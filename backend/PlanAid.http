@@ -1,4 +1,4 @@
-@PlanAid_HostAddress = http://localhost:5251
+@PlanAid_HostAddress = http://localhost:5001
 
 GET {{PlanAid_HostAddress}}/weatherforecast/
 Accept: application/json
