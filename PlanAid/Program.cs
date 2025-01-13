@@ -1,15 +1,36 @@
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c => 
+{
+    c.SwaggerDoc("v1", new OpenApiInfo 
+    { 
+        Title = "PlanAid API", 
+        Version = "v1",
+        Description = "API Documentation for PlanAid",
+        Contact = new OpenApiContact
+        {
+            Name = "PlanAid",
+            Email = "areb@uia.no",
+        }
+    });
+});
+
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c => 
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "PlanAid API v1");
+        c.RoutePrefix = string.Empty; // Set to empty to serve the Swagger UI at the root
+    });
 }
 
 app.UseHttpsRedirection();
