@@ -1,14 +1,22 @@
+
+
+using backend;
+using backend.Services;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers();
+builder.Services.AddSingleton<PdfProcessingService>();
+
+// Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c => 
+builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo 
-    { 
-        Title = "PlanAid API", 
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "PlanAid API",
         Version = "v1",
         Description = "API Documentation for PlanAid",
         Contact = new OpenApiContact
@@ -17,46 +25,45 @@ builder.Services.AddSwaggerGen(c =>
             Email = "areb@uia.no",
         }
     });
+    
+    // Add support for file uploads in Swagger
+    c.OperationFilter<FileUploadOperation>();
 });
-
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Add the redirects first, before other middleware
 if (app.Environment.IsDevelopment())
 {
+    app.Use(async (context, next) =>
+    {
+        if (context.Request.Path.Value == "/" || context.Request.Path.Value == "/index.html")
+        {
+            context.Response.Redirect("/swagger");
+            return;
+        }
+        await next();
+    });
+    
     app.UseSwagger();
-    app.UseSwaggerUI(c => 
+    app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "PlanAid API v1");
-        c.RoutePrefix = string.Empty; // Set to empty to serve the Swagger UI at the root
+        c.RoutePrefix = "swagger";
     });
 }
 
 app.UseHttpsRedirection();
-
-var summaries = new[]
+app.UseCors(options =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    options.WithOrigins("http://localhost:3000")
+           .AllowAnyHeader()
+           .AllowAnyMethod();
+});
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.UseRouting();
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
