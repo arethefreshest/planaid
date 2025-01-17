@@ -1,53 +1,44 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { ChangeEvent, useState } from 'react';
 
-const FileUpload: React.FC = () => {
-    const [file, setFile] = useState<File | null>(null);
-    const [text, setText] = useState<string | null>(null);
+interface FileUploadProps {
+  // Add any props here if needed
+}
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files.length > 0) {
-            setFile(event.target.files[0]);
-        }
-    };
+const FileUpload: React.FC<FileUploadProps> = () => {
+  const [file, setFile] = useState<File | null>(null);
 
-    const handleSubmit = async () => {
-        if (!file) return;
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setFile(event.target.files[0]);
+    }
+  };
 
-        const formData = new FormData();
-        formData.append('file', file);
+  const handleUpload = async () => {
+    if (!file) return;
 
-        try {
-            const response = await axios.post('/api/validation/upload', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            setText(response.data.text);
-        } catch (error) {
-            console.error('Error uploading file:', error);
-        }
-    };
+    const formData = new FormData();
+    formData.append('file', file);
 
-    return (
-        <div>
-            <h1>PlanAid File Upload</h1>
-            <input 
-                type="file" 
-                onChange={handleFileChange} 
-                data-testid="file-input"
-            />
-            <button onClick={handleSubmit} disabled={!file}>
-                Upload
-            </button>
-            {text && (
-                <div>
-                    <h3>Extracted Text:</h3>
-                    <pre>{text}</pre>
-                </div>
-            )}
-        </div>
-    );
+    try {
+      const response = await fetch('/api/validation', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
+
+  return (
+    <div>
+      <input type="file" onChange={handleFileChange} accept=".pdf" />
+      <button onClick={handleUpload} disabled={!file}>
+        Upload
+      </button>
+    </div>
+  );
 };
 
 export default FileUpload;
