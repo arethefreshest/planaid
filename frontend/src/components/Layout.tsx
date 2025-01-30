@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/LogoPlanAid.png'
-import x from '../images/x.png'
-import insta from '../images/insta.png'
-import in from '../images/in.png'
+import xIcon from '../images/x.png';
+import instaIcon from '../images/insta.png';
+import linkedIcon from '../images/in.png';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -25,20 +25,27 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <span>© 2025 PlanAid</span>
         </div>
         <div style={styles.socialLinks}>
-          <a href="https://x.com">X</a>
-          <a href="https://instagram.com">Instagram</a>
-          <a href="https://linkedin.com">LinkedIn</a>
+          <a href="https://x.com" target="_blank" rel="noopener noreferrer">
+            <img src={xIcon} alt="X" style={styles.icon} />
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+            <img src={instaIcon} alt="Instagram" style={styles.icon} />
+          </a>
+          <a href="https://linkedin.com/in/olesveinungberget/" target="_blank" rel="noopener noreferrer">
+            <img src={linkedIcon} alt="LinkedIn" style={styles.icon} />
+          </a>
         </div>
       </footer>
     </div>
   );
 };
 
-const styles: { [key: string]: React.CSSProperties } = {
+const styles = {
   pageContainer: {
     display: 'flex',
-    flexDirection: 'column',
-    minHeight: '100vh', // Ensures the page takes at least the full height of the viewport
+    flexDirection: 'column' as const,
+    minHeight: '100vh',
+    backgroundColor: '#f9f9f9',
   },
   header: {
     display: 'flex',
@@ -54,19 +61,18 @@ const styles: { [key: string]: React.CSSProperties } = {
     gap: '1rem',
   },
   logoImage: {
-    height: '80px',
+    height: '60px',
   },
   loginButton: {
     backgroundColor: '#004d00',
     color: '#fff',
     border: 'none',
-    padding: '0.5rem 2rem',
+    padding: '0.5rem 1rem',
     borderRadius: '4px',
-    fontSize:'25px',
     cursor: 'pointer',
   },
   main: {
-    flex: '1', // Fills available space between header and footer
+    flex: '1',
     padding: '2rem',
   },
   footer: {
@@ -80,6 +86,10 @@ const styles: { [key: string]: React.CSSProperties } = {
   socialLinks: {
     display: 'flex',
     gap: '1rem',
+  },
+  icon: {
+    width: '20px',
+    height: '20px',
   },
 };
 

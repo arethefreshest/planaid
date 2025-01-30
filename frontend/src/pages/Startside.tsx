@@ -5,7 +5,6 @@ import bygg3d from '../images/bygg3d.png';
 const Start = () => {
   return (
     <Layout>
-      {/* Center the title and subtitle */}
       <div style={{ textAlign: 'center', marginBottom: '10rem' }}>
         <h1 style={{fontSize: '50px'}}>Velkommen til PlanAid!</h1>
         <p style={{fontSize: '25px'}}>Her kan du analysere planforslag.</p>

@@ -11,6 +11,9 @@
     "axios": "^1.7.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-drag-drop-files": "^2.4.0",
+    "react-native-maps": "^1.20.1",
+    "react-native-web": "^0.19.13",
     "react-router-dom": "^7.1.2",
     "react-scripts": "5.0.1",
     "serve": "^14.2.1",
@@ -53,13 +56,19 @@
       "/node_modules/(?!axios)/"
     ]
   },
+  
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-syntax-jsx": "^7.25.9",
     "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
+    "@babel/preset-typescript": "^7.26.0",
     "@types/axios": "^0.9.36",
     "@types/jest": "^29.5.14",
     "@types/react": "^18.3.18",
+    "@types/react-native": "^0.72.8",
+    "@types/react-native-maps": "^0.24.1",
     "@types/testing-library__jest-dom": "^5.14.9",
     "babel-jest": "^29.7.0"
   },
