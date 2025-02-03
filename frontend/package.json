@@ -12,7 +12,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-drag-drop-files": "^2.4.0",
-    "react-native-maps": "^1.20.1",
+    "react-native-maps": "^0.29.4",
     "react-native-web": "^0.19.13",
     "react-router-dom": "^7.1.2",
     "react-scripts": "5.0.1",
@@ -56,7 +56,6 @@
       "/node_modules/(?!axios)/"
     ]
   },
-  
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
@@ -72,5 +71,16 @@
     "@types/testing-library__jest-dom": "^5.14.9",
     "babel-jest": "^29.7.0"
   },
+  "babel": {
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react",
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-private-property-in-object",
+    "@babel/plugin-syntax-jsx"
+  ]
+ },
   "proxy": "http://localhost:5251"
 }
