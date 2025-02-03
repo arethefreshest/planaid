@@ -12,38 +12,12 @@
  * - Metadata visualization
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { CircularProgress } from './CircularProgress';
 import { logger } from '../utils/logger';
 import { DocumentFieldsDisplay } from './DocumentFieldsDisplay';
-
-/** Represents extracted fields from a document */
-export interface DocumentFields {
-  raw_fields: string[];
-  normalized_fields: string[];
-  text_sections: string[];
-}
-
-/** Represents the consistency check result structure */
-interface ConsistencyResult {
-  matching_fields: string[];
-  only_in_plankart: string[];
-  only_in_bestemmelser: string[];
-  only_in_sosi: string[];
-  is_consistent: boolean;
-  document_fields: {
-    plankart?: DocumentFields;
-    bestemmelser?: DocumentFields;
-    sosi?: DocumentFields;
-  };
-  metadata?: {
-    plan_id?: string;
-    plankart_dato?: string;
-    bestemmelser_dato?: string;
-    vedtatt_dato?: string;
-  };
-}
+import type { ConsistencyResult } from '../types';
 
 // Configuration constants
 const ALLOWED_TYPES = ['application/pdf', 'text/xml'];
@@ -352,13 +326,38 @@ const ConsistencyCheck: React.FC = () => {
         </div>
       )}
 
-      {result && result.document_fields && (
-        <div className="mt-4 space-y-4">
-          {Object.entries(result.document_fields).map(([docType, fields]) => (
-            <DocumentFieldsDisplay key={docType} documentType={docType} fields={fields} />
-          ))}
-        </div>
-      )}
+      {/* Fields Display */}
+      <div className="mt-4 space-y-4">
+        {result.document_fields && Object.entries(result.document_fields).map(([docType, fields]) => (
+          <div key={docType} className="bg-white shadow rounded-lg p-4">
+            <h3 className="text-lg font-medium text-gray-900 capitalize">{docType}</h3>
+            
+            {/* Raw Fields */}
+            <div className="mt-4">
+              <h4 className="text-sm font-medium text-gray-500">Raw Fields</h4>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {fields.raw_fields.map(field => (
+                  <span key={field} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    {field}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Normalized Fields */}
+            <div className="mt-4">
+              <h4 className="text-sm font-medium text-gray-500">Normalized Fields</h4>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {fields.normalized_fields.map(field => (
+                  <span key={field} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    {field}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
