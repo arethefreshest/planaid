@@ -45,37 +45,36 @@ namespace backend.Services
         {
             try
             {
-                if (type == PdfType.Consistency)
+                if (!File.Exists(filePath))
                 {
-                    var pythonResponse = await _pythonService.CheckConsistencyAsync(filePath, filePath);
-                    _logger.LogInformation($"Python service response: {pythonResponse}"); // Add debug logging
-                    
-                    // Verify it's valid JSON
-                    try
-                    {
-                        JsonDocument.Parse(pythonResponse);
-                        return pythonResponse;
-                    }
-                    catch (JsonException)
-                    {
-                        _logger.LogWarning("Invalid JSON from Python service, wrapping response");
-                        return JsonSerializer.Serialize(new { message = pythonResponse });
-                    }
+                    throw new FileNotFoundException("PDF file not found", filePath);
                 }
 
-                var document = new ProcessedPdfDocument
+                switch (type)
                 {
-                    Title = Path.GetFileNameWithoutExtension(filePath),
-                    ProcessedDate = DateTime.UtcNow
-                };
+                    case PdfType.Consistency:
+                        var pythonResponse = await _pythonService.CheckConsistencyAsync(filePath, filePath, string.Empty);
+                        if (string.IsNullOrEmpty(pythonResponse))
+                        {
+                            return JsonSerializer.Serialize(new { result = "No response from Python service" });
+                        }
+                        return pythonResponse;
 
-                // ... existing code ...
+                    case PdfType.PlanMap:
+                        var planMapResult = await ProcessPlanMapAsync(filePath);
+                        return JsonSerializer.Serialize(planMapResult);
 
-                return JsonSerializer.Serialize(document);
+                    case PdfType.Regulations:
+                        var regulationsResult = await ProcessRegulationsAsync(filePath);
+                        return JsonSerializer.Serialize(regulationsResult);
+
+                    default:
+                        throw new ArgumentException($"Unsupported PDF type: {type}");
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error processing PDF");
+                _logger.LogError(ex, "Error processing PDF {FilePath}", filePath);
                 throw;
             }
         }

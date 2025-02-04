@@ -23,52 +23,54 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using System.Text.Json;
+using System.Collections.Generic;
 
 namespace backend.Tests;
 
-public class PdfProcessingServiceTests
+public class PdfProcessingServiceTests : IDisposable
 {
     private readonly Mock<ILogger<PdfProcessingService>> _loggerMock;
     private readonly Mock<IPythonIntegrationService> _pythonServiceMock;
     private readonly PdfProcessingService _service;
+    private readonly string _testDirectory;
 
     public PdfProcessingServiceTests()
     {
         _loggerMock = new Mock<ILogger<PdfProcessingService>>();
         _pythonServiceMock = new Mock<IPythonIntegrationService>();
+        _service = new PdfProcessingService(_loggerMock.Object, _pythonServiceMock.Object);
         
-        // Setup default mock behavior
-        _pythonServiceMock
-            .Setup(x => x.CheckConsistencyAsync(
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<string>()))
-            .ReturnsAsync("{}");
-
-        _service = new PdfProcessingService(
-            _loggerMock.Object,
-            _pythonServiceMock.Object);
+        _testDirectory = Path.Combine(Path.GetTempPath(), "PdfProcessingTests_" + Guid.NewGuid());
+        Directory.CreateDirectory(_testDirectory);
+        Console.WriteLine($"Created test directory: {_testDirectory}");
     }
 
-    /// <summary>
-    /// Creates a test PDF with specified content.
-    /// </summary>
-    private byte[] CreateTestPdf(string content)
+    private string CreateTestPdf(string content)
     {
-        using var memoryStream = new MemoryStream();
-        using var writer = new PdfWriter(memoryStream);
-        using var pdf = new PdfDocument(writer);
-        using var document = new Document(pdf);
+        var filePath = Path.Combine(_testDirectory, $"{Guid.NewGuid()}.pdf");
+        Console.WriteLine($"Creating PDF at: {filePath}");
+        Console.WriteLine($"Content: {content}");
         
-        // Add test content
-        document.Add(new Paragraph(content));
-        
-        // Add a second page
-        document.Add(new AreaBreak());
-        document.Add(new Paragraph("Page 2 content"));
-        
-        document.Close();
-        return memoryStream.ToArray();
+        try 
+        {
+            using var fs = new FileStream(filePath, FileMode.Create);
+            using var writer = new PdfWriter(fs);
+            using var pdf = new PdfDocument(writer);
+            using var doc = new Document(pdf);
+            doc.Add(new Paragraph(content));
+            doc.Close();
+            
+            Console.WriteLine($"PDF created successfully at: {filePath}");
+            Console.WriteLine($"File exists: {File.Exists(filePath)}");
+            Console.WriteLine($"File size: {new FileInfo(filePath).Length} bytes");
+            
+            return filePath;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error creating PDF: {ex}");
+            throw;
+        }
     }
 
     /// <summary>
@@ -77,39 +79,67 @@ public class PdfProcessingServiceTests
     [Fact]
     public async Task ProcessPdfAsync_WithRegulationsType_ShouldExtractText()
     {
+        Console.WriteLine("Starting ProcessPdfAsync_WithRegulationsType_ShouldExtractText test");
+        
         // Arrange
-        var testPdfPath = "path/to/test.pdf";
+        var content = "Test content for regulations";
+        var testFile = CreateTestPdf(content);
+        Console.WriteLine($"Test file created at: {testFile}");
+        
+        try
+        {
+            // Act
+            var resultJson = await _service.ProcessPdfAsync(testFile, PdfType.Regulations);
+            Console.WriteLine($"Result JSON: {resultJson}");
+            
+            var result = JsonSerializer.Deserialize<ProcessedPdfDocument>(resultJson);
+            Console.WriteLine($"Deserialized result: {JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true })}");
 
-        // Act
-        var result = await _service.ProcessPdfAsync(testPdfPath, PdfType.Regulations);
-
-        // Assert
-        // ... your assertions here ...
+            // Assert
+            Assert.NotNull(result);
+            Assert.NotNull(result!.Pages);
+            Assert.NotEmpty(result.Pages);
+        }
+        finally
+        {
+            SafeDeleteFile(testFile);
+        }
     }
 
     [Fact]
     public async Task ProcessPdfAsync_WithPlanMapType_ShouldExtractFieldIdentifiers()
     {
         // Arrange
-        var testFile = Path.GetTempFileName();
-        var pdfBytes = CreateTestPdf("Test content with field BRA_1");
-        await File.WriteAllBytesAsync(testFile, pdfBytes);
+        var content = @"Tegnforklaring
+BRA1 - Boligbebyggelse
+o_BRA_1 - Offentlig boligbebyggelse
+f_BRA_2 - Felles boligbebyggelse
+Kartopplysninger";
+        var testFile = CreateTestPdf(content);
         
         try
         {
             // Act
-            var result = await _service.ProcessPdfAsync(testFile, PdfType.PlanMap);
+            var resultJson = await _service.ProcessPdfAsync(testFile, PdfType.PlanMap);
+            var result = JsonSerializer.Deserialize<ProcessedPdfDocument>(resultJson);
 
             // Assert
             Assert.NotNull(result);
-            Assert.Contains("BRA_1", result.ToString());
+            Assert.NotNull(result!.Metadata);
+            Assert.True(result.Metadata.ContainsKey("FieldIdentifiers"));
+            var fieldIdentifiers = JsonSerializer.Deserialize<List<string>>(result.Metadata["FieldIdentifiers"]);
+            Assert.NotNull(fieldIdentifiers);
+            
+            // Log the found identifiers to help debug
+            Console.WriteLine($"Found identifiers: {string.Join(", ", fieldIdentifiers)}");
+            
+            // Check for any of the valid identifiers
+            Assert.Contains(fieldIdentifiers, id => 
+                id == "o_BRA_1" || id == "f_BRA_2" || id == "BRA1");
         }
         finally
         {
-            if (File.Exists(testFile))
-            {
-                File.Delete(testFile);
-            }
+            SafeDeleteFile(testFile);
         }
     }
 
@@ -117,52 +147,118 @@ public class PdfProcessingServiceTests
     public async Task ProcessPdfAsync_ExtractsAllPages()
     {
         // Arrange
-        var testFile = Path.GetTempFileName();
-        var pdfBytes = CreateTestPdf("Test content");
-        await File.WriteAllBytesAsync(testFile, pdfBytes);
+        var content = "Test content With multiple lines And more content";
+        var testFile = CreateTestPdf(content);
         
         try
         {
             // Act
             var resultJson = await _service.ProcessPdfAsync(testFile, PdfType.Regulations);
+            _loggerMock.VerifyNoErrors();
+            
             var result = JsonSerializer.Deserialize<ProcessedPdfDocument>(resultJson);
 
             // Assert
             Assert.NotNull(result);
-            Assert.True(result!.TotalPages > 0);
-            Assert.NotEmpty(result.Pages);
+            Assert.NotNull(result!.Pages);
+            Assert.True(result.Pages.Count > 0, "Document should have at least one page");
+            Assert.True(result.TotalPages > 0, "Total pages should be greater than 0");
+            
+            // Normalize strings for comparison
+            var normalizedContent = content.Replace("\n", " ").Replace("  ", " ").Trim();
+            var normalizedResult = result.Pages[0].Content.Replace("\n", " ").Replace("  ", " ").Trim();
+            Assert.Contains(normalizedContent, normalizedResult);
         }
         finally
         {
-            if (File.Exists(testFile))
-            {
-                File.Delete(testFile);
-            }
+            SafeDeleteFile(testFile);
         }
     }
 
     [Fact]
     public async Task ProcessPdfAsync_HandlesError()
     {
-        // Arrange
-        var nonExistentFile = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        Console.WriteLine("Starting ProcessPdfAsync_HandlesError test");
+        var nonExistentFile = Path.Combine(_testDirectory, "nonexistent.pdf");
+        Console.WriteLine($"Using non-existent file path: {nonExistentFile}");
 
-        // Act & Assert
-        await Assert.ThrowsAsync<FileNotFoundException>(() => 
+        var exception = await Assert.ThrowsAsync<FileNotFoundException>(() => 
             _service.ProcessPdfAsync(nonExistentFile, PdfType.Regulations));
+        
+        Console.WriteLine($"Exception message: {exception.Message}");
     }
 
     [Fact]
     public async Task ProcessPdfAsync_ValidFile_ReturnsProcessedDocument()
     {
         // Arrange
-        var filePath = "test.pdf";
-        var type = PdfType.Consistency;
+        var testFile = CreateTestPdf("Test content");
+        
+        try
+        {
+            // Mock Python service response
+            _pythonServiceMock
+                .Setup(x => x.CheckConsistencyAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync("{\"result\": \"success\"}");
 
-        // Act
-        var result = await _service.ProcessPdfAsync(filePath, type);
+            // Act
+            var result = await _service.ProcessPdfAsync(testFile, PdfType.Consistency);
 
-        // Assert
-        Assert.NotNull(result);
+            // Assert
+            Assert.NotNull(result);
+            Assert.Contains("success", result);
+        }
+        finally
+        {
+            SafeDeleteFile(testFile);
+        }
+    }
+
+    private void SafeDeleteFile(string filePath)
+    {
+        try
+        {
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+                Console.WriteLine($"Successfully deleted file: {filePath}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to delete file {filePath}: {ex}");
+        }
+    }
+
+    public void Dispose()
+    {
+        try
+        {
+            if (Directory.Exists(_testDirectory))
+            {
+                Directory.Delete(_testDirectory, true);
+                Console.WriteLine($"Successfully deleted test directory: {_testDirectory}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to delete test directory {_testDirectory}: {ex}");
+        }
+    }
+}
+
+// Helper extension method for verifying no errors were logged
+public static class LoggerMockExtensions
+{
+    public static void VerifyNoErrors<T>(this Mock<ILogger<T>> loggerMock)
+    {
+        loggerMock.Verify(
+            x => x.Log(
+                It.Is<LogLevel>(l => l == LogLevel.Error),
+                It.IsAny<EventId>(),
+                It.IsAny<It.IsAnyType>(),
+                It.IsAny<Exception>(),
+                It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
+            Times.Never);
     }
 }
