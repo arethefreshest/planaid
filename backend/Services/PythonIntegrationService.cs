@@ -16,9 +16,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Http;
 
 namespace backend.Services {
-    public class PythonIntegrationService
+    public class PythonIntegrationService : IPythonIntegrationService
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<PythonIntegrationService> _logger;
@@ -29,14 +30,7 @@ namespace backend.Services {
             _logger = logger;
         }
 
-        /// <summary>
-        /// Checks consistency between regulatory documents using Python service.
-        /// </summary>
-        /// <param name="plankartPath">Path to plankart PDF file</param>
-        /// <param name="bestemmelserPath">Path to bestemmelser PDF file</param>
-        /// <param name="sosiPath">Optional path to SOSI file</param>
-        /// <returns>JSON string containing consistency check results</returns>
-        /// <exception cref="HttpRequestException">Thrown when Python service returns error</exception>
+        /// <inheritdoc/>
         public async Task<string> CheckConsistencyAsync(string plankartPath, string bestemmelserPath, string? sosiPath = null)
         {
             try

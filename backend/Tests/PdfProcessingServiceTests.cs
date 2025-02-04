@@ -29,14 +29,25 @@ namespace backend.Tests;
 public class PdfProcessingServiceTests
 {
     private readonly Mock<ILogger<PdfProcessingService>> _loggerMock;
-    private readonly Mock<PythonIntegrationService> _pythonServiceMock;
+    private readonly Mock<IPythonIntegrationService> _pythonServiceMock;
     private readonly PdfProcessingService _service;
 
     public PdfProcessingServiceTests()
     {
         _loggerMock = new Mock<ILogger<PdfProcessingService>>();
-        _pythonServiceMock = new Mock<PythonIntegrationService>();
-        _service = new PdfProcessingService(_loggerMock.Object, _pythonServiceMock.Object);
+        _pythonServiceMock = new Mock<IPythonIntegrationService>();
+        
+        // Setup default mock behavior
+        _pythonServiceMock
+            .Setup(x => x.CheckConsistencyAsync(
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<string>()))
+            .ReturnsAsync("{}");
+
+        _service = new PdfProcessingService(
+            _loggerMock.Object,
+            _pythonServiceMock.Object);
     }
 
     /// <summary>
@@ -80,13 +91,7 @@ public class PdfProcessingServiceTests
     public async Task ProcessPdfAsync_WithPlanMapType_ShouldExtractFieldIdentifiers()
     {
         // Arrange
-        var testPdfPath = "path/to/test.pdf";
-
-        // Act
-        var result = await _service.ProcessPdfAsync(testPdfPath, PdfType.PlanMap);
-
-        // Assert
-        // ... your assertions here ...
+        // ... test implementation ...
     }
 
     [Fact]

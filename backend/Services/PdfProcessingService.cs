@@ -25,11 +25,11 @@ namespace backend.Services
     public class PdfProcessingService
     {
         private readonly ILogger<PdfProcessingService> _logger;
-        private readonly PythonIntegrationService _pythonService;
+        private readonly IPythonIntegrationService _pythonService;
 
         public PdfProcessingService(
             ILogger<PdfProcessingService> logger,
-            PythonIntegrationService pythonService)
+            IPythonIntegrationService pythonService)
         {
             _logger = logger;
             _pythonService = pythonService;
