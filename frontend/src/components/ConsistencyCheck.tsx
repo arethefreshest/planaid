@@ -16,7 +16,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { CircularProgress } from './CircularProgress';
 import { logger } from '../utils/logger';
-import { DocumentFieldsDisplay } from './DocumentFieldsDisplay';
+// import { DocumentFieldsDisplay } from './DocumentFieldsDisplay';
 import type { ConsistencyResult } from '../types';
 
 // Configuration constants
