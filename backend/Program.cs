@@ -8,11 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSingleton<PdfProcessingService>();
 
-// Add HttpClient for Python service
+// Configure HttpClient and register PythonIntegrationService
 builder.Services.AddHttpClient<PythonIntegrationService>(client =>
 {
     client.BaseAddress = new Uri("http://python_service:8000");
 });
+builder.Services.AddSingleton<IPythonIntegrationService, PythonIntegrationService>();
 
 // Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();

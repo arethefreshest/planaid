@@ -19,16 +19,18 @@ using System.ComponentModel.DataAnnotations;
 namespace backend.Controllers
 {
     [ApiController]
-    [Route("api")]
+    [Route("api/[controller]")]
     public class ConsistencyController : ControllerBase
     {
-        private readonly PythonIntegrationService _pythonService;
         private readonly ILogger<ConsistencyController> _logger;
+        private readonly IPythonIntegrationService _pythonService;
 
-        public ConsistencyController(PythonIntegrationService pythonService, ILogger<ConsistencyController> logger)
+        public ConsistencyController(
+            ILogger<ConsistencyController> logger,
+            IPythonIntegrationService pythonService)
         {
-            _pythonService = pythonService;
             _logger = logger;
+            _pythonService = pythonService;
         }
 
         /// <summary>
