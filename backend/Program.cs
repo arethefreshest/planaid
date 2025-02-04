@@ -1,5 +1,3 @@
-
-
 using backend;
 using backend.Services;
 using Microsoft.OpenApi.Models;
@@ -9,6 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddSingleton<PdfProcessingService>();
+
+// Add HttpClient for Python service
+builder.Services.AddHttpClient<PythonIntegrationService>(client =>
+{
+    client.BaseAddress = new Uri("http://python_service:8000");
+});
 
 // Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
@@ -28,6 +32,17 @@ builder.Services.AddSwaggerGen(c =>
     
     // Add support for file uploads in Swagger
     c.OperationFilter<FileUploadOperation>();
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
 });
 
 var app = builder.Build();
@@ -65,5 +80,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Allow frontend to access backend
+app.UseCors("AllowLocalhost");
 
 app.Run();
