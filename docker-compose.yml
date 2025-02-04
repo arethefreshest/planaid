@@ -1,0 +1,73 @@
+services:
+  frontend:
+    build: 
+      context: ./frontend
+      target: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - REACT_APP_API_URL=http://localhost:5251
+      - NODE_ENV=development
+    networks:
+      - planaid-network
+
+  backend:
+    build: 
+      context: ./backend
+      target: development
+    ports:
+      - "5251:5251"
+    volumes:
+      - ./backend:/src
+      - dotnet-cache:/root/.nuget/packages
+      - backend-obj:/src/obj
+      - backend-bin:/src/bin
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - PythonServiceUrl=http://python_service:8000
+      - ASPNETCORE_URLS=http://+:5251
+    networks:
+      - planaid-network
+
+  python_service:
+    build:
+      context: .  
+      dockerfile: python_service/Dockerfile
+      target: development
+    volumes:
+      - ./python_service:/app/python_service
+      - ./python_service/app:/app/app
+      - ./python_service/requirements.txt:/app/requirements.txt
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PYTHONPATH=/app
+    depends_on:
+      - redis
+    networks:
+      - planaid-network
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - planaid-network
+
+volumes:
+  dotnet-cache:
+  backend-obj:
+  backend-bin:
+  redis-data:
+
+networks:
+  planaid-network:
+    driver: bridge
