@@ -16,20 +16,20 @@ from typing import Set, Tuple, List, Optional
 import logging
 from .models import ConsistencyResult
 from .document.pdf_handler import PdfHandler, extract_text_from_pdf
-from .llm.extractor import FieldExtractor
-from .config import settings
+from .config import settings, extractor
 from fastapi import FastAPI, File, UploadFile, HTTPException
 import uuid
 import os
 import re
+from pydantic import BaseModel
+import asyncio
 
 logger = logging.getLogger(__name__)
 
-# Initialize FastAPI and field extractor
+# Initialize FastAPI
 app = FastAPI()
-field_extractor = FieldExtractor(settings.OPENAI_MODEL)
 
-async def extract_fields_from_file(file) -> Set[str]:
+async def extract_fields_from_file(file: UploadFile) -> Set[str]:
     """
     Extract regulatory fields from an uploaded file.
     
@@ -46,14 +46,16 @@ async def extract_fields_from_file(file) -> Set[str]:
         return set()
 
     try:
-        content = await file.read()
-        fields = await field_extractor.extract_fields(content)
-        logger.info(f"Extracted {len(fields)} fields from {file.filename}")
-        return fields
+        # Process file in chunks
+        chunk_size = 1024 * 1024  # 1MB chunks
+        content = bytearray()
         
+        while chunk := await file.read(chunk_size):
+            content.extend(chunk)
+            
+        return await extractor.extract_fields(bytes(content))
     except Exception as e:
-        logger.error(f"Extraction error for file {file.filename}: {str(e)}")
-        logger.debug("Full error:", exc_info=True)
+        logger.error(f"Field extraction error: {str(e)}")
         return set()
 
 @app.post("/api/check-field-consistency")
@@ -78,13 +80,34 @@ async def check_field_consistency(
         if not bestemmelser.content_type in ['application/pdf', 'text/xml']:
             raise HTTPException(status_code=400, detail=f"Invalid bestemmelser file type: {bestemmelser.content_type}")
 
-        # Extract fields from each file
-        plankart_content = await plankart.read()
-        bestemmelser_content = await bestemmelser.read()
+        # Read files concurrently
+        content_tasks = [
+            plankart.read(),
+            bestemmelser.read(),
+        ]
+        if sosi:
+            content_tasks.append(sosi.read())
+            
+        # Wait for all file reads to complete
+        contents = await asyncio.gather(*content_tasks)
+        plankart_content = contents[0]
+        bestemmelser_content = contents[1]
+        sosi_content = contents[2] if len(contents) > 2 else None
+
+        # Extract fields concurrently
+        fields_tasks = [
+            extractor.extract_fields(plankart_content),
+            extractor.extract_fields(bestemmelser_content)
+        ]
+        if sosi_content:
+            fields_tasks.append(extractor.extract_fields(sosi_content))
+            
+        # Wait for all extractions to complete
+        results = await asyncio.gather(*fields_tasks)
         
-        plankart_fields = await field_extractor.extract_fields(plankart_content)
-        bestemmelser_fields = await field_extractor.extract_fields(bestemmelser_content)
-        sosi_fields = set() if not sosi else await field_extractor.extract_fields(await sosi.read())
+        plankart_fields = results[0]
+        bestemmelser_fields = results[1]
+        sosi_fields = results[2] if len(results) > 2 else set()
 
         # Convert bytes to string for metadata extraction
         bestemmelser_text = bestemmelser_content.decode('utf-8', errors='ignore')
@@ -104,6 +127,7 @@ async def check_field_consistency(
         only_sosi = sosi_fields - (plankart_fields | bestemmelser_fields) if sosi_fields else set()
 
         return {
+            "status": "success",
             "result": {
                 "matching_fields": sorted(list(matching)),
                 "only_in_plankart": sorted(list(only_plankart)),
@@ -113,11 +137,11 @@ async def check_field_consistency(
                 "document_fields": {
                     "plankart": {
                         "raw_fields": sorted(list(plankart_fields)),
-                        "normalized_fields": sorted(list(plankart_fields))
+                        "normalized_fields": sorted(list(normalize_field(f) for f in plankart_fields))
                     },
                     "bestemmelser": {
                         "raw_fields": sorted(list(bestemmelser_fields)),
-                        "normalized_fields": sorted(list(bestemmelser_fields))
+                        "normalized_fields": sorted(list(normalize_field(f) for f in bestemmelser_fields))
                     }
                 },
                 "metadata": metadata
@@ -149,7 +173,7 @@ async def extract_fields_and_text(file: UploadFile) -> Tuple[Set[str], List[str]
             f.write(content)
         
         extracted_text = extract_text_from_pdf(temp_path)
-        fields = field_extractor.extract_fields(extracted_text)
+        fields = extractor.extract_fields(extracted_text)
         relevant_text = extract_relevant_sections(extracted_text)
         
         return fields, relevant_text
@@ -218,3 +242,67 @@ def extract_date(type_: str, text: str) -> Optional[str]:
         if match := re.search(pattern, text):
             return match.group(1)
     return None
+
+def normalize_field(field: str) -> str:
+    """Normalize field names by removing prefixes and standardizing format"""
+    field = field.upper().strip()
+    # Remove common prefixes
+    prefixes = ['O_', 'F_', 'H_']
+    for prefix in prefixes:
+        if field.startswith(prefix):
+            field = field[len(prefix):]
+    return field
+
+async def process_consistency_check(plankart: UploadFile, bestemmelser: UploadFile, sosi: UploadFile = None):
+    """Process consistency check between files"""
+    try:
+        # Extract fields from each file
+        plankart_content = await plankart.read()
+        bestemmelser_content = await bestemmelser.read()
+        
+        plankart_fields = await extractor.extract_fields(plankart_content)
+        bestemmelser_fields = await extractor.extract_fields(bestemmelser_content)
+        sosi_fields = set() if not sosi else await extractor.extract_fields(await sosi.read())
+
+        # Convert bytes to string for metadata extraction
+        bestemmelser_text = bestemmelser_content.decode('utf-8', errors='ignore')
+
+        # Extract metadata
+        metadata = {
+            "plan_id": extract_plan_id(bestemmelser_text),
+            "plankart_dato": extract_date("plankart", bestemmelser_text),
+            "bestemmelser_dato": extract_date("bestemmelser", bestemmelser_text),
+            "vedtatt_dato": extract_date("vedtatt", bestemmelser_text)
+        }
+
+        # Calculate field differences
+        matching = plankart_fields & bestemmelser_fields
+        only_plankart = plankart_fields - bestemmelser_fields
+        only_bestemmelser = bestemmelser_fields - plankart_fields
+        only_sosi = sosi_fields - (plankart_fields | bestemmelser_fields) if sosi_fields else set()
+
+        return {
+            "status": "success",
+            "result": {
+                "matching_fields": sorted(list(matching)),
+                "only_in_plankart": sorted(list(only_plankart)),
+                "only_in_bestemmelser": sorted(list(only_bestemmelser)),
+                "only_in_sosi": sorted(list(only_sosi)),
+                "is_consistent": len(only_plankart) == 0 and len(only_bestemmelser) == 0 and len(only_sosi) == 0,
+                "document_fields": {
+                    "plankart": {
+                        "raw_fields": sorted(list(plankart_fields)),
+                        "normalized_fields": sorted(list(normalize_field(f) for f in plankart_fields))
+                    },
+                    "bestemmelser": {
+                        "raw_fields": sorted(list(bestemmelser_fields)),
+                        "normalized_fields": sorted(list(normalize_field(f) for f in bestemmelser_fields))
+                    }
+                },
+                "metadata": metadata
+            }
+        }
+    except Exception as e:
+        logger.error(f"Consistency check error: {str(e)}")
+        logger.debug("Full error:", exc_info=True)
+        raise

@@ -1,19 +1,30 @@
 using backend;
 using backend.Services;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add logging
+var logger = LoggerFactory.Create(config =>
+{
+    config.AddConsole();
+}).CreateLogger("Program");
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddSingleton<PdfProcessingService>();
 
 // Configure HttpClient and register PythonIntegrationService
-builder.Services.AddHttpClient<PythonIntegrationService>(client =>
+builder.Services.AddHttpClient<IPythonIntegrationService, PythonIntegrationService>(client =>
 {
-    client.BaseAddress = new Uri("http://python_service:8000");
+    var pythonServiceUrl = builder.Configuration.GetValue<string>("PythonServiceUrl") ?? "http://python_service:8000";
+    logger.LogInformation($"Configuring Python service URL: {pythonServiceUrl}");
+    client.BaseAddress = new Uri(pythonServiceUrl.TrimEnd('/') + "/");
+    
+    // Add default headers
+    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 });
-builder.Services.AddSingleton<IPythonIntegrationService, PythonIntegrationService>();
 
 // Configure Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
@@ -69,20 +80,21 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); Commented out for development purposes
 app.UseCors(options =>
 {
-    options.WithOrigins("http://localhost:3000")
-           .AllowAnyHeader()
-           .AllowAnyMethod();
+    options.WithOrigins(
+        "http://localhost:3000",
+        "http://frontend:3000"
+    )
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials();
 });
 
 app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllers();
-
-// Allow frontend to access backend
-app.UseCors("AllowLocalhost");
 
 app.Run();

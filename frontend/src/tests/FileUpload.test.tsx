@@ -38,7 +38,7 @@ describe('FileUpload Component', () => {
         });
 
         expect(mockedAxios.post).toHaveBeenCalledWith(
-            '/api/validation/upload?type=Regulations',
+            '/api/validation',
             expect.any(FormData),
             expect.any(Object)
         );

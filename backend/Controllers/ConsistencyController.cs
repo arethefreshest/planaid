@@ -19,7 +19,7 @@ using System.ComponentModel.DataAnnotations;
 namespace backend.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api")]
     public class ConsistencyController : ControllerBase
     {
         private readonly ILogger<ConsistencyController> _logger;
@@ -43,9 +43,9 @@ namespace backend.Controllers
         [HttpPost("check-field-consistency")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CheckFieldConsistency(
-            [Required] IFormFile plankart,
-            [Required] IFormFile bestemmelser,
-            IFormFile? sosi = null)
+            [FromForm] IFormFile plankart,
+            [FromForm] IFormFile bestemmelser,
+            [FromForm] IFormFile? sosi = null)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace backend.Controllers
                     }
 
                     var result = await _pythonService.CheckConsistencyAsync(plankartPath, bestemmelserPath, sosiPath);
-                    return Ok(new { result = result });
+                    return Ok(result);
                 }
                 finally
                 {

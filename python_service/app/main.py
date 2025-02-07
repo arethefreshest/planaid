@@ -14,7 +14,7 @@ Features:
 import logging
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from .extract_logic import check_field_consistency
+from .extract_logic import check_field_consistency, process_consistency_check
 import uvicorn
 
 # Configure logging levels for different components
@@ -25,7 +25,11 @@ logging.getLogger("litellm").setLevel(logging.WARNING)
 logging.getLogger("instructor").setLevel(logging.WARNING)
 logging.getLogger("app").setLevel(logging.DEBUG)
 
-logging.basicConfig(level=logging.INFO)
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
@@ -33,14 +37,19 @@ app = FastAPI()
 # Configure CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:5251"],
+    allow_origins=[
+        "http://localhost:3000",     # Frontend local development
+        "http://frontend:3000",      # Frontend in Docker
+        "http://localhost:5251",     # Backend local development
+        "http://backend:5251"        # Backend in Docker
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 @app.post("/api/check-field-consistency")
-async def check_consistency(
+async def check_field_consistency(
     plankart: UploadFile = File(...),
     bestemmelser: UploadFile = File(...),
     sosi: UploadFile = None
@@ -59,6 +68,7 @@ async def check_consistency(
     Raises:
         HTTPException: For invalid file types or processing errors
     """
+    logger.info(f"Received files: plankart={plankart.filename}, bestemmelser={bestemmelser.filename}")
     try:
         # Validate file types
         for file in [plankart, bestemmelser]:
@@ -76,7 +86,8 @@ async def check_consistency(
         if sosi:
             await sosi.seek(0)
             
-        result = await check_field_consistency(plankart, bestemmelser, sosi)
+        # Call the extract_logic function directly
+        result = await process_consistency_check(plankart, bestemmelser, sosi)
         logger.info("Field consistency check completed successfully")
         return {"status": "success", "result": result}
         

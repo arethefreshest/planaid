@@ -26,8 +26,16 @@ namespace backend.Services {
 
         public PythonIntegrationService(HttpClient httpClient, ILogger<PythonIntegrationService> logger)
         {
-            _httpClient = httpClient;
-            _logger = logger;
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            
+            if (_httpClient.BaseAddress == null)
+            {
+                throw new InvalidOperationException("HttpClient BaseAddress is not configured");
+            }
+            _logger.LogInformation($"PythonIntegrationService initialized with BaseAddress: {_httpClient.BaseAddress}");
+
+            _httpClient.Timeout = TimeSpan.FromMinutes(5); // Increase timeout to 5 minutes
         }
 
         /// <inheritdoc/>
@@ -35,27 +43,34 @@ namespace backend.Services {
         {
             try
             {
-                using var formData = new MultipartFormDataContent();
-                
-                // Helper function to add file with proper content type
-                async Task AddFileToForm(string filePath, string fieldName)
+                if (_httpClient.BaseAddress == null)
                 {
-                    var fileContent = new ByteArrayContent(await File.ReadAllBytesAsync(filePath));
-                    fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
-                    formData.Add(fileContent, fieldName, Path.GetFileName(filePath));
-                }
-                
-                // Add required files
-                await AddFileToForm(plankartPath, "plankart");
-                await AddFileToForm(bestemmelserPath, "bestemmelser");
-                
-                // Add optional SOSI file
-                if (sosiPath != null)
-                {
-                    await AddFileToForm(sosiPath, "sosi");
+                    throw new InvalidOperationException("HttpClient BaseAddress is not configured");
                 }
 
-                var response = await _httpClient.PostAsync("/api/check-field-consistency", formData);
+                using var formData = new MultipartFormDataContent();
+                
+                // Create StreamContent with proper content type
+                var plankartContent = new StreamContent(File.OpenRead(plankartPath));
+                plankartContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+                
+                var bestemmelserContent = new StreamContent(File.OpenRead(bestemmelserPath));
+                bestemmelserContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+                
+                // Add files to form data with content type
+                formData.Add(plankartContent, "plankart", Path.GetFileName(plankartPath));
+                formData.Add(bestemmelserContent, "bestemmelser", Path.GetFileName(bestemmelserPath));
+                
+                if (!string.IsNullOrEmpty(sosiPath))
+                {
+                    var sosiContent = new StreamContent(File.OpenRead(sosiPath));
+                    sosiContent.Headers.ContentType = new MediaTypeHeaderValue("text/xml");
+                    formData.Add(sosiContent, "sosi", Path.GetFileName(sosiPath));
+                }
+
+                var requestUri = new Uri(_httpClient.BaseAddress!, "api/check-field-consistency");
+                _logger.LogInformation($"Sending request to: {requestUri}");
+                var response = await _httpClient.PostAsync(requestUri, formData);
                 var content = await response.Content.ReadAsStringAsync();
                 
                 if (!response.IsSuccessStatusCode)

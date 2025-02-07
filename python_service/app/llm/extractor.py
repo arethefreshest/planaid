@@ -10,8 +10,8 @@ Key Components:
 - FieldExtractor: Main class for handling field extraction logic
 """
 
-from extract_thinker import Extractor, DocumentLoaderPyPdf, Contract
-from typing import Set
+from extract_thinker import Extractor, DocumentLoaderPyPdf, Contract, LLM
+from typing import Set, Tuple
 import logging
 import io
 import csv
@@ -35,33 +35,27 @@ class FieldExtractContract(Contract):
     
     class Config:
         prompt = """
-        Les gjennom teksten og ekstraher KUN reguleringskoder. Se spesielt etter:
+        Les gjennom teksten og ekstraher KUN reguleringskoder som brukes i arealformål. 
+        Ignorer referanser til PBL (Plan- og bygningsloven).
 
-        1. Koder i bestemmelser som:
-           - "...på BKS skal..."
-           - "...for o_GTD1-2 være..."
-           - "...på BR, skal o_SF..."
-           - "...og o_SPA være..."
-
-        2. Koder i plankart som:
-           - o_GTD1, o_GTD2 (Turdrag)
-           - o_SF (Fortau)
-           - o_SPA (Parkering)
+        Se spesielt etter:
+        1. Arealformål som:
            - BKS (Konsentrert småhusbebyggelse)
-           - BR (Religionsbygg)
+           - BFS (Frittliggende småhusbebyggelse)
+           - o_BOP (Offentlig tjenesteyting)
+           - o_GF (Friområde)
+           - o_SGS (Gang-/sykkelveg)
            - o_SKV (Kjøreveg)
 
-        Viktig: 
-        - Se etter koder i kontekst, spesielt rundt §-tegn og i bestemmelser
-        - Inkluder både prefiks (o_, f_) og nummer hvis de finnes
-        - Returner BARE selve kodene, ikke beskrivelsene
-        - Koder kan være med bindestrek (f.eks. o_GTD1-2)
-        
-        Eksempel på tekst:
-        "§2.3 Før midlertidig brukstillatelse på BKS skal o_GTD1-2 være ferdig opparbeidet."
-        
-        Skal gi:
-        ["BKS", "o_GTD1-2"]
+        2. Koder med prefiks:
+           - o_ (offentlig)
+           - f_ (felles)
+           - b_ (bebyggelse)
+
+        Viktig:
+        - Returner KUN reguleringskoder, ikke PBL-referanser eller beskrivelser
+        - Ta med prefiks og nummer hvis det finnes
+        - Ignorer alle referanser til paragrafer (§)
         """
 
 class FieldExtractor:
@@ -89,42 +83,41 @@ class FieldExtractor:
         self.extractor = Extractor()
         self.document_loader = DocumentLoaderPyPdf()
         self.extractor.load_document_loader(self.document_loader)
-        self.extractor.load_llm(model_name)
+        
+        # Create and load LLM with Azure configuration
+        llm = LLM(model=model_name, token_limit=4000)
+        self.extractor.load_llm(llm)
         
         # Load reference codes
         self.sosi_codes, self.benevnelseskoder = self._load_codes()
     
-    def _load_codes(self) -> tuple[Set[str], Set[str]]:
-        """
-        Load SOSI codes and benevnelseskoder from CSV file.
-        
-        Returns:
-            tuple[Set[str], Set[str]]: Sets of SOSI codes and benevnelseskoder
-        
-        Note:
-            CSV file should be located at '/app/app/data/Reguleringsplan.csv'
-            with columns for 'SOSI-kode' and 'Benevnelseskode'
-        """
-        sosi_codes = set()
-        benevnelseskoder = set()
+    def _load_codes(self) -> Tuple[Set[str], Set[str]]:
         csv_path = '/app/app/data/Reguleringsplan.csv'
+        fallback_path = os.path.join(os.path.dirname(__file__), 'data/Reguleringsplan.csv')
         
         try:
-            with open(csv_path, 'r', encoding='utf-8') as f:
+            path_to_use = csv_path if os.path.exists(csv_path) else fallback_path
+            logger.debug(f"Attempting to load codes from: {path_to_use}")
+            
+            if not os.path.exists(path_to_use):
+                logger.error(f"Neither {csv_path} nor {fallback_path} exist")
+                raise FileNotFoundError(f"Neither {csv_path} nor {fallback_path} exist")
+            
+            with open(path_to_use, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f, delimiter=';')
-                for row in reader:
-                    if row.get('SOSI-kode'):
-                        # Add both with and without parentheses
-                        sosi_codes.add(row['SOSI-kode'].strip('()'))
-                        sosi_codes.add(row['SOSI-kode'])
-                    if row.get('Benevnelseskode'):
-                        benevnelseskoder.add(row['Benevnelseskode'])
-                        
-            logger.info(f"Loaded {len(benevnelseskoder)} benevnelseskoder and {len(sosi_codes)} SOSI codes")
+                sosi_codes = {row['SOSI-kode'].strip() for row in reader if row.get('SOSI-kode')}
+                logger.debug(f"Loaded SOSI codes: {sosi_codes}")
+            
+            with open(path_to_use, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f, delimiter=';')
+                benevnelseskoder = {row['Benevnelse'].strip() for row in reader if row.get('Benevnelse')}
+                logger.debug(f"Loaded Benevnelseskoder: {benevnelseskoder}")
+            
+            return sosi_codes, benevnelseskoder
+            
         except Exception as e:
-            logger.warning(f"Could not load codes from {csv_path}: {e}")
-        
-        return sosi_codes, benevnelseskoder
+            logger.error(f"Failed to load regulation codes: {str(e)}", exc_info=True)
+            raise RuntimeError(f"Failed to load required regulation codes: {str(e)}")
     
     async def compare_documents(self, plankart_content: bytes, bestemmelser_content: bytes) -> dict:
         """
@@ -157,36 +150,34 @@ class FieldExtractor:
         }
 
     def _is_valid_code(self, field: str, base_codes: Set[str]) -> bool:
-        """
-        Validate if a field matches known regulation codes.
-        
-        Args:
-            field (str): Field to validate
-            base_codes (Set[str]): Set of valid base codes
-            
-        Returns:
-            bool: True if field is valid, False otherwise
-        """
+        """Validate a field against known regulation codes."""
         field = field.strip().upper()
         
-        # Handle hyphenated codes (e.g., o_GTD1-2)
-        base_field = field.split('-')[0]
+        # If we have no base codes, accept all fields that look like regulation codes
+        if not base_codes:
+            logger.warning("No base codes available, using pattern matching")
+            # Check if it matches common regulation code patterns
+            common_prefixes = ['O_', 'F_', 'B_', 'BFS', 'BKS', 'SKV', 'SGS', 'GF']
+            return any(field.startswith(prefix) for prefix in common_prefixes)
         
-        # Remove prefix if exists
-        if base_field.startswith(('O_', 'F_')):
-            base = base_field.split('_')[1]
-        else:
-            base = base_field
-        
-        # Remove numbers to get base code
-        base = ''.join(c for c in base if not c.isdigit())
-        
-        # Check exact match first
-        if base in base_codes:
+        # Normal validation against base codes
+        if field in base_codes:
             return True
         
-        # Then check for partial matches (e.g., GTD matches GTD1)
-        return any(code.startswith(base) or base.startswith(code) for code in base_codes)
+        # Remove prefixes for comparison
+        stripped_field = field
+        for prefix in ['O_', 'F_', 'B_']:
+            if field.startswith(prefix):
+                stripped_field = field[len(prefix):]
+                break
+            
+        # Check if the stripped field exists in base codes
+        if stripped_field in base_codes:
+            return True
+        
+        # Check for partial matches (e.g., GTD matches GTD1)
+        return any(code.startswith(stripped_field) or stripped_field.startswith(code) 
+                  for code in base_codes)
 
     async def extract_fields(self, content: bytes) -> Set[str]:
         """

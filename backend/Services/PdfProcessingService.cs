@@ -41,40 +41,25 @@ namespace backend.Services
         /// <param name="filePath">Path to the PDF file</param>
         /// <param name="type">Type of PDF document (Regulations, PlanMap, Consistency)</param>
         /// <returns>JSON string containing processed document data</returns>
-        public async Task<string> ProcessPdfAsync(string filePath, PdfType type)
+        public async Task<string> ProcessPdfAsync(string plankartPath, string bestemmelserPath, string sosiPath = null)
         {
             try
             {
-                if (!File.Exists(filePath))
+                var pythonResponse = await _pythonService.CheckConsistencyAsync(
+                    plankartPath: plankartPath,
+                    bestemmelserPath: bestemmelserPath,
+                    sosiPath: sosiPath
+                );
+                
+                if (string.IsNullOrEmpty(pythonResponse))
                 {
-                    throw new FileNotFoundException("PDF file not found", filePath);
+                    return JsonSerializer.Serialize(new { error = "No response from Python service" });
                 }
-
-                switch (type)
-                {
-                    case PdfType.Consistency:
-                        var pythonResponse = await _pythonService.CheckConsistencyAsync(filePath, filePath, string.Empty);
-                        if (string.IsNullOrEmpty(pythonResponse))
-                        {
-                            return JsonSerializer.Serialize(new { result = "No response from Python service" });
-                        }
-                        return pythonResponse;
-
-                    case PdfType.PlanMap:
-                        var planMapResult = await ProcessPlanMapAsync(filePath);
-                        return JsonSerializer.Serialize(planMapResult);
-
-                    case PdfType.Regulations:
-                        var regulationsResult = await ProcessRegulationsAsync(filePath);
-                        return JsonSerializer.Serialize(regulationsResult);
-
-                    default:
-                        throw new ArgumentException($"Unsupported PDF type: {type}");
-                }
+                return pythonResponse;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error processing PDF {FilePath}", filePath);
+                _logger.LogError(ex, "Error in ProcessPdfAsync");
                 throw;
             }
         }

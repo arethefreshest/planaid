@@ -38,7 +38,7 @@ const validateFile = (file: File): string | null => {
 
 // Add logging interceptor
 axios.interceptors.request.use(request => {
-  console.log('Starting Request:', {
+  logger.info('Starting Request:', {
     url: request.url,
     method: request.method,
     data: request.data instanceof FormData ? 'FormData' : request.data
@@ -66,7 +66,7 @@ axios.interceptors.response.use(
   }
 );
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://backend:5251';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5251';
 
 const ConsistencyCheck: React.FC = () => {
   const [files, setFiles] = useState({
@@ -106,8 +106,7 @@ const ConsistencyCheck: React.FC = () => {
     event.preventDefault();
     setLoading(true);
     setError(null);
-    setProgress(0);
-
+    
     try {
       if (!files.plankart || !files.bestemmelser) {
         setError('Both Plankart and Bestemmelser files are required');
@@ -121,16 +120,16 @@ const ConsistencyCheck: React.FC = () => {
         formData.append('sosi', files.sosi);
       }
 
-      logger.info('Sending files', {
-        plankart: files.plankart.name,
-        bestemmelser: files.bestemmelser.name,
-        sosi: files.sosi?.name
-      });
-
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 300000); // 5 minute timeout
+      
+      logger.info('Sending request to:', `${API_URL}/api/check-field-consistency`);
       const response = await axios.post(
         `${API_URL}/api/check-field-consistency`,
         formData,
         {
+          signal: controller.signal,
+          timeout: 300000, // 5 minute timeout
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -141,17 +140,13 @@ const ConsistencyCheck: React.FC = () => {
           },
         }
       );
-
-      logger.info('Response received:', response.data);
-
-      // Parse the nested JSON structure
-      const parsedResult = typeof response.data.result === 'string' 
-        ? JSON.parse(response.data.result) 
-        : response.data.result;
       
-      const resultData = parsedResult?.result?.result;
-
-      if (!resultData?.matching_fields) {
+      clearTimeout(timeoutId);
+      
+      // Handle the nested response structure
+      const resultData = response.data.result?.result;
+      
+      if (!resultData) {
         throw new Error('Invalid response format');
       }
 
@@ -160,27 +155,13 @@ const ConsistencyCheck: React.FC = () => {
         only_in_plankart: resultData.only_in_plankart || [],
         only_in_bestemmelser: resultData.only_in_bestemmelser || [],
         only_in_sosi: resultData.only_in_sosi || [],
-        is_consistent: resultData.is_consistent || false,
+        is_consistent: Boolean(resultData.is_consistent),
         document_fields: resultData.document_fields || {},
         metadata: resultData.metadata || {}
       });
-
-      setProgress(100);
-      setProcessingStep('Analyse fullført');
-      
     } catch (err) {
       logger.error('Request failed', err);
-      if (axios.isAxiosError(err)) {
-        const errorMessage = err.response?.data?.detail || err.message;
-        setError(`Error: ${errorMessage}`);
-        logger.error('API Error:', {
-          status: err.response?.status,
-          data: err.response?.data,
-          message: errorMessage
-        });
-      } else {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-      }
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
     } finally {
       setLoading(false);
     }

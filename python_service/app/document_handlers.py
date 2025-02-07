@@ -100,13 +100,15 @@ class SosiHandler(DocumentHandler):
             Currently performs basic UTF-8 decoding. May need enhancement
             for specific SOSI parsing requirements.
         """
-        try:
-            text = file_content.decode('utf-8')
-            logger.debug("Successfully decoded SOSI file")
-            return text
-        except UnicodeDecodeError as e:
-            logger.error(f"Error decoding SOSI file: {str(e)}")
-            raise
+        encodings = ['utf-8', 'iso-8859-1', 'windows-1252']
+        for encoding in encodings:
+            try:
+                text = file_content.decode(encoding)
+                logger.debug(f"Successfully decoded SOSI file with {encoding}")
+                return text
+            except UnicodeDecodeError:
+                continue
+        raise UnicodeDecodeError("Failed to decode SOSI file with any supported encoding")
 
 class XmlHandler(DocumentHandler):
     """
