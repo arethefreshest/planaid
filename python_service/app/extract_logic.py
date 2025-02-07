@@ -94,6 +94,9 @@ async def check_field_consistency(
         bestemmelser_content = contents[1]
         sosi_content = contents[2] if len(contents) > 2 else None
 
+        # Convert bytes to string for metadata extraction first
+        bestemmelser_text = bestemmelser_content.decode('utf-8', errors='ignore')
+
         # Extract fields concurrently
         fields_tasks = [
             extractor.extract_fields(plankart_content),
@@ -108,9 +111,6 @@ async def check_field_consistency(
         plankart_fields = results[0]
         bestemmelser_fields = results[1]
         sosi_fields = results[2] if len(results) > 2 else set()
-
-        # Convert bytes to string for metadata extraction
-        bestemmelser_text = bestemmelser_content.decode('utf-8', errors='ignore')
 
         # Extract metadata
         metadata = {
