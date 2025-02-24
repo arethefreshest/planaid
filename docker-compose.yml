@@ -1,6 +1,8 @@
+version: '3.8'
+
 services:
   frontend:
-    build: 
+    build:
       context: ./frontend
       target: development
     ports:
@@ -9,13 +11,19 @@ services:
       - ./frontend:/app
       - /app/node_modules
     environment:
-      - REACT_APP_API_URL=http://localhost:5251
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+      - REACT_APP_OPENAI_API_KEY=${OPENAI_API_KEY}
+      - REACT_APP_OPENAI_API_BASE=${OPENAI_API_BASE}
+      - REACT_APP_OPENAI_API_VERSION=${OPENAI_API_VERSION}
+      - REACT_APP_OPENAI_DEPLOYMENT_NAME=${OPENAI_DEPLOYMENT_NAME}
       - NODE_ENV=development
     networks:
       - planaid-network
+    depends_on:
+      - backend
 
   backend:
-    build: 
+    build:
       context: ./backend
       target: development
     ports:
@@ -31,10 +39,12 @@ services:
       - ASPNETCORE_URLS=http://+:5251
     networks:
       - planaid-network
+    depends_on:
+      - python_service
 
   python_service:
     build:
-      context: .  
+      context: .
       dockerfile: python_service/Dockerfile
       target: development
     volumes:
@@ -44,6 +54,9 @@ services:
     environment:
       - PYTHONDONTWRITEBYTECODE=1
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_API_BASE=${OPENAI_API_BASE}
+      - OPENAI_API_VERSION=${OPENAI_API_VERSION}
+      - OPENAI_DEPLOYMENT_NAME=${OPENAI_DEPLOYMENT_NAME}
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - PYTHONPATH=/app

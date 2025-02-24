@@ -2,18 +2,46 @@ import Layout from '../components/Layout';
 import React, { useState } from "react";
 import DragDrop from '../components/DragDrop';
 import CustomInput from '../components/CustomInput';
+import FileUpload from '../components/FileUpload';
+
+export type FileType = 'plankart' | 'bestemmelser' | 'sosi';
+
 
 
 const Plan1 = () => {
+  const [files, setFiles] = useState<{ plankart: File | null, bestemmelser: File | null, sosi: File | null }>({
+    plankart: null,
+    bestemmelser: null,
+    sosi: null,
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState(0);
+  const [processingStep, setProcessingStep] = useState("");
+
+  const handleFileUpload = (type: FileType, file: File) => {
+    if (file) {
+      setFiles((prev) => ({ ...prev, [type]: file }));
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    // Add your submit logic here
+  };
+
   return (
     <Layout>
       <div style={styles.container}>
-        <h2>Last opp planforslag her:</h2>
-        <CustomInput></CustomInput>
-        <DragDrop></DragDrop>
-        <button style={styles.ButtonUpload}>
-          Upload
-        </button>
+        <FileUpload 
+          onFileUpload={handleFileUpload}
+          handleSubmit={handleSubmit}
+          files={files}
+          loading={loading}
+          error={error}
+          progress={progress}
+          processingStep={processingStep}
+        />
       </div>
     </Layout>
   );
@@ -21,7 +49,6 @@ const Plan1 = () => {
 const styles = {
   container: {
     flex: '1', 
-    paddingLeft: '600px',
     paddingTop: '100px',
     textAlign: 'left' as const,
     justifyContent: 'center'

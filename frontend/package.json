@@ -3,35 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^6.1.0",
-    "@testing-library/react": "^14.1.0",
-    "@testing-library/user-event": "^14.0.0",
-    "@types/node": "^16.18.124",
-    "@types/react-dom": "^18.3.5",
-    "axios": "^1.7.9",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/node": "^20.0.0",
+    "axios": "^1.6.0",
     "react-drag-drop-files": "^2.4.0",
-    "react-native-maps": "^0.29.4",
-    "react-native-web": "^0.19.13",
     "react-router-dom": "^7.1.2",
     "react-scripts": "5.0.1",
-    "serve": "^14.2.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
-  },
-  "overrides": {
-    "nth-check": "^2.1.1",
-    "postcss": "^8.4.31",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "typescript": "^4.9.5"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "serve": "serve -s build"
+    "serve": "serve -s build",
+    "tsc": "tsc"
   },
   "eslintConfig": {
     "extends": [
@@ -56,37 +45,23 @@
       "/node_modules/(?!axios)/"
     ]
   },
-  "jest": {
-    "transformIgnorePatterns": [
-      "/node_modules/(?!axios)/"
-    ]
-  },
   "devDependencies": {
     "@babel/core": "^7.26.0",
-    "@babel/core": "^7.26.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/plugin-syntax-jsx": "^7.25.9",
     "@babel/preset-env": "^7.26.0",
-    "@babel/preset-react": "^7.26.3",
-    "@babel/preset-typescript": "^7.26.0",
     "@types/axios": "^0.9.36",
     "@types/jest": "^29.5.14",
-    "@types/react": "^18.3.18",
-    "@types/react-native": "^0.72.8",
-    "@types/react-native-maps": "^0.24.1",
     "@types/testing-library__jest-dom": "^5.14.9",
-    "babel-jest": "^29.7.0"
+    "autoprefixer": "^10.4.17",
+    "babel-jest": "^29.7.0",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/node": "^20.0.0"
   },
-  "babel": {
-  "presets": [
-    "@babel/preset-env",
-    "@babel/preset-react",
-    "@babel/preset-typescript"
-  ],
-  "plugins": [
-    "@babel/plugin-proposal-private-property-in-object",
-    "@babel/plugin-syntax-jsx"
-  ]
- },
-  "proxy": "http://localhost:5251"
+  "proxy": "http://localhost:5251",
+  "resolutions": {
+    "postcss": "^8.4.35"
+  }
 }

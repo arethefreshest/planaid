@@ -1,44 +1,148 @@
-import React, { ChangeEvent, useState } from 'react';
+// FileUpload.tsx
+import React, { useState } from "react";
+import type { FileType } from "../pages/Plan2";
+import CustomInput from '../components/CustomInput';
+import { CircularProgress } from "./CircularProgress";
 
 interface FileUploadProps {
-  // Add any props here if needed
+  onFileUpload: (type: FileType, file: File) => void;
+  handleSubmit: (event: React.FormEvent) => void;
+  files: { plankart: File | null; bestemmelser: File | null; sosi: File | null };
+  loading: boolean;
+  error: string | null;
+  progress: number;
+  processingStep: string;
 }
 
-const FileUpload: React.FC<FileUploadProps> = () => {
-  const [file, setFile] = useState<File | null>(null);
-
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      setFile(event.target.files[0]);
-    }
-  };
-
-  const handleUpload = async () => {
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const response = await fetch('/api/validation', {
-        method: 'POST',
-        body: formData,
-      });
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error('Error uploading file:', error);
+const FileUpload = ({ onFileUpload, handleSubmit, files, loading, error, progress, processingStep }: FileUploadProps) => {
+  const handleChange = (type: FileType) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      onFileUpload(type, file);
     }
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleFileChange} accept=".pdf" />
-      <button onClick={handleUpload} disabled={!file}>
-        Upload
-      </button>
+    <div style={styles.uploadContainer}>
+      <h2 style={styles.title}>Feltsjekk for Reguleringsplan</h2>
+      <CustomInput />
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div style={styles.fileInputContainer}>
+          {Object.entries(files).map(([type, file]) => (
+            <div key={type} style={styles.fileInputWrapper}>
+              <label style={styles.label}>{type === 'plankart' ? 'Plankart' : type === 'bestemmelser' ? 'Bestemmelser' : 'SOSI-fil'}{type !== 'sosi' && <span style={styles.required}>*</span>}</label>
+              <div style={styles.relative}>
+                <input type="file" accept=".pdf,.xml,.sos" onChange={handleChange(type as FileType)} style={styles.hiddenInput} id={`file-${type}`} />
+                <label htmlFor={`file-${type}`} style={styles.uploadLabel}>
+                  {file ? <span>{file.name}</span> : <span>Velg fil</span>}
+                </label>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {loading && (
+          <div className="mt-4">
+            <CircularProgress progress={progress} />
+            <p style={styles.progressText}>{processingStep}</p>
+          </div>
+        )}
+
+        {error && (
+          <div style={styles.errorContainer}>
+            <p style={styles.errorText}>{error}</p>
+          </div>
+        )}
+
+        <button type="submit" disabled={loading || !files.plankart || !files.bestemmelser} style={styles.button}>
+          {loading ? <><CircularProgress progress={progress} size={24} /> {processingStep}</> : 'Start analyse'}
+        </button>
+      </form>
     </div>
   );
 };
 
+const styles = {
+  uploadContainer: {
+    backgroundColor: "#ffffff",
+    borderRadius: "8px",
+    padding: "20px",
+    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+    textAlign: "left" as const,
+    maxWidth: "900px",
+    margin: "auto",
+  },
+  title: {
+    fontSize: "20px",
+    fontWeight: "bold",
+    marginBottom: "20px",
+    color: "#333",
+  },
+  fileInputContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    gap: "20px",
+  },
+  fileInputWrapper: {
+    flex: "1",
+    display: "flex",
+    flexDirection: "column" as const,
+  },
+  label: {
+    fontSize: "14px",
+    fontWeight: "bold",
+    marginBottom: "5px",
+    color: "#333",
+  },
+  required: {
+    color: "#e74c3c",
+    marginLeft: "4px",
+  },
+  hiddenInput: {
+    display: "none",
+  },
+  uploadLabel: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "10px",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+    fontSize: "14px",
+    width: "100%",
+    cursor: "pointer",
+  },
+  progressText: {
+    fontSize: "14px",
+    color: "#666",
+    marginTop: "10px",
+  },
+  errorContainer: {
+    marginTop: "10px",
+    padding: "10px",
+    backgroundColor: "#fdecea",
+    borderRadius: "5px",
+  },
+  errorText: {
+    color: "#d32f2f",
+    fontSize: "14px",
+  },
+  button: {
+    marginTop: "20px",
+    backgroundColor: "#24BD76",
+    color: "#fff",
+    padding: "10px 15px",
+    borderRadius: "5px",
+    fontSize: "16px",
+    cursor: "pointer",
+    border: "none",
+  },
+  relative: {
+    position: 'relative' as const,
+    width: '100%'
+  },
+};
+
 export default FileUpload;
+
+

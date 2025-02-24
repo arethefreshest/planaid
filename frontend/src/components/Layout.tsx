@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../images/LogoPlanAid.png'
+import logo from '../images/planlogopng1.png'
 import xIcon from '../images/x.png';
 import instaIcon from '../images/insta.png';
 import linkedIcon from '../images/in.png';
@@ -25,10 +25,10 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <span>© 2025 PlanAid</span>
         </div>
         <div style={styles.socialLinks}>
-          <a href="https://x.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://x.com/thefunnytweeter/status/1668518247938023425" target="_blank" rel="noopener noreferrer">
             <img src={xIcon} alt="X" style={styles.icon} />
           </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/realfunnyreels/reels/" target="_blank" rel="noopener noreferrer">
             <img src={instaIcon} alt="Instagram" style={styles.icon} />
           </a>
           <a href="https://linkedin.com/in/olesveinungberget/" target="_blank" rel="noopener noreferrer">
@@ -64,7 +64,7 @@ const styles = {
     height: '60px',
   },
   loginButton: {
-    backgroundColor: '#004d00',
+    backgroundColor: '#24BD76',
     color: '#fff',
     border: 'none',
     padding: '0.5rem 1rem',

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import Layout from '../components/Layout';
 import bygg3d from '../images/bygg3d.png';
 
@@ -23,7 +24,9 @@ const Start = () => {
 
         {/* Right side: Button */}
         <div style={styles.buttonContainer}>
-          <button style={styles.tryButton}>Prøv Nå!</button>
+        <Link to="/page1" style={styles.button}>
+          Start analyse
+        </Link>
         </div>
       </div>
     </Layout>
@@ -35,28 +38,28 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: '10rem', // Space between image and button
+    gap: '10rem', 
     marginTop: '2rem',
-    flexWrap: 'wrap' as const, // Add type assertion here
+    flexWrap: 'wrap' as const, 
   },
   imageContainer: {
-    flex: '1 1 60%', // Allows image to take up more space
-    maxWidth: '800px', // Optional: Limits max size of the image
+    flex: '1 1 60%', 
+    maxWidth: '600px', 
   },
   buttonContainer: {
-    flex: '0 1 auto', // Adjusts button size while maintaining proportions
+    flex: '0 1 auto', 
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  tryButton: {
-    backgroundColor: '#004d00',
+  button: {
+    backgroundColor: '#24BD76',
     color: '#fff',
     border: 'none',
-    padding: '1rem 2rem',
+    padding: '1rem 3rem',
     borderRadius: '8px',
     cursor: 'pointer',
-    fontSize: '3rem',
+    fontSize: '2rem',
   },
   image: {
     width: '100%',

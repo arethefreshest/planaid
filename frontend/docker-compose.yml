@@ -1,0 +1,120 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      target: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - REACT_APP_API_URL=http://localhost:5251
+      - NODE_ENV=development
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - planaid-network
+
+  backend:
+    build: 
+      context: ./backend
+      target: development
+    ports:
+      - "5251:5251"
+    volumes:
+      - ./backend:/src
+      - dotnet-cache:/root/.nuget/packages
+      - backend-obj:/src/obj
+      - backend-bin:/src/bin
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - PythonServiceUrl=http://python_service:8000
+      - ASPNETCORE_URLS=http://+:5251
+      - NerServiceUrl=http://ner_service:8001
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - planaid-network
+
+  python_service:
+    build:
+      context: .  
+      dockerfile: python_service/Dockerfile
+      target: development
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./python_service:/app/python_service
+      - ./python_service/app:/app/app
+      - ./python_service/requirements.txt:/app/requirements.txt
+      - ./.env:/app/.env
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONPATH=/app
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    depends_on:
+      - redis
+      - ner_service
+    networks:
+      - planaid-network
+
+  ner_service:
+    build:
+      context: .
+      dockerfile: ner_service/Dockerfile
+      target: development
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./ner_service:/app
+      - ./ner_service/src:/app/src
+      - ./ner_service/src/models:/app/src/models
+      - ./ner_service/src/model_params.yaml:/app/src/model_params.yaml
+      - ner-models:/root/.cache/spacy
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONPATH=/app
+    networks:
+      - planaid-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - planaid-network
+
+volumes:
+  dotnet-cache:
+  backend-obj:
+  backend-bin:
+  redis-data:
+  ner-models:
+
+networks:
+  planaid-network:
+    driver: bridge
