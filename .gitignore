@@ -75,3 +75,6 @@ processed_pdfs/
 
 # .log
 *.log
+
+# Large model files
+ner_service/src/models/*.pth

@@ -3,10 +3,24 @@ import axios from 'axios';
 
 type PdfType = 'Regulations' | 'PlanMap';
 
+interface ProcessedPage {
+    pageNumber: number;
+    content: string;
+}
+
+interface ProcessedDocument {
+    documentId: string;
+    pageCount: number;
+    processedAt: string;
+    pages: ProcessedPage[];
+    extractedFields?: Record<string, string>;
+}
+
 const FileUpload: React.FC = () => {
     const [file, setFile] = useState<File | null>(null);
     const [pdfType, setPdfType] = useState<PdfType>('Regulations');
-    const [processedDoc, setProcessedDoc] = useState<any>(null);
+    const [processedDoc, setProcessedDoc] = useState<ProcessedDocument | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
@@ -19,14 +33,16 @@ const FileUpload: React.FC = () => {
 
         const formData = new FormData();
         formData.append('file', file);
+        setError(null);
 
         try {
-            const response = await axios.post(`/api/validation/upload?type=${pdfType}`, formData, {
+            const response = await axios.post(`/api/documents/upload?type=${pdfType}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             setProcessedDoc(response.data);
         } catch (error) {
             console.error('Error uploading file:', error);
+            setError('Failed to upload file. Please try again.');
         }
     };
 
@@ -48,18 +64,25 @@ const FileUpload: React.FC = () => {
             <button onClick={handleSubmit} disabled={!file}>
                 Upload
             </button>
+            
+            {error && (
+                <div className="error-message" style={{ color: 'red', margin: '10px 0' }}>
+                    {error}
+                </div>
+            )}
+            
             {processedDoc && (
                 <div>
-                    <h2>{processedDoc.title}</h2>
-                    <p>Pages: {processedDoc.totalPages}</p>
-                    <p>Processed: {new Date(processedDoc.processedDate).toLocaleString()}</p>
-                    {processedDoc.metadata?.fieldIdentifiers && (
+                    <h2>Document ID: {processedDoc.documentId}</h2>
+                    <p>Pages: {processedDoc.pageCount}</p>
+                    <p>Processed: {new Date(processedDoc.processedAt).toLocaleString()}</p>
+                    {processedDoc.extractedFields && (
                         <div>
-                            <h3>Found Field Identifiers:</h3>
-                            <pre>{processedDoc.metadata.fieldIdentifiers}</pre>
+                            <h3>Extracted Fields:</h3>
+                            <pre>{JSON.stringify(processedDoc.extractedFields, null, 2)}</pre>
                         </div>
                     )}
-                    {processedDoc.pages?.map((page: any) => (
+                    {processedDoc.pages?.map((page) => (
                         <div key={page.pageNumber}>
                             <h3>Page {page.pageNumber}</h3>
                             <pre>{page.content}</pre>
