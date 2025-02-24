@@ -2,6 +2,7 @@ using backend;
 using backend.Services;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Logging;
+using System.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,17 +14,27 @@ var logger = LoggerFactory.Create(config =>
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddSingleton<PdfProcessingService>();
+builder.Services.AddScoped<PdfProcessingService>();
+builder.Services.AddScoped<IPythonIntegrationService, PythonIntegrationService>();
 
 // Configure HttpClient and register PythonIntegrationService
-builder.Services.AddHttpClient<IPythonIntegrationService, PythonIntegrationService>(client =>
+builder.Services.AddHttpClient("PythonService", client =>
 {
     var pythonServiceUrl = builder.Configuration.GetValue<string>("PythonServiceUrl") ?? "http://python_service:8000";
     logger.LogInformation($"Configuring Python service URL: {pythonServiceUrl}");
     client.BaseAddress = new Uri(pythonServiceUrl.TrimEnd('/') + "/");
     
     // Add default headers
-    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+    client.Timeout = TimeSpan.FromMinutes(5); // Increased timeout
+});
+
+builder.Services.AddHttpClient("NerService", client =>
+{
+    var nerServiceUrl = builder.Configuration.GetValue<string>("NerServiceUrl") ?? "http://ner_service:8001";
+    client.BaseAddress = new Uri(nerServiceUrl.TrimEnd('/') + "/");
+    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+    client.Timeout = TimeSpan.FromMinutes(2); // Increased timeout
 });
 
 // Configure Swagger/OpenAPI
@@ -85,7 +96,9 @@ app.UseCors(options =>
 {
     options.WithOrigins(
         "http://localhost:3000",
-        "http://frontend:3000"
+        "http://frontend:3000",
+        "http://localhost:8000",
+        "http://python_service:8000"
     )
     .AllowAnyHeader()
     .AllowAnyMethod()

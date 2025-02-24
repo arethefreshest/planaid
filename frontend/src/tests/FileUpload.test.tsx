@@ -38,7 +38,7 @@ describe('FileUpload Component', () => {
         });
 
         expect(mockedAxios.post).toHaveBeenCalledWith(
-            '/api/validation',
+            '/api/check-field-consistency',
             expect.any(FormData),
             expect.any(Object)
         );

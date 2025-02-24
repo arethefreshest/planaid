@@ -34,6 +34,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - PythonServiceUrl=http://python_service:8000
       - ASPNETCORE_URLS=http://+:5251
+      - NerServiceUrl=http://ner_service:8001
     logging:
       driver: "json-file"
       options:
@@ -66,8 +67,34 @@ services:
         max-file: "3"
     depends_on:
       - redis
+      - ner_service
     networks:
       - planaid-network
+
+  ner_service:
+    build:
+      context: .
+      dockerfile: ner_service/Dockerfile
+      target: development
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./ner_service:/app
+      - ./ner_service/src:/app/src
+      - ./ner_service/src/models:/app/src/models
+      - ./ner_service/src/model_params.yaml:/app/src/model_params.yaml
+      - ner-models:/root/.cache/spacy
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONPATH=/app
+    networks:
+      - planaid-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   redis:
     image: redis:alpine
@@ -84,6 +111,7 @@ volumes:
   backend-obj:
   backend-bin:
   redis-data:
+  ner-models:
 
 networks:
   planaid-network:

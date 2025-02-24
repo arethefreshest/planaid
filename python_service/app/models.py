@@ -49,4 +49,13 @@ class ConsistencyResult(BaseModel):
     only_in_sosi: List[str]
     is_consistent: bool
     document_fields: Dict[str, DocumentFields]
-    metadata: Optional[Dict[str, str]] = None 
+    metadata: Optional[Dict[str, str]] = None
+
+class NerResponse(BaseModel):
+    """
+    Represents the response from the NER service.
+    
+    Attributes:
+        fields (List[str]): List of extracted fields from bestemmelser
+    """
+    fields: List[str] 

@@ -14,7 +14,9 @@ Features:
 
 using Microsoft.AspNetCore.Mvc;
 using backend.Services;
+using backend.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 
 namespace backend.Controllers
 {
@@ -86,7 +88,30 @@ namespace backend.Controllers
                     }
 
                     var result = await _pythonService.CheckConsistencyAsync(plankartPath, bestemmelserPath, sosiPath);
-                    return Ok(result);
+                    _logger.LogInformation("Python service response: {Result}", result);
+                    
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        _logger.LogError("Empty response from processing service");
+                        return StatusCode(500, new { detail = "Empty response from processing service" });
+                    }
+
+                    try
+                    {
+                        var pythonResponse = JsonSerializer.Deserialize<PythonResponse<ConsistencyResult>>(result);
+                        if (pythonResponse == null)
+                        {
+                            _logger.LogError("Failed to deserialize response");
+                            return StatusCode(500, new { detail = "Failed to deserialize response" });
+                        }
+
+                        return Ok(pythonResponse);
+                    }
+                    catch (JsonException ex)
+                    {
+                        _logger.LogError(ex, "Error deserializing response: {Result}", result);
+                        return StatusCode(500, new { detail = $"Invalid response format: {ex.Message}" });
+                    }
                 }
                 finally
                 {
@@ -95,6 +120,11 @@ namespace backend.Controllers
                     if (System.IO.File.Exists(bestemmelserPath)) System.IO.File.Delete(bestemmelserPath);
                     if (sosiPath != null && System.IO.File.Exists(sosiPath)) System.IO.File.Delete(sosiPath);
                 }
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "Service communication error");
+                return StatusCode(502, new { detail = ex.Message });
             }
             catch (Exception ex)
             {

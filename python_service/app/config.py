@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     OPENAI_API_VERSION: str = "2024-08-01-preview"
     OPENAI_DEPLOYMENT_NAME: str = "gpt-4o-mini"
     OPENAI_API_TYPE: str = "azure"
+    NER_SERVICE_URL: str = "http://ner_service:8001"
     
     class Config:
         env_file = str(ROOT_DIR / ".env")

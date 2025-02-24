@@ -23,6 +23,8 @@ interface LogMessage {
   data?: any;
 }
 
+const API_URL = process.env.REACT_APP_API_URL ?? 'http://localhost:5251';
+
 /**
  * Core logging function that handles message formatting and output
  */
@@ -34,32 +36,34 @@ const log = (level: LogLevel, message: string, data?: any) => {
     data
   };
   
-  // Send to Docker logs via stdout
-  if (typeof window === 'undefined') {
-    // Node.js environment (server-side)
-    process.stdout.write(JSON.stringify(logMessage) + '\n');
-  } else {
-    // Browser environment (client-side)
-    console.log(JSON.stringify(logMessage));
-  }
-  
-  // Also log to browser console in development
-  if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
+  // Always log to console in development
+  if (process.env.NODE_ENV === 'development') {
     switch (level) {
       case 'info':
-        console.info(message, data);
+        console.info(`[${level.toUpperCase()}] ${message}`, data);
         break;
       case 'error':
-        console.error(message, data);
+        console.error(`[${level.toUpperCase()}] ${message}`, data);
         break;
       case 'warn':
-        console.warn(message, data);
+        console.warn(`[${level.toUpperCase()}] ${message}`, data);
         break;
       case 'debug':
-        console.debug(message, data);
+        console.debug(`[${level.toUpperCase()}] ${message}`, data);
         break;
     }
   }
+
+  // Send logs to backend
+  fetch(`${API_URL}/api/log`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(logMessage)
+  }).catch(err => {
+    console.error('Failed to send log to backend:', err);
+  });
 };
 
 /**
