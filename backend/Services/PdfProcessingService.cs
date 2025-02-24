@@ -24,57 +24,50 @@ namespace backend.Services
 
     public class PdfProcessingService
     {
-        private readonly ILogger<PdfProcessingService> _logger;
         private readonly IPythonIntegrationService _pythonService;
+        private readonly ILogger<PdfProcessingService> _logger;
 
-        public PdfProcessingService(
-            ILogger<PdfProcessingService> logger,
-            IPythonIntegrationService pythonService)
+        public PdfProcessingService(IPythonIntegrationService pythonService, ILogger<PdfProcessingService> logger)
         {
-            _logger = logger;
             _pythonService = pythonService;
+            _logger = logger;
         }
 
-        /// <summary>
-        /// Processes a PDF file based on its type and extracts relevant information.
-        /// </summary>
-        /// <param name="filePath">Path to the PDF file</param>
-        /// <param name="type">Type of PDF document (Regulations, PlanMap, Consistency)</param>
-        /// <returns>JSON string containing processed document data</returns>
         public async Task<string> ProcessPdfAsync(string filePath, PdfType type)
         {
             try
             {
-                if (!File.Exists(filePath))
+                // For single file processing
+                string? plankartPath = type == PdfType.PlanMap ? filePath : null;
+                string? bestemmelserPath = type == PdfType.Regulations ? filePath : null;
+
+                if (plankartPath == null && bestemmelserPath == null)
                 {
-                    throw new FileNotFoundException("PDF file not found", filePath);
+                    throw new ArgumentException("Invalid PDF type or file path");
                 }
 
-                switch (type)
-                {
-                    case PdfType.Consistency:
-                        var pythonResponse = await _pythonService.CheckConsistencyAsync(filePath, filePath, string.Empty);
-                        if (string.IsNullOrEmpty(pythonResponse))
-                        {
-                            return JsonSerializer.Serialize(new { result = "No response from Python service" });
-                        }
-                        return pythonResponse;
-
-                    case PdfType.PlanMap:
-                        var planMapResult = await ProcessPlanMapAsync(filePath);
-                        return JsonSerializer.Serialize(planMapResult);
-
-                    case PdfType.Regulations:
-                        var regulationsResult = await ProcessRegulationsAsync(filePath);
-                        return JsonSerializer.Serialize(regulationsResult);
-
-                    default:
-                        throw new ArgumentException($"Unsupported PDF type: {type}");
-                }
+                var result = await _pythonService.CheckConsistencyAsync(
+                    plankartPath ?? string.Empty,
+                    bestemmelserPath ?? string.Empty
+                );
+                return result;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error processing PDF {FilePath}", filePath);
+                _logger.LogError(ex, "Error processing PDF");
+                throw;
+            }
+        }
+
+        public async Task<string> CheckConsistencyAsync(string plankartPath, string bestemmelserPath, string? sosiPath = null)
+        {
+            try
+            {
+                return await _pythonService.CheckConsistencyAsync(plankartPath, bestemmelserPath, sosiPath);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error checking consistency");
                 throw;
             }
         }
@@ -103,14 +96,14 @@ namespace backend.Services
                 // First pass: Find all potential prefixes in the legend
                 var prefixPatterns = new[]
                 {
-                    // Base pattern for most prefixes (BKS, BR, BE, etc.)
-                    @"(?:^|\n)\s*([A-ZÆØÅ]{2,})\s+(?:[A-ZÆØÅa-zæøå]|[-–])",
+                    // Base pattern for most prefixes (o_BKS, o_BR, o_BE, etc.)
+                    @"(?:^|\n)\s*([oO]_[A-ZÆØÅ]{2,}\d*)\s+(?:[A-ZÆØÅa-zæøå]|[-–])",
                     // H-numbers specific pattern
                     @"(?:^|\n)\s*(H\d{3})\s+(?:[A-ZÆØÅa-zæøå]|[-–])",
                     // SNØ pattern
                     @"(?:^|\n)\s*(#\d+\s+SNØ)\s+(?:[A-ZÆØÅa-zæøå]|[-–])",
-                    // Two-letter prefixes (BE, GF, etc.)
-                    @"(?:^|\n)\s*(BE|GF|SF|SV|SPA)\s+(?:[A-ZÆØÅa-zæøå]|[-–])"
+                    // Two-letter prefixes with optional prefix (f_BE, BE, etc.)
+                    @"(?:^|\n)\s*(?:[fF]_)?([A-ZÆØÅ]{2})\s+(?:[A-ZÆØÅa-zæøå]|[-–])"
                 };
 
                 foreach (var pattern in prefixPatterns)

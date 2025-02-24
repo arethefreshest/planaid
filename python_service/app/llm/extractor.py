@@ -10,12 +10,14 @@ Key Components:
 - FieldExtractor: Main class for handling field extraction logic
 """
 
-from extract_thinker import Extractor, DocumentLoaderPyPdf, Contract
-from typing import Set
+from extract_thinker import Extractor, DocumentLoaderPyPdf, Contract, LLM
+from typing import Set, Tuple
 import logging
 import io
 import csv
 import os
+import re
+import tempfile
 
 # Set up debug logging
 logging.basicConfig(level=logging.DEBUG)
@@ -35,33 +37,48 @@ class FieldExtractContract(Contract):
     
     class Config:
         prompt = """
-        Les gjennom teksten og ekstraher KUN reguleringskoder. Se spesielt etter:
+        Les gjennom teksten og ekstraher KUN reguleringskoder. 
+        Ignorer referanser til PBL (Plan- og bygningsloven) og lange beskrivelser.
 
-        1. Koder i bestemmelser som:
-           - "...på BKS skal..."
-           - "...for o_GTD1-2 være..."
-           - "...på BR, skal o_SF..."
-           - "...og o_SPA være..."
-
-        2. Koder i plankart som:
-           - o_GTD1, o_GTD2 (Turdrag)
-           - o_SF (Fortau)
-           - o_SPA (Parkering)
-           - BKS (Konsentrert småhusbebyggelse)
-           - BR (Religionsbygg)
-           - o_SKV (Kjøreveg)
-
-        Viktig: 
-        - Se etter koder i kontekst, spesielt rundt §-tegn og i bestemmelser
-        - Inkluder både prefiks (o_, f_) og nummer hvis de finnes
-        - Returner BARE selve kodene, ikke beskrivelsene
-        - Koder kan være med bindestrek (f.eks. o_GTD1-2)
+        Se spesielt etter disse kodene (må finnes i teksten):
+        1. Offentlige koder:
+           - o_SV1
+           - o_SV3
+           - o_SPA
+           - o_GF1, o_GF2, o_GF3
+           - o_GTD1, o_GTD2
+           - o_SF1, o_SF2
         
-        Eksempel på tekst:
-        "§2.3 Før midlertidig brukstillatelse på BKS skal o_GTD1-2 være ferdig opparbeidet."
+        2. Felles koder:
+           - f_BE
+           - f_VEG
         
-        Skal gi:
-        ["BKS", "o_GTD1-2"]
+        3. Basisformer:
+           - BKS
+           - BIA
+           - BR
+
+        4. Hensynssoner:
+           - H210, H220, H320
+
+        5. Spesielle koder:
+           - #01 SNØ
+           - #02 SNØ
+
+        6. Tallserier skal ekspanderes:
+           - o_GF1-3 blir o_GF1, o_GF2, o_GF3
+           - o_GTD1-2 blir o_GTD1, o_GTD2
+
+        VIKTIG:
+        - Se etter koder med mellomrom eller newline: 
+          "o_SV1\\no_SV3" skal bli ["o_SV1", "o_SV3"]
+          "f_BE " skal bli "f_BE"
+        - Returner KUN korte koder
+        - Ta med prefiks og nummer
+        - Behold original bokstavstørrelse (o_GF1, ikke O_GF1)
+        - Ignorer paragrafer (§)
+        - Ekspander tallserier til individuelle koder
+        - Godta koder med whitespace rundt (f.eks " o_SV1 ", " f_BE ")
         """
 
 class FieldExtractor:
@@ -76,6 +93,7 @@ class FieldExtractor:
         document_loader (DocumentLoaderPyPdf): PDF document loader
         sosi_codes (Set[str]): Set of valid SOSI codes
         benevnelseskoder (Set[str]): Set of valid regulation codes
+        skip_bases (Set[str]): Set of base codes to skip
     """
     
     def __init__(self, model_name: str):
@@ -89,42 +107,45 @@ class FieldExtractor:
         self.extractor = Extractor()
         self.document_loader = DocumentLoaderPyPdf()
         self.extractor.load_document_loader(self.document_loader)
-        self.extractor.load_llm(model_name)
+        
+        # Create and load LLM with Azure configuration
+        llm = LLM(model=model_name, token_limit=4000)
+        self.extractor.load_llm(llm)
         
         # Load reference codes
         self.sosi_codes, self.benevnelseskoder = self._load_codes()
+        
+        # Initialize skip_bases set
+        self.skip_bases = set()
+        self.fields = set()
     
-    def _load_codes(self) -> tuple[Set[str], Set[str]]:
-        """
-        Load SOSI codes and benevnelseskoder from CSV file.
-        
-        Returns:
-            tuple[Set[str], Set[str]]: Sets of SOSI codes and benevnelseskoder
-        
-        Note:
-            CSV file should be located at '/app/app/data/Reguleringsplan.csv'
-            with columns for 'SOSI-kode' and 'Benevnelseskode'
-        """
-        sosi_codes = set()
-        benevnelseskoder = set()
+    def _load_codes(self) -> Tuple[Set[str], Set[str]]:
         csv_path = '/app/app/data/Reguleringsplan.csv'
+        fallback_path = os.path.join(os.path.dirname(__file__), 'data/Reguleringsplan.csv')
         
         try:
-            with open(csv_path, 'r', encoding='utf-8') as f:
+            path_to_use = csv_path if os.path.exists(csv_path) else fallback_path
+            logger.debug(f"Attempting to load codes from: {path_to_use}")
+            
+            if not os.path.exists(path_to_use):
+                logger.error(f"Neither {csv_path} nor {fallback_path} exist")
+                raise FileNotFoundError(f"Neither {csv_path} nor {fallback_path} exist")
+            
+            with open(path_to_use, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f, delimiter=';')
-                for row in reader:
-                    if row.get('SOSI-kode'):
-                        # Add both with and without parentheses
-                        sosi_codes.add(row['SOSI-kode'].strip('()'))
-                        sosi_codes.add(row['SOSI-kode'])
-                    if row.get('Benevnelseskode'):
-                        benevnelseskoder.add(row['Benevnelseskode'])
-                        
-            logger.info(f"Loaded {len(benevnelseskoder)} benevnelseskoder and {len(sosi_codes)} SOSI codes")
+                sosi_codes = {row['SOSI-kode'].strip() for row in reader if row.get('SOSI-kode')}
+                logger.debug(f"Loaded SOSI codes: {sosi_codes}")
+            
+            with open(path_to_use, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f, delimiter=';')
+                benevnelseskoder = {row['Benevnelse'].strip() for row in reader if row.get('Benevnelse')}
+                logger.debug(f"Loaded Benevnelseskoder: {benevnelseskoder}")
+            
+            return sosi_codes, benevnelseskoder
+            
         except Exception as e:
-            logger.warning(f"Could not load codes from {csv_path}: {e}")
-        
-        return sosi_codes, benevnelseskoder
+            logger.error(f"Failed to load regulation codes: {str(e)}", exc_info=True)
+            raise RuntimeError(f"Failed to load required regulation codes: {str(e)}")
     
     async def compare_documents(self, plankart_content: bytes, bestemmelser_content: bytes) -> dict:
         """
@@ -157,61 +178,131 @@ class FieldExtractor:
         }
 
     def _is_valid_code(self, field: str, base_codes: Set[str]) -> bool:
-        """
-        Validate if a field matches known regulation codes.
+        """Validate a field against known regulation codes."""
+        field = field.strip()
         
-        Args:
-            field (str): Field to validate
-            base_codes (Set[str]): Set of valid base codes
-            
-        Returns:
-            bool: True if field is valid, False otherwise
-        """
-        field = field.strip().upper()
+        # Skip property numbers and coordinates
+        if re.match(r'^\d+/\d+$', field) or re.match(r'^[NS]\d+$', field):
+            logger.debug(f"Skipping number/coordinate: {field}")
+            return False
         
-        # Handle hyphenated codes (e.g., o_GTD1-2)
-        base_field = field.split('-')[0]
-        
-        # Remove prefix if exists
-        if base_field.startswith(('O_', 'F_')):
-            base = base_field.split('_')[1]
-        else:
-            base = base_field
-        
-        # Remove numbers to get base code
-        base = ''.join(c for c in base if not c.isdigit())
-        
-        # Check exact match first
-        if base in base_codes:
+        # Skip PBL references
+        if 'PBL' in field.upper() or '§' in field:
+            logger.debug(f"Skipping PBL reference: {field}")
+            return False
+
+        # Clean up field - remove any trailing text after space, but keep SNØ
+        if not re.match(r'^#\d+\s+SNØ$', field):
+            field = field.split()[0]
+
+        # Special cases that are always valid
+        if re.match(r'^#\d+\s+SNØ$', field):
+            logger.debug(f"Accepting special code: {field}")
+            return True
+        if re.match(r'^H\d{3}$', field):
+            logger.debug(f"Accepting special code: {field}")
             return True
         
-        # Then check for partial matches (e.g., GTD matches GTD1)
-        return any(code.startswith(base) or base.startswith(code) for code in base_codes)
+        # Skip standalone SNØ
+        if field.upper() == 'SNØ':
+            logger.debug(f"Skipping standalone SNØ")
+            return False
+        
+        # Handle number ranges in codes (e.g., o_GTD1-3)
+        range_match = re.match(r'([a-zA-Z_]+)(\d+)-(\d+)$', field)
+        if range_match:
+            prefix, start, end = range_match.groups()
+            try:
+                # Generate all numbers in the range and add them individually
+                expanded_fields = [f"{prefix}{i}" for i in range(int(start), int(end) + 1)]
+                logger.debug(f"Expanded range {field} to: {expanded_fields}")
+                # Add each expanded field to the set
+                for expanded_field in expanded_fields:
+                    self.fields.add(expanded_field)
+                return False  # Return False to skip adding the range format
+            except ValueError:
+                return False
+            
+        # If we have no base codes, use pattern matching
+        if not base_codes:
+            logger.warning("No base codes available, using pattern matching")
+            
+            # First check for prefixed codes with numbers (o_SV1, f_BE1)
+            prefixed_with_number = re.match(r'^[ofb]_[A-ZÆØÅ]{2,}\d*\b', field, re.IGNORECASE)
+            if prefixed_with_number:
+                base = re.sub(r'\d+$', '', field).strip()  # Remove numbers
+                self.skip_bases.add(base)
+                self.skip_bases.add(re.sub(r'^[ofb]_', '', base))
+                field = field.split()[0].strip()  # Clean after matching
+                logger.debug(f"Accepting prefixed code with number: {field}")
+                return True
+            
+            # Then check for prefixed codes without numbers (f_BE)
+            prefixed_no_number = re.match(r'^[ofb]_[A-ZÆØÅ]{2,}$', field, re.IGNORECASE)
+            if prefixed_no_number:
+                base = re.sub(r'^[ofb]_', '', field)  # Get base code
+                self.skip_bases.add(base)  # Skip unprefixed version
+                if field not in self.skip_bases:
+                    logger.debug(f"Accepting prefixed code without number: {field}")
+                    return True
+                return False
+            
+            # Check for base codes with numbers (BE1)
+            base_with_number = re.match(r'^[A-ZÆØÅ]{2,}\d+$', field)
+            if base_with_number:
+                base = re.sub(r'\d+$', '', field)
+                if not any(f.endswith(field) for f in self.fields if f.startswith(('o_', 'f_', 'b_'))):
+                    self.skip_bases.add(base)
+                    logger.debug(f"Accepting base code with number: {field}")
+                    return True
+                return False
+            
+            # Finally check for simple base codes (BE)
+            base_code = re.match(r'^[A-ZÆØÅ]{2,}$', field)
+            if base_code and field not in self.skip_bases:
+                # Don't accept if we have a prefixed or numbered version
+                if not any(f.endswith(field) or f.endswith(field + '1') 
+                          for f in self.fields if f.startswith(('o_', 'f_', 'b_'))):
+                    logger.debug(f"Accepting base code: {field}")
+                    return True
+                return False
+            
+            return False
+        
+        return False
 
     async def extract_fields(self, content: bytes) -> Set[str]:
-        """
-        Extract and validate fields from a document.
-        
-        Args:
-            content (bytes): PDF document content
-            
-        Returns:
-            Set[str]: Set of validated regulation codes
-            
-        Note:
-            Uses LLM to extract potential fields and validates them against
-            known regulation codes.
-        """
+        """Extract field identifiers from PDF content."""
         try:
-            pdf_file = io.BytesIO(content)
-            pdf_file.name = 'document.pdf'
+            # Create a temporary file for the PDF content
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as temp_file:
+                temp_file.write(content)
+                temp_file_path = temp_file.name
+
+            # Use the document loader to load the content from the file path
+            raw_text = self.document_loader.load(temp_file_path)
             
-            # Add debug logging for the raw text
-            raw_text = self.document_loader.load(pdf_file)
-            logger.debug(f"Raw text from PDF: {raw_text[:500]}...")  # First 500 chars
+            # Handle list of dicts, list of strings, or single string
+            if isinstance(raw_text, list):
+                if raw_text and isinstance(raw_text[0], dict):
+                    # Extract text from dict if available
+                    cleaned_text = ' '.join(page.get('text', '') for page in raw_text)
+                else:
+                    # Join list of strings
+                    cleaned_text = ' '.join(raw_text)
+            else:
+                cleaned_text = raw_text
             
+            # Clean the text
+            cleaned_text = cleaned_text.replace('\\\n', ' ').replace('\\n', '\n')
+            cleaned_text = re.sub(r'\s+', ' ', cleaned_text)
+            cleaned_text = re.sub(r'[^\x00-\x7F]+', ' ', cleaned_text)  # Remove non-ASCII characters
+            
+            logger.debug(f"Cleaned text for LLM: {cleaned_text[:500]}...")  # First 500 chars
+
+            # Pass the file path to the extractor
             result = self.extractor.extract(
-                source=pdf_file,
+                source=temp_file_path,  # Pass the file path
                 response_model=FieldExtractContract
             )
             
@@ -223,14 +314,18 @@ class FieldExtractor:
                 for field in result.fields:
                     logger.debug(f"Checking field: {field}")
                     if self._is_valid_code(field, base_codes):
-                        fields.add(field.strip().upper())
+                        # Keep original case
+                        fields.add(field.strip())
                         logger.debug(f"Added valid code: {field}")
                 
                 logger.info(f"Extracted fields: {fields}")
                 return fields
             
             return set()
-            
         except Exception as e:
             logger.error(f"Field extraction error: {str(e)}", exc_info=True)
-            return set() 
+            return set()
+        finally:
+            # Clean up the temporary file
+            if os.path.exists(temp_file_path):
+                os.remove(temp_file_path) 

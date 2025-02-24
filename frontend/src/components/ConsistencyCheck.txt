@@ -36,9 +36,9 @@ const validateFile = (file: File): string | null => {
     return null;
 };
 
-// Add logging interceptor
+// Add logging interceptors
 axios.interceptors.request.use(request => {
-  console.log('Starting Request:', {
+  logger.info('Starting Request:', {
     url: request.url,
     method: request.method,
     data: request.data instanceof FormData ? 'FormData' : request.data
@@ -48,25 +48,27 @@ axios.interceptors.request.use(request => {
 
 axios.interceptors.response.use(
   response => {
-    console.log('Response:', {
+    logger.info('Response:', {
       status: response.status,
-      statusText: response.statusText,
-      data: response.data
+      url: response.config.url
     });
     return response;
   },
   error => {
-    console.log('Response Error:', {
+    logger.error('Request Error:', {
       message: error.message,
-      code: error.code,
-      response: error.response?.data,
+      url: error.config?.url,
       status: error.response?.status
     });
     return Promise.reject(error);
   }
 );
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://backend:5251';
+const API_URL = process.env.REACT_APP_API_URL ?? 'http://localhost:5251';
+
+if (!process.env.REACT_APP_API_URL) {
+    console.warn('REACT_APP_API_URL is not set, using default');
+}
 
 const ConsistencyCheck: React.FC = () => {
   const [files, setFiles] = useState({
@@ -80,7 +82,18 @@ const ConsistencyCheck: React.FC = () => {
     only_in_bestemmelser: [],
     only_in_sosi: [],
     is_consistent: false,
-    document_fields: {}
+    document_fields: {
+      plankart: {
+        raw_fields: [],
+        normalized_fields: [],
+        text_sections: []
+      },
+      bestemmelser: {
+        raw_fields: [],
+        normalized_fields: [],
+        text_sections: []
+      }
+    }
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -106,8 +119,7 @@ const ConsistencyCheck: React.FC = () => {
     event.preventDefault();
     setLoading(true);
     setError(null);
-    setProgress(0);
-
+    
     try {
       if (!files.plankart || !files.bestemmelser) {
         setError('Both Plankart and Bestemmelser files are required');
@@ -120,12 +132,6 @@ const ConsistencyCheck: React.FC = () => {
       if (files.sosi) {
         formData.append('sosi', files.sosi);
       }
-
-      logger.info('Sending files', {
-        plankart: files.plankart.name,
-        bestemmelser: files.bestemmelser.name,
-        sosi: files.sosi?.name
-      });
 
       const response = await axios.post(
         `${API_URL}/api/check-field-consistency`,
@@ -142,47 +148,38 @@ const ConsistencyCheck: React.FC = () => {
         } as any // temporary type assertion until proper type is determined
       );
 
-      logger.info('Response received:', response.data);
-
-      // Parse the nested JSON structure
-      const parsedResult = typeof response.data.result === 'string' 
-        ? JSON.parse(response.data.result) 
-        : response.data.result;
+      // The backend wraps the result in a "result" property
+      const resultData = response.data.result;
       
-      const resultData = parsedResult?.result?.result;
-
-      if (!resultData?.matching_fields) {
-        throw new Error('Invalid response format');
-      }
-
       setResult({
         matching_fields: resultData.matching_fields || [],
         only_in_plankart: resultData.only_in_plankart || [],
         only_in_bestemmelser: resultData.only_in_bestemmelser || [],
         only_in_sosi: resultData.only_in_sosi || [],
         is_consistent: resultData.is_consistent || false,
-        document_fields: resultData.document_fields || {},
-        metadata: resultData.metadata || {}
+        document_fields: {
+          plankart: resultData.document_fields?.plankart || {
+            raw_fields: [],
+            normalized_fields: [],
+            text_sections: []
+          },
+          bestemmelser: resultData.document_fields?.bestemmelser || {
+            raw_fields: [],
+            normalized_fields: [],
+            text_sections: []
+          },
+          ...(resultData.document_fields?.sosi && {
+            sosi: resultData.document_fields.sosi
+          })
+        }
       });
 
-      setProgress(100);
-      setProcessingStep('Analyse fullført');
-      
     } catch (err) {
-      logger.error('Request failed', err);
-      if (axios.isAxiosError(err)) {
-        const errorMessage = err.response?.data?.detail || err.message;
-        setError(`Error: ${errorMessage}`);
-        logger.error('API Error:', {
-          status: err.response?.status,
-          data: err.response?.data,
-          message: errorMessage
-        });
-      } else {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-      }
+      logger.error('Error during consistency check:', err);
+      setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);
+      setProgress(0);
     }
   };
 
@@ -328,35 +325,37 @@ const ConsistencyCheck: React.FC = () => {
 
       {/* Fields Display */}
       <div className="mt-4 space-y-4">
-        {result.document_fields && Object.entries(result.document_fields).map(([docType, fields]) => (
-          <div key={docType} className="bg-white shadow rounded-lg p-4">
-            <h3 className="text-lg font-medium text-gray-900 capitalize">{docType}</h3>
-            
-            {/* Raw Fields */}
-            <div className="mt-4">
-              <h4 className="text-sm font-medium text-gray-500">Raw Fields</h4>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {fields.raw_fields.map(field => (
-                  <span key={field} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                    {field}
-                  </span>
-                ))}
+        {result.document_fields && Object.entries(result.document_fields).map(([docType, fields]) => 
+          fields && (
+            <div key={docType} className="bg-white shadow rounded-lg p-4">
+              <h3 className="text-lg font-medium text-gray-900 capitalize">{docType}</h3>
+              
+              {/* Raw Fields */}
+              <div className="mt-4">
+                <h4 className="text-sm font-medium text-gray-500">Raw Fields</h4>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {fields.raw_fields.map(field => (
+                    <span key={field} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      {field}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* Normalized Fields */}
-            <div className="mt-4">
-              <h4 className="text-sm font-medium text-gray-500">Normalized Fields</h4>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {fields.normalized_fields.map(field => (
-                  <span key={field} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                    {field}
-                  </span>
-                ))}
+              {/* Normalized Fields */}
+              <div className="mt-4">
+                <h4 className="text-sm font-medium text-gray-500">Normalized Fields</h4>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {fields.normalized_fields.map(field => (
+                    <span key={field} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      {field}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          )
+        )}
       </div>
     </div>
   );

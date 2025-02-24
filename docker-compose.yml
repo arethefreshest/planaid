@@ -17,6 +17,11 @@ services:
       - REACT_APP_OPENAI_API_VERSION=${OPENAI_API_VERSION}
       - REACT_APP_OPENAI_DEPLOYMENT_NAME=${OPENAI_DEPLOYMENT_NAME}
       - NODE_ENV=development
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks:
       - planaid-network
     depends_on:
@@ -37,6 +42,12 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - PythonServiceUrl=http://python_service:8000
       - ASPNETCORE_URLS=http://+:5251
+      - NerServiceUrl=http://ner_service:8001
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     networks:
       - planaid-network
     depends_on:
@@ -47,23 +58,53 @@ services:
       context: .
       dockerfile: python_service/Dockerfile
       target: development
+    ports:
+      - "8000:8000"
     volumes:
       - ./python_service:/app/python_service
       - ./python_service/app:/app/app
       - ./python_service/requirements.txt:/app/requirements.txt
+      - ./.env:/app/.env
     environment:
       - PYTHONDONTWRITEBYTECODE=1
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - OPENAI_API_BASE=${OPENAI_API_BASE}
-      - OPENAI_API_VERSION=${OPENAI_API_VERSION}
-      - OPENAI_DEPLOYMENT_NAME=${OPENAI_DEPLOYMENT_NAME}
+      - PYTHONPATH=/app
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - PYTHONPATH=/app
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     depends_on:
       - redis
+      - ner_service
     networks:
       - planaid-network
+
+  ner_service:
+    build:
+      context: .
+      dockerfile: ner_service/Dockerfile
+      target: development
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./ner_service:/app
+      - ./ner_service/src:/app/src
+      - ./ner_service/src/models:/app/src/models
+      - ./ner_service/src/model_params.yaml:/app/src/model_params.yaml
+      - ner-models:/root/.cache/spacy
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONPATH=/app
+    networks:
+      - planaid-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   redis:
     image: redis:alpine
@@ -80,6 +121,7 @@ volumes:
   backend-obj:
   backend-bin:
   redis-data:
+  ner-models:
 
 networks:
   planaid-network:
