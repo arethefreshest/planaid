@@ -1,0 +1,11 @@
+conllu
+torch
+torchmetrics
+transformers
+scikit-learn
+tqdm
+spacy
+pdfplumber
+fastapi
+uvicorn
+python-multipart

@@ -1,0 +1,23 @@
+model:
+  model_name: 'NbAiLab/nb-bert-base'
+  dropout: 0.45
+
+training:
+
+  general:
+    batch_size: 12
+    num_epochs: 12
+    learning_rate: 2.6587543983272713e-06
+    weight_decay: 0.017322667470546258
+
+  transfer:
+    batch_size: 16
+    num_epochs: 9
+    learning_rate: 8.216436961379529e-06
+
+data:
+  max_seq_len: 48 # 52
+  
+general:
+  seed: 42
+  
