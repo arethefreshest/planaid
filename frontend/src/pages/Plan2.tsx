@@ -47,48 +47,43 @@ const Plan2 = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+  
     setLoading(true);
     setError(null);
     setProgress(0);
-
+    setProcessingStep("Starter opplasting...");
+  
+    const formData = new FormData();
+    if (files.plankart) formData.append("plankart", files.plankart);
+    if (files.bestemmelser) formData.append("bestemmelser", files.bestemmelser);
+    if (files.sosi) formData.append("sosi", files.sosi);
+  
     try {
-      if (!files.plankart || !files.bestemmelser) {
-        setError("Both Plankart and Bestemmelser files are required");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("plankart", files.plankart);
-      formData.append("bestemmelser", files.bestemmelser);
-      if (files.sosi) {
-        formData.append("sosi", files.sosi);
-      }
-
-      logger.info("Uploading files", { files });
-
-      const response = await axios.post<{ result: ConsistencyResult }>(
-        `${API_URL}/api/check-field-consistency`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-          onUploadProgress: (progressEvent: ProgressEvent) => {
-            const percentage = (progressEvent.loaded * 100) / (progressEvent.total ?? 100);
-            setProgress(Math.min(percentage, 95));
-            setProcessingStep("Uploading files...");
-          }
-        } as any
-      );
-
-      setResult(response.data.result);
-      setProgress(100);
-      setProcessingStep("Analysis complete");
-    } catch (err: any) {
-      logger.error("Error during request", err);
-      setError(err.response?.data?.detail || err.message);
+      setProcessingStep("Laster opp filer...");
+  
+      const response = await axios.post("/api/consistency/check-field-consistency", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        onUploadProgress: (progressEvent) => {
+          const total = progressEvent.total ?? 1;
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / total);
+          setProgress(percentCompleted);
+          setProcessingStep(`Laster opp... ${percentCompleted}%`);
+        },
+      });
+  
+      setProcessingStep("Analyserer dokumenter...");
+      console.log("Respons fra backend:", response.data);
+  
+      // 💡 Her kan du oppdatere UI med resultatet fra backend
+      setProcessingStep("Analyse fullført ✅");
+    } catch (error: any) {
+      console.error("Feil under opplasting:", error);
+      setError(error?.response?.data?.detail || "En feil oppstod under analysen.");
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <Layout>

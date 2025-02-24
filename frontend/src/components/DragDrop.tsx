@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FileUploader } from "react-drag-drop-files";
 import dragDrop from "../images/DragDrop.png"
 
 const fileTypes = ["PNG", "SOS"];
@@ -15,11 +14,6 @@ function DragDrop() {
       <div style={styles.content}>
         <img src={dragDrop} alt="upload icon" style={styles.icon} />
         <p style={styles.text}>Drag and Drop here</p>
-        <FileUploader
-        handleChange={handleChange}
-        name="file"
-        types={fileTypes}
-        />
       </div>
     </div>
   );

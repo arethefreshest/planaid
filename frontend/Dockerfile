@@ -10,12 +10,11 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Install React and its type definitions
-RUN npm install react react-dom
-RUN npm install --save-dev @types/react @types/react-dom @types/node
-
 # Copy the rest of your application code
 COPY . .
+
+# Build the application
+RUN npm run build
 
 # Development stage
 FROM base AS development

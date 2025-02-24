@@ -53,10 +53,9 @@ const FileUpload = ({ onFileUpload, handleSubmit, files, loading, error, progres
             <p style={styles.errorText}>{error}</p>
           </div>
         )}
-
-        <button type="submit" disabled={loading || !files.plankart || !files.bestemmelser} style={styles.button}>
-          {loading ? <><CircularProgress progress={progress} size={24} /> {processingStep}</> : 'Start analyse'}
-        </button>
+      <button type="submit" disabled={!files.plankart || !files.bestemmelser} style={styles.button}>
+        Start analyse
+      </button>
       </form>
     </div>
   );
