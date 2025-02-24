@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
-import CustomInput from "../components/CustomInput";
 import axios from "axios";
 import { CircularProgress } from "../components/CircularProgress";
 import { logger } from "../utils/logger";
@@ -8,7 +7,6 @@ import ConsistencyResults from '../components/ConsistencyResults';
 import FileUpload from '../components/FileUpload';
 
 const API_URL = process.env.REACT_APP_API_URL;
-
 
 export type FileType = 'plankart' | 'bestemmelser' | 'sosi';
 
@@ -22,10 +20,10 @@ interface ConsistencyResult {
 }
 
 const Plan2 = () => {
-  const [files, setFiles] = useState<{ 
-    plankart: File | null, 
-    bestemmelser: File | null, 
-    sosi: File | null 
+  const [files, setFiles] = useState<{
+    plankart: File | null,
+    bestemmelser: File | null,
+    sosi: File | null
   }>({
     plankart: null,
     bestemmelser: null,
@@ -39,28 +37,29 @@ const Plan2 = () => {
 
   const handleFileUpload = (type: FileType, file: File) => {
     if (file) {
-      setFiles((prev: { plankart: File | null, bestemmelser: File | null, sosi: File | null }) => 
-        ({ ...prev, [type]: file })
-      );
+      setFiles((prev) => ({
+        ...prev,
+        [type]: file,
+      }));
     }
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-  
+
     setLoading(true);
     setError(null);
     setProgress(0);
     setProcessingStep("Starter opplasting...");
-  
+
     const formData = new FormData();
     if (files.plankart) formData.append("plankart", files.plankart);
     if (files.bestemmelser) formData.append("bestemmelser", files.bestemmelser);
     if (files.sosi) formData.append("sosi", files.sosi);
-  
+
     try {
       setProcessingStep("Laster opp filer...");
-  
+
       const response = await axios.post("/api/consistency/check-field-consistency", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
@@ -70,11 +69,9 @@ const Plan2 = () => {
           setProcessingStep(`Laster opp... ${percentCompleted}%`);
         },
       });
-  
+
       setProcessingStep("Analyserer dokumenter...");
-      console.log("Respons fra backend:", response.data);
-  
-      // 💡 Her kan du oppdatere UI med resultatet fra backend
+      setResult(response.data);
       setProcessingStep("Analyse fullført ✅");
     } catch (error: any) {
       console.error("Feil under opplasting:", error);
@@ -83,13 +80,12 @@ const Plan2 = () => {
       setLoading(false);
     }
   };
-  
 
   return (
     <Layout>
       <div style={styles.container}>
         <div style={styles.LeftContainer}>
-          <FileUpload 
+          <FileUpload
             onFileUpload={handleFileUpload}
             handleSubmit={handleSubmit}
             files={files}
@@ -102,7 +98,13 @@ const Plan2 = () => {
 
         <div style={styles.RightContainer}>
           <h2 style={styles.title}>Kart Analyse: </h2>
+          {loading && <CircularProgress progress={progress} />}
           {result && <ConsistencyResults result={result} />}
+          {error && (
+            <div style={styles.errorContainer}>
+              <p style={styles.errorText}>{error}</p>
+            </div>
+          )}
         </div>
       </div>
     </Layout>
@@ -137,14 +139,15 @@ const styles = {
     marginBottom: "20px",
     color: "#333",
   },
-  tryButton: {
-    backgroundColor: "#004d00",
-    color: "#fff",
-    border: "none",
-    padding: "1rem 2rem",
-    borderRadius: "8px",
-    cursor: "pointer",
-    fontSize: "1.5rem",
+  errorContainer: {
+    marginTop: "10px",
+    padding: "10px",
+    backgroundColor: "#fdecea",
+    borderRadius: "5px",
+  },
+  errorText: {
+    color: "#d32f2f",
+    fontSize: "14px",
   },
 };
 
