@@ -1,97 +1,99 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
-type PdfType = 'Regulations' | 'PlanMap';
-
-interface ProcessedPage {
-    pageNumber: number;
-    content: string;
+interface FileUploadProps {
 }
 
-interface ProcessedDocument {
-    documentId: string;
-    pageCount: number;
-    processedAt: string;
-    pages: ProcessedPage[];
-    extractedFields?: Record<string, string>;
-}
-
-const FileUpload: React.FC = () => {
-    const [file, setFile] = useState<File | null>(null);
-    const [pdfType, setPdfType] = useState<PdfType>('Regulations');
-    const [processedDoc, setProcessedDoc] = useState<ProcessedDocument | null>(null);
-    const [error, setError] = useState<string | null>(null);
-
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files.length > 0) {
-            setFile(event.target.files[0]);
-        }
-    };
-
-    const handleSubmit = async () => {
-        if (!file) return;
-
-        const formData = new FormData();
-        formData.append('file', file);
-        setError(null);
-
-        try {
-            const response = await axios.post(`/api/documents/upload?type=${pdfType}`, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
-            });
-            setProcessedDoc(response.data);
-        } catch (error) {
-            console.error('Error uploading file:', error);
-            setError('Failed to upload file. Please try again.');
-        }
-    };
-
-    return (
-        <div>
-            <h1>PlanAid File Upload</h1>
-            <div>
-                <select value={pdfType} onChange={(e) => setPdfType(e.target.value as PdfType)}>
-                    <option value="Regulations">Regulations</option>
-                    <option value="PlanMap">Plan Map</option>
-                </select>
+  return (
+    <div style={styles.uploadContainer}>
+      <h2 style={styles.title}>Feltsjekk for Reguleringsplan</h2>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div style={styles.fileInputContainer}>
+          {(['plankart', 'bestemmelser', 'sosi'] as FileType[]).map((type) => (
+            <div key={type}>
+              <label style={styles.label}>{type.toUpperCase()}</label>
+              <input
+                type="file"
+                onChange={(e) => handleFileChange(e, type)}
+                accept=".pdf,.xml,.sos"
+              />
+              {files[type] && (
+                <p style={styles.fileName}>{files[type]?.name}</p>
+              )}
             </div>
-            <input 
-                type="file" 
-                onChange={handleFileChange} 
-                data-testid="file-input"
-                accept=".pdf"
-            />
-            <button onClick={handleSubmit} disabled={!file}>
-                Upload
-            </button>
-            
-            {error && (
-                <div className="error-message" style={{ color: 'red', margin: '10px 0' }}>
-                    {error}
-                </div>
-            )}
-            
-            {processedDoc && (
-                <div>
-                    <h2>Document ID: {processedDoc.documentId}</h2>
-                    <p>Pages: {processedDoc.pageCount}</p>
-                    <p>Processed: {new Date(processedDoc.processedAt).toLocaleString()}</p>
-                    {processedDoc.extractedFields && (
-                        <div>
-                            <h3>Extracted Fields:</h3>
-                            <pre>{JSON.stringify(processedDoc.extractedFields, null, 2)}</pre>
-                        </div>
-                    )}
-                    {processedDoc.pages?.map((page) => (
-                        <div key={page.pageNumber}>
-                            <h3>Page {page.pageNumber}</h3>
-                            <pre>{page.content}</pre>
-                        </div>
-                    ))}
-                </div>
-            )}
+          ))}
         </div>
-    );
+
+        {error && (
+          <div style={styles.errorContainer}>
+            <p style={styles.errorText}>{error}</p>
+          </div>
+        )}
+
+        <button
+          type="submit"
+          disabled={loading}
+          style={styles.button}
+        >
+          {loading ? `Laster opp... ${progress}%` : 'Start Analyse'}
+        </button>
+
+        {processingStep && <p>{processingStep}</p>}
+      </form>
+    </div>
+  );
+};
+
+const styles = {
+  uploadContainer: {
+    backgroundColor: '#ffffff',
+    borderRadius: '8px',
+    padding: '20px',
+    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+    textAlign: 'left' as const,
+    maxWidth: '900px',
+    margin: 'auto',
+  },
+  title: {
+    fontSize: '20px',
+    fontWeight: 'bold',
+    marginBottom: '20px',
+    color: '#333',
+  },
+  fileInputContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '20px',
+    flexWrap: 'wrap' as const,
+  },
+  fileName: {
+    fontSize: '14px',
+    marginTop: '5px',
+  },
+  label: {
+    fontWeight: 'bold',
+    marginBottom: '5px',
+    display: 'block',
+  },
+  errorContainer: {
+    marginTop: '10px',
+    padding: '10px',
+    backgroundColor: '#fdecea',
+    borderRadius: '5px',
+  },
+  errorText: {
+    color: '#d32f2f',
+    fontSize: '14px',
+  },
+  button: {
+    marginTop: '20px',
+    backgroundColor: '#24BD76',
+    color: '#fff',
+    padding: '10px 15px',
+    borderRadius: '5px',
+    fontSize: '16px',
+    cursor: 'pointer',
+    border: 'none',
+  },
 };
 
 export default FileUpload;
