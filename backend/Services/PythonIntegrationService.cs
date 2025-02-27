@@ -34,7 +34,7 @@ namespace backend.Services {
             _logger = logger;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc/
         public async Task<string> CheckConsistencyAsync(string plankartPath, string bestemmelserPath, string? sosiPath = null)
         {
             try
@@ -43,43 +43,46 @@ namespace backend.Services {
                 {
                     throw new InvalidOperationException("HttpClient BaseAddress is not configured");
                 }
-
-                using var formData = new MultipartFormDataContent();
-                
-                // Add files with proper content type
-                using var plankartContent = new StreamContent(File.OpenRead(plankartPath));
+        
+                var formData = new MultipartFormDataContent();
+        
+                // Add Plankart file
+                var plankartContent = new StreamContent(File.OpenRead(plankartPath));
                 plankartContent.Headers.ContentType = new MediaTypeHeaderValue(GetContentType(plankartPath));
                 formData.Add(plankartContent, "plankart", Path.GetFileName(plankartPath));
-
-                using var bestemmelserContent = new StreamContent(File.OpenRead(bestemmelserPath));
+        
+                // Add Bestemmelser file
+                var bestemmelserContent = new StreamContent(File.OpenRead(bestemmelserPath));
                 bestemmelserContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
                 formData.Add(bestemmelserContent, "bestemmelser", Path.GetFileName(bestemmelserPath));
-
+        
+                // Optionally add SOSI file
                 if (sosiPath != null)
                 {
-                    using var sosiContent = new StreamContent(File.OpenRead(sosiPath));
+                    var sosiContent = new StreamContent(File.OpenRead(sosiPath));
                     sosiContent.Headers.ContentType = new MediaTypeHeaderValue("text/xml");
                     formData.Add(sosiContent, "sosi", Path.GetFileName(sosiPath));
                 }
-
+        
                 var requestUri = new Uri(_httpClient.BaseAddress!, "api/check-field-consistency");
                 _logger.LogInformation($"Sending request to: {requestUri}");
-                
+        
                 var response = await _httpClient.PostAsync(requestUri, formData);
                 var content = await response.Content.ReadAsStringAsync();
-                
+        
                 if (!response.IsSuccessStatusCode)
                 {
                     _logger.LogError($"Python service returned error. Status: {response.StatusCode}, Content: {content}");
                     throw new HttpRequestException($"Python service error: {content}");
                 }
-                
+        
                 if (string.IsNullOrEmpty(content))
                 {
                     _logger.LogError("Python service returned empty response");
                     throw new HttpRequestException("Python service returned empty response");
                 }
-
+        
+                _logger.LogInformation("Python service response received successfully.");
                 return content;
             }
             catch (Exception ex)

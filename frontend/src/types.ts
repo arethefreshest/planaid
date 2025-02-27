@@ -5,6 +5,7 @@ export interface DocumentFields {
   text_sections: string[];
 }
 
+export type FileType = 'plankart' | 'bestemmelser' | 'sosi';
 /** Represents the consistency check result structure */
 export interface ConsistencyResult {
   matching_fields: string[];

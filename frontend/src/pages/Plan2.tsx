@@ -5,10 +5,10 @@ import { CircularProgress } from "../components/CircularProgress";
 import { logger } from "../utils/logger";
 import ConsistencyResults from '../components/ConsistencyResults';
 import FileUpload from '../components/FileUpload';
+import { FileType } from '../types'
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL ?? 'http://backend:5251';
 
-export type FileType = 'plankart' | 'bestemmelser' | 'sosi';
 
 interface ConsistencyResult {
   is_consistent: boolean;
@@ -46,7 +46,6 @@ const Plan2 = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
     setLoading(true);
     setError(null);
     setProgress(0);
@@ -60,7 +59,7 @@ const Plan2 = () => {
     try {
       setProcessingStep("Laster opp filer...");
 
-      const response = await axios.post("/api/consistency/check-field-consistency", formData, {
+      const response = await axios.post(`${API_URL}/api/check-field-consistency`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
           const total = progressEvent.total ?? 1;

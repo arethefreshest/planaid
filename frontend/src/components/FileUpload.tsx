@@ -1,19 +1,5 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { FileType } from '../pages/Plan2'; // Keep this import
-
-interface ProcessedPage {
-  pageNumber: number;
-  content: string;
-}
-
-interface ProcessedDocument {
-  documentId: string;
-  pageCount: number;
-  processedAt: string;
-  pages: ProcessedPage[];
-  extractedFields?: Record<string, string>;
-}
+import React from 'react';
+import { FileType } from '../types'
 
 interface FileUploadProps {
   onFileUpload: (type: FileType, file: File) => void;
@@ -38,76 +24,50 @@ const FileUpload: React.FC<FileUploadProps> = ({
   progress,
   processingStep,
 }) => {
-  const [file, setFile] = useState<File | null>(null);
-  const [processedDoc, setProcessedDoc] = useState<ProcessedDocument | null>(null);
-  const [localError, setLocalError] = useState<string | null>(null);
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    type: FileType
+  ) => {
     if (event.target.files && event.target.files.length > 0) {
-      setFile(event.target.files[0]);
-    }
-  };
-
-  const handleSubmitLocal = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append('file', file);
-    setLocalError(null);
-
-    try {
-      const response = await axios.post('/api/documents/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      setProcessedDoc(response.data);
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      setLocalError('Failed to upload file. Please try again.');
+      onFileUpload(type, event.target.files[0]);
     }
   };
 
   return (
     <div style={styles.uploadContainer}>
       <h2 style={styles.title}>Feltsjekk for Reguleringsplan</h2>
-      <form onSubmit={handleSubmitLocal} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div style={styles.fileInputContainer}>
-          <input
-            type="file"
-            onChange={handleFileChange}
-            data-testid="file-input"
-            accept=".pdf"
-          />
-          <button type="submit" disabled={!file} style={styles.button}>
-            Upload
-          </button>
+          {(['plankart', 'bestemmelser', 'sosi'] as FileType[]).map((type) => (
+            <div key={type}>
+              <label style={styles.label}>{type.toUpperCase()}</label>
+              <input
+                type="file"
+                onChange={(e) => handleFileChange(e, type)}
+                accept=".pdf,.xml,.sos"
+              />
+              {files[type] && (
+                <p style={styles.fileName}>{files[type]?.name}</p>
+              )}
+            </div>
+          ))}
         </div>
 
-        {localError && (
+        {error && (
           <div style={styles.errorContainer}>
-            <p style={styles.errorText}>{localError}</p>
+            <p style={styles.errorText}>{error}</p>
           </div>
         )}
 
-        {processedDoc && (
-          <div>
-            <h2>Document ID: {processedDoc.documentId}</h2>
-            <p>Pages: {processedDoc.pageCount}</p>
-            <p>Processed: {new Date(processedDoc.processedAt).toLocaleString()}</p>
-            {processedDoc.extractedFields && (
-              <div>
-                <h3>Extracted Fields:</h3>
-                <pre>{JSON.stringify(processedDoc.extractedFields, null, 2)}</pre>
-              </div>
-            )}
-            {processedDoc.pages?.map((page) => (
-              <div key={page.pageNumber}>
-                <h3>Page {page.pageNumber}</h3>
-                <pre>{page.content}</pre>
-              </div>
-            ))}
-          </div>
-        )}
+        <button
+          type="submit"
+          disabled={loading}
+          style={styles.button}
+        >
+          {loading ? `Laster opp... ${progress}%` : 'Start Analyse'}
+        </button>
+
+        {processingStep && <p>{processingStep}</p>}
       </form>
     </div>
   );
@@ -133,6 +93,16 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     gap: '20px',
+    flexWrap: 'wrap' as const,
+  },
+  fileName: {
+    fontSize: '14px',
+    marginTop: '5px',
+  },
+  label: {
+    fontWeight: 'bold',
+    marginBottom: '5px',
+    display: 'block',
   },
   errorContainer: {
     marginTop: '10px',
