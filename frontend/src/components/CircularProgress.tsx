@@ -24,7 +24,7 @@ interface CircularProgressProps {
   className?: string;
 }
 
-export const CircularProgress: React.FC<CircularProgressProps> = ({
+const CircularProgress: React.FC<CircularProgressProps> = ({
   progress,
   size = 44,
   strokeWidth = 4,
@@ -64,4 +64,6 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
       </span>
     </div>
   );
-}; 
+};
+
+export default CircularProgress; 

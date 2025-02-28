@@ -1,25 +1,26 @@
 import React from 'react';
-import ConsistencyCheck from './components/ConsistencyCheck';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Start from './pages/Startside';
+import Page1 from './pages/Plan1';
+import Page2 from './pages/Plan2';
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100">
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16 items-center">
-            <div className="flex-shrink-0">
-              <h1 className="text-2xl font-bold text-gray-900">PlanAid</h1>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <Router>
+      <div>
+        <nav style={{ padding: '1rem', backgroundColor: '#f0f0f0' }}>
+          <Link to="/" style={{ marginRight: '10px' }}>Home</Link>
+          <Link to="/page1" style={{ marginRight: '10px' }}>Page 1</Link>
+          <Link to="/page2" style={{ marginRight: '10px' }}>Page 2</Link>
+        </nav>
+        <Routes>
+          <Route path="/" element={<Start />} />
+          <Route path="/page1" element={<Page1 />} />
+          <Route path="/page2" element={<Page2 />} />
 
-      <main className="py-10">
-        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <ConsistencyCheck />
-        </div>
-      </main>
-    </div>
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

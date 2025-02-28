@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   frontend:
     build: 
@@ -6,8 +8,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      - /app/node_modules  # Prevents overriding node_modules inside container
+      - ./frontend:/app:delegated  # Syncs frontend files
     environment:
       - REACT_APP_API_URL=http://localhost:5251
       - NODE_ENV=development
@@ -60,14 +62,6 @@ services:
       - PYTHONPATH=/app
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-    depends_on:
-      - redis
-      - ner_service
     networks:
       - planaid-network
 

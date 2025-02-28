@@ -16,7 +16,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { CircularProgress } from './CircularProgress';
 import { logger } from '../utils/logger';
-// import { DocumentFieldsDisplay } from './DocumentFieldsDisplay';
 import type { ConsistencyResult } from '../types';
 
 // Configuration constants
@@ -196,7 +195,7 @@ const ConsistencyCheck: React.FC = () => {
                   <input
                     type="file"
                     onChange={handleFileChange(type as keyof typeof files)}
-                    accept=".pdf,.xml"
+                    accept=".pdf,.xml,.sos"
                     className="hidden"
                     id={`file-${type}`}
                   />
