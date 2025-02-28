@@ -60,3 +60,21 @@ _NCrunch_*
 *.tmp
 *.temp
 ~$*
+
+# Debug files
+processed_pdfs/
+
+# DS Store
+.DS_Store
+
+# Environment variables
+*.env
+
+# IDE
+.vscode/
+
+# .log
+*.log
+
+# Large model files
+ner_service/src/models/*.pth
