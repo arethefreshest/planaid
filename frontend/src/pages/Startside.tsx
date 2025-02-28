@@ -24,7 +24,7 @@ const Start = () => {
 
         {/* Right side: Button */}
         <div style={styles.buttonContainer}>
-        <Link to="/page1" style={styles.button}>
+        <Link to="/page2" style={styles.button}>
           Start analyse
         </Link>
         </div>

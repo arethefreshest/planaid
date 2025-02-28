@@ -13,7 +13,6 @@ const Plan2 = () => {
           <FileUpload onUploadSuccess={setResult} />
         </div>
         <div style={styles.rightContainer}>
-          <h2 style={styles.title}>Kart Analyse:</h2>
           {result && <ConsistencyResults result={result} />}
         </div>
       </div>

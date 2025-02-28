@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Start from './pages/Startside';
 import Page1 from './pages/Plan1';
 import Page2 from './pages/Plan2';
-import ConsistencyCheck from './components/ConsistencyCheck';
 
 function App() {
   return (
