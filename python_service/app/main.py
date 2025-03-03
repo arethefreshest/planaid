@@ -23,7 +23,7 @@ from typing import Dict, Any
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("httpcore").setLevel(logging.WARNING)
 logging.getLogger("openai").setLevel(logging.WARNING)
-logging.getLogger("litellm").setLevel(logging.WARNING)
+logging.getLogger("litellm").setLevel(logging.ERROR)
 logging.getLogger("instructor").setLevel(logging.WARNING)
 logging.getLogger("app").setLevel(logging.DEBUG)
 

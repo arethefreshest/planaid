@@ -1,0 +1,12 @@
+pandas>=2.2.0
+matplotlib>=3.8.2
+numpy>=1.26.4
+redis>=5.0.1
+pymemcache>=4.0.0
+diskcache>=5.6.3
+cachetools>=5.3.2
+pylru>=1.2.1
+psutil>=5.9.8
+tqdm>=4.66.2
+aioredis>=2.0.1
+python-memcached>=1.59 

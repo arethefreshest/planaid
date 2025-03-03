@@ -1,0 +1,8 @@
+pandas>=2.2.0
+matplotlib>=3.8.2
+beautifulsoup4>=4.12.3
+nltk>=3.8.1
+spacy>=3.7.4
+numpy>=1.26.4
+# Install Norwegian language model:
+# python -m spacy download nb_core_news_sm 
