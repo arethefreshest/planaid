@@ -1,9 +1,0 @@
-pandas>=2.2.0
-matplotlib>=3.8.2
-numpy>=1.26.4
-bintrees>=2.2.0
-sortedcontainers>=2.4.0
-bitarray>=2.9.2
-memory-profiler>=0.61.0
-psutil>=5.9.8
-tqdm>=4.66.2 

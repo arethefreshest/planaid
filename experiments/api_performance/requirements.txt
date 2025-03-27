@@ -1,7 +1,0 @@
-pandas>=2.2.0
-matplotlib>=3.8.2
-numpy>=1.26.4
-aiohttp>=3.9.3
-redis>=5.0.1
-tqdm>=4.66.2
-python-dotenv>=1.0.1 
