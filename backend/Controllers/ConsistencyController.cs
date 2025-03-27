@@ -17,6 +17,12 @@ using backend.Services;
 using backend.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace backend.Controllers
 {
@@ -49,6 +55,38 @@ namespace backend.Controllers
             [FromForm] IFormFile bestemmelser,
             [FromForm] IFormFile? sosi = null)
         {
+            // Start metrics collection
+            var startTime = DateTime.UtcNow;
+            var metrics = new Dictionary<string, object>
+            {
+                ["run_id"] = Guid.NewGuid().ToString(),
+                ["timestamp"] = startTime.ToString("o"),
+                ["files"] = new Dictionary<string, object>
+                {
+                    ["plankart"] = new Dictionary<string, object>
+                    {
+                        ["filename"] = plankart.FileName,
+                        ["size_kb"] = plankart.Length / 1024.0
+                    },
+                    ["bestemmelser"] = new Dictionary<string, object>
+                    {
+                        ["filename"] = bestemmelser.FileName,
+                        ["size_kb"] = bestemmelser.Length / 1024.0
+                    }
+                },
+                ["timings"] = new Dictionary<string, double>(),
+                ["resource_usage"] = new Dictionary<string, double>()
+            };
+            
+            if (sosi != null)
+            {
+                ((Dictionary<string, object>)metrics["files"])["sosi"] = new Dictionary<string, object>
+                {
+                    ["filename"] = sosi.FileName,
+                    ["size_kb"] = sosi.Length / 1024.0
+                };
+            }
+            
             try
             {
                 _logger.LogInformation($"Received files: {plankart.FileName}, {bestemmelser.FileName}");
@@ -59,67 +97,81 @@ namespace backend.Controllers
                     return BadRequest("Missing required files");
                 }
 
-                // Create temp files with original extensions
-                var plankartPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}{Path.GetExtension(plankart.FileName)}");
-                var bestemmelserPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}{Path.GetExtension(bestemmelser.FileName)}");
+                // Save files to temporary location
+                var tempDir = Path.Combine(Path.GetTempPath(), "PlanAid", metrics["run_id"]?.ToString() ?? Guid.NewGuid().ToString());
+                Directory.CreateDirectory(tempDir);
+                
+                var plankartPath = Path.Combine(tempDir, plankart.FileName);
+                var bestemmelserPath = Path.Combine(tempDir, bestemmelser.FileName);
                 string? sosiPath = null;
-
-                try
+                
+                var fileStart = DateTime.UtcNow;
+                using (var stream = new FileStream(plankartPath, FileMode.Create))
                 {
-                    _logger.LogInformation($"Writing files to: {plankartPath}, {bestemmelserPath}");
-                    
-                    using (var stream = new FileStream(plankartPath, FileMode.Create))
+                    await plankart.CopyToAsync(stream);
+                }
+                
+                using (var stream = new FileStream(bestemmelserPath, FileMode.Create))
+                {
+                    await bestemmelser.CopyToAsync(stream);
+                }
+                
+                if (sosi != null)
+                {
+                    sosiPath = Path.Combine(tempDir, sosi.FileName);
+                    using (var stream = new FileStream(sosiPath, FileMode.Create))
                     {
-                        await plankart.CopyToAsync(stream);
-                    }
-
-                    using (var stream = new FileStream(bestemmelserPath, FileMode.Create))
-                    {
-                        await bestemmelser.CopyToAsync(stream);
-                    }
-
-                    if (sosi != null)
-                    {
-                        sosiPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}{Path.GetExtension(sosi.FileName)}");
-                        using (var stream = new FileStream(sosiPath, FileMode.Create))
-                        {
-                            await sosi.CopyToAsync(stream);
-                        }
-                    }
-
-                    var result = await _pythonService.CheckConsistencyAsync(plankartPath, bestemmelserPath, sosiPath);
-                    _logger.LogInformation("Python service response: {Result}", result);
-                    
-                    if (string.IsNullOrEmpty(result))
-                    {
-                        _logger.LogError("Empty response from processing service");
-                        return StatusCode(500, new { detail = "Empty response from processing service" });
-                    }
-
-                    try
-                    {
-                        var pythonResponse = JsonSerializer.Deserialize<PythonResponse<ConsistencyResult>>(result);
-                        if (pythonResponse == null)
-                        {
-                            _logger.LogError("Failed to deserialize response");
-                            return StatusCode(500, new { detail = "Failed to deserialize response" });
-                        }
-
-                        return Ok(pythonResponse);
-                    }
-                    catch (JsonException ex)
-                    {
-                        _logger.LogError(ex, "Error deserializing response: {Result}", result);
-                        return StatusCode(500, new { detail = $"Invalid response format: {ex.Message}" });
+                        await sosi.CopyToAsync(stream);
                     }
                 }
-                finally
+                var fileEnd = DateTime.UtcNow;
+                ((Dictionary<string, double>)metrics["timings"])["file_saving"] = (fileEnd - fileStart).TotalSeconds;
+                
+                // Call Python service with timing
+                var pythonCallStart = DateTime.UtcNow;
+                var result = await _pythonService.CheckConsistencyAsync(plankartPath, bestemmelserPath, sosiPath);
+                var pythonCallEnd = DateTime.UtcNow;
+                
+                ((Dictionary<string, double>)metrics["timings"])["python_service_call"] = 
+                    (pythonCallEnd - pythonCallStart).TotalSeconds;
+                
+                // Parse result
+                var parseStart = DateTime.UtcNow;
+                var consistencyResult = JsonSerializer.Deserialize<ConsistencyResult>(result);
+                var parseEnd = DateTime.UtcNow;
+                
+                ((Dictionary<string, double>)metrics["timings"])["result_parsing"] = 
+                    (parseEnd - parseStart).TotalSeconds;
+                
+                // Record field counts
+                metrics["field_counts"] = new Dictionary<string, int>
                 {
-                    // Cleanup temp files
-                    if (System.IO.File.Exists(plankartPath)) System.IO.File.Delete(plankartPath);
-                    if (System.IO.File.Exists(bestemmelserPath)) System.IO.File.Delete(bestemmelserPath);
-                    if (sosiPath != null && System.IO.File.Exists(sosiPath)) System.IO.File.Delete(sosiPath);
-                }
+                    ["matching"] = consistencyResult?.MatchingFields?.Count ?? 0,
+                    ["only_in_plankart"] = consistencyResult?.OnlyInPlankart?.Count ?? 0,
+                    ["only_in_bestemmelser"] = consistencyResult?.OnlyInBestemmelser?.Count ?? 0,
+                    ["only_in_sosi"] = consistencyResult?.OnlyInSosi?.Count ?? 0,
+                    ["is_consistent"] = consistencyResult?.IsConsistent == true ? 1 : 0
+                };
+                
+                // Record end metrics
+                var endTime = DateTime.UtcNow;
+                ((Dictionary<string, double>)metrics["timings"])["total_processing"] = 
+                    (endTime - startTime).TotalSeconds;
+                
+                // Save metrics to file
+                var metricsDir = Path.Combine(Directory.GetCurrentDirectory(), "metrics");
+                Directory.CreateDirectory(metricsDir);
+                
+                var metricsFile = Path.Combine(metricsDir, $"backend_consistency_{metrics["run_id"]}.json");
+                await System.IO.File.WriteAllTextAsync(
+                    metricsFile, 
+                    JsonSerializer.Serialize(metrics, new JsonSerializerOptions { WriteIndented = true })
+                );
+                
+                // Clean up temporary files
+                Directory.Delete(tempDir, true);
+                
+                return Ok(consistencyResult);
             }
             catch (HttpRequestException ex)
             {
@@ -128,8 +180,21 @@ namespace backend.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error processing consistency check");
-                return StatusCode(500, new { detail = ex.Message });
+                // Record error in metrics
+                metrics["error"] = ex.ToString();
+                
+                // Save metrics even in case of error
+                var metricsDir = Path.Combine(Directory.GetCurrentDirectory(), "metrics");
+                Directory.CreateDirectory(metricsDir);
+                
+                var metricsFile = Path.Combine(metricsDir, $"backend_consistency_error_{metrics["run_id"]}.json");
+                await System.IO.File.WriteAllTextAsync(
+                    metricsFile, 
+                    JsonSerializer.Serialize(metrics, new JsonSerializerOptions { WriteIndented = true })
+                );
+                
+                _logger.LogError(ex, "Error checking consistency");
+                return StatusCode(500, new { error = "Error checking consistency" });
             }
         }
     }

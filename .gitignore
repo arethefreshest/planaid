@@ -78,3 +78,6 @@ processed_pdfs/
 
 # Large model files
 ner_service/src/models/*.pth
+
+# Test files in experiments
+experiments/test_documents/*

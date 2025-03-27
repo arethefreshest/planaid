@@ -11,7 +11,9 @@ describe('FileUpload Component', () => {
     it('renders and uploads a file', async () => {
         mockedAxios.post.mockResolvedValue({ data: { text: 'Test PDF Content' } });
 
-        render(<FileUpload />);
+        const mockOnUploadSuccess = jest.fn();
+
+        render(<FileUpload onUploadSuccess={mockOnUploadSuccess} />);
 
         const fileInput = screen.getByTestId('file-input');
         const uploadButton = screen.getByText('Upload');
@@ -24,5 +26,7 @@ describe('FileUpload Component', () => {
 
         const result = await screen.findByText('Test PDF Content');
         expect(result).toBeInTheDocument();
+        
+        expect(mockOnUploadSuccess).toHaveBeenCalledWith({ text: 'Test PDF Content' });
     });
 });
