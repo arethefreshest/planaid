@@ -81,3 +81,19 @@ ner_service/src/models/*.pth
 
 # Test files in experiments
 experiments/test_documents/*
+
+# metrics files 
+metrics/*
+backend/metrics/*
+ner_service/metrics/*
+python_service/metrics/*
+
+# __pycache__
+__pycache__/*
+ner_service/__pycache__/*
+ner_service/src/models/__pycache__/*
+ner_service/src/utils/__pycache__/*
+python_service/app/__pycache__/*
+python_service/app/document/__pycache__/*
+python_service/app/llm/__pycache__/*
+python_service/app/utils/__pycache__/*

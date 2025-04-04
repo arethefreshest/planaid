@@ -12,18 +12,20 @@ Features:
 - Text section extraction and analysis
 """
 
-from typing import Set, Tuple, List, Optional, Dict
+from typing import Set, Tuple, List, Optional, Dict # Dict is not accessed
 import logging
-from .models import ConsistencyResult
-from .document.pdf_handler import PdfHandler, extract_text_from_pdf
-from .config import settings, extractor
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from .models import ConsistencyResult # Not accessed
+from .document.pdf_handler import PdfHandler, extract_text_from_pdf # PdfHandler is not accessed
+from .config import settings, extractor # settings is not accessed
+from fastapi import FastAPI, File, UploadFile, HTTPException # FastAPI & File is not accessed
 import uuid
 import os
 import re
-from pydantic import BaseModel
+from pydantic import BaseModel # Not accessed
 import asyncio
 import httpx
+from app.utils.logger import logger
+import tempfile
 
 logger = logging.getLogger(__name__)
 
@@ -179,14 +181,19 @@ def normalize_field(field: str) -> str:
 
 async def extract_text_from_pdf(file: UploadFile) -> bytes:
     """Extract raw bytes from PDF file in chunks"""
-    chunk_size = 8192  # 8KB chunks
-    content = bytearray()
-    while True:
-        chunk = await file.read(chunk_size)
-        if not chunk:
-            break
-        content.extend(chunk)
-    return bytes(content)
+    try:
+        # Read the file content
+        content = await file.read()
+        if not content:
+            logger.error("Empty file received")
+            raise HTTPException(status_code=400, detail="File is empty")
+            
+        # Reset file position for future reads
+        await file.seek(0)
+        return content
+    except Exception as e:
+        logger.error(f"Error reading PDF file: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error reading PDF file: {str(e)}")
 
 async def process_consistency_check(plankart: UploadFile, bestemmelser: UploadFile, sosi: UploadFile = None):
     """Process consistency check between files"""
@@ -208,22 +215,51 @@ async def process_consistency_check(plankart: UploadFile, bestemmelser: UploadFi
         
         # Get bestemmelser fields from NER service
         try:
+            # Read the file content
+            bestemmelser_content = await extract_text_from_pdf(bestemmelser)
+            
+            # Create a temporary file
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as temp_file:
+                temp_file.write(bestemmelser_content)
+                temp_file_path = temp_file.name
+
+            # Send to NER service
             async with httpx.AsyncClient(timeout=60.0) as client:
-                files = {'file': ('bestemmelser.pdf', await extract_text_from_pdf(bestemmelser), 'application/pdf')}
-                response = await client.post('http://ner_service:8001/api/extract-fields', files=files)
-                response.raise_for_status()
-                raw_fields = set(response.json()['fields'])
+                with open(temp_file_path, 'rb') as f:
+                    files = {'file': ('bestemmelser.pdf', f, 'application/pdf')}
+                    response = await client.post('http://localhost:8001/api/extract-fields', files=files)
+                    try:
+                        response.raise_for_status()
+                    except httpx.HTTPError as e:
+                        # Try to get the detailed error message from the NER service
+                        error_detail = "Unknown error"
+                        try:
+                            error_json = response.json()
+                            if 'detail' in error_json:
+                                error_detail = error_json['detail']
+                        except Exception:
+                            pass
+                        logger.error(f"NER service error: {error_detail}")
+                        raise HTTPException(status_code=500, detail=error_detail)
+                    
+                    bestemmelser_fields = set(response.json()['fields'])
+
+            # Clean up
+            os.unlink(temp_file_path)
+            
+        except HTTPException:
+            raise
         except httpx.HTTPError as e:
-            logger.error(f"NER service error: {str(e)}")
-            raise HTTPException(status_code=502, detail="NER service unavailable")
+            logger.error(f"NER service communication error: {str(e)}")
+            raise HTTPException(status_code=502, detail=f"Failed to communicate with NER service: {str(e)}")
         except Exception as e:
             logger.error(f"Error processing bestemmelser: {str(e)}")
-            raise HTTPException(status_code=500, detail="Error processing bestemmelser")
+            raise HTTPException(status_code=500, detail=f"Error processing bestemmelser: {str(e)}")
         
         # Clean and normalize bestemmelser fields
         bestemmelser_fields = {
             normalize_field(field)
-            for field in raw_fields 
+            for field in bestemmelser_fields 
             if (
                 len(field.strip()) > 1  # Remove single characters
                 and not field.strip().startswith('på')  # Remove common noise
@@ -281,13 +317,48 @@ async def get_bestemmelser_fields(bestemmelser: UploadFile) -> Set[str]:
     
     for attempt in range(max_retries):
         try:
-            async with httpx.AsyncClient(timeout=60.0) as client:  # Increased timeout to 60 seconds
-                files = {'file': ('bestemmelser.pdf', await bestemmelser.read(), 'application/pdf')}
-                response = await client.post('http://ner_service:8001/api/extract-fields', files=files)
-                response.raise_for_status()
-                return set(response.json()['fields'])
+            # Read the file content
+            content = await bestemmelser.read()
+            if not content:
+                logger.error("Empty file received")
+                raise HTTPException(status_code=400, detail="File is empty")
+                
+            # Create a temporary file
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as temp_file:
+                temp_file.write(content)
+                temp_file_path = temp_file.name
+
+            # Send to NER service
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                with open(temp_file_path, 'rb') as f:
+                    files = {'file': ('bestemmelser.pdf', f, 'application/pdf')}
+                    response = await client.post('http://localhost:8001/api/extract-fields', files=files)
+                    try:
+                        response.raise_for_status()
+                    except httpx.HTTPError as e:
+                        # Try to get the detailed error message from the NER service
+                        error_detail = "Unknown error"
+                        try:
+                            error_json = response.json()
+                            if 'detail' in error_json:
+                                error_detail = error_json['detail']
+                        except Exception:
+                            pass
+                        logger.error(f"NER service error: {error_detail}")
+                        raise HTTPException(status_code=500, detail=error_detail)
+                    
+                    fields = set(response.json()['fields'])
+
+            # Clean up
+            os.unlink(temp_file_path)
+            
+            # Reset file position
+            await bestemmelser.seek(0)
+            
+            return fields
+            
         except httpx.HTTPError as e:
             if attempt == max_retries - 1:
                 logger.error(f"NER service communication error after {max_retries} attempts: {str(e)}")
-                raise HTTPException(status_code=502, detail=str(e))  # Include error details
-            await asyncio.sleep(retry_delay * (attempt + 1))  # Exponential backoff
+                raise HTTPException(status_code=502, detail=str(e))
+            await asyncio.sleep(retry_delay * (attempt + 1))

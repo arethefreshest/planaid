@@ -19,10 +19,7 @@ from abc import ABC, abstractmethod
 import xml.etree.ElementTree as ET
 from pypdf import PdfReader
 import io
-import logging
-
-# Set up logging
-logger = logging.getLogger(__name__)
+from app.utils.logger import logger
 
 class DocumentHandler(ABC):
     """

@@ -4,12 +4,16 @@ import os
 import psutil
 from datetime import datetime
 from typing import Dict, Any, Optional, Set
-import logging
+from app.utils.logger import logger
+from pathlib import Path
 
-logger = logging.getLogger(__name__)
+# Get the app's root directory
+APP_ROOT = Path(__file__).parent.parent
+METRICS_DIR = APP_ROOT / "metrics"
 
 # Ensure metrics directory exists
-os.makedirs("metrics", exist_ok=True)
+os.makedirs(METRICS_DIR, exist_ok=True)
+logger.info(f"Metrics directory: {METRICS_DIR}")
 
 class MetricsCollector:
     """Collects and saves metrics for processing operations."""
@@ -110,12 +114,13 @@ class MetricsCollector:
         
         # Save metrics to file
         try:
-            metrics_file = f"metrics/{self.operation_name}_{self.run_id}.json"
+            metrics_file = METRICS_DIR / f"{self.operation_name}_{self.run_id}.json"
             with open(metrics_file, "w") as f:
                 json.dump(self.metrics, f, indent=2)
             logger.info(f"Metrics saved to {metrics_file}")
         except Exception as e:
             logger.error(f"Error saving metrics: {str(e)}")
+            raise
         
         return self.metrics
     
@@ -132,11 +137,12 @@ class MetricsCollector:
         
         # Save metrics even in case of error
         try:
-            metrics_file = f"metrics/{self.operation_name}_error_{self.run_id}.json"
+            metrics_file = METRICS_DIR / f"{self.operation_name}_error_{self.run_id}.json"
             with open(metrics_file, "w") as f:
                 json.dump(self.metrics, f, indent=2)
             logger.info(f"Error metrics saved to {metrics_file}")
         except Exception as e:
             logger.error(f"Error saving metrics: {str(e)}")
+            raise
         
         return self.metrics 

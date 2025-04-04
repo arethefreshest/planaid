@@ -142,8 +142,8 @@ const ConsistencyCheck: React.FC = () => {
         }
       );
 
-      // The backend wraps the result in a "result" property
-      const resultData = response.data.result;
+      // The backend returns the result directly
+      const resultData = response.data;
       
       setResult({
         matching_fields: resultData.matching_fields || [],

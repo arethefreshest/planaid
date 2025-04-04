@@ -9,4 +9,5 @@ pdfplumber
 fastapi
 uvicorn
 python-multipart
-psutil==5.9.5
+psutil>=6.1.0
+pydantic>=2.6.1,<2.10.0

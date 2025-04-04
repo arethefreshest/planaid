@@ -1,6 +1,5 @@
 import React, { useState, CSSProperties } from "react";
 import axios from "axios";
-import CircularProgress from "../components/CircularProgress";
 import { logger } from "../utils/logger";
 
 // Define FileType inside this component
@@ -9,13 +8,18 @@ type FileType = "plankart" | "bestemmelser" | "sosi";
 const API_URL = process.env.REACT_APP_API_URL ?? "http://localhost:5251";
 
 // Configuration constants
-const ALLOWED_TYPES = ["application/pdf", "text/xml"];
+const ALLOWED_TYPES = ["application/pdf", "text/xml", "text/plain", "application/octet-stream"];
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 // Validation function
 const validateFile = (file: File): string | null => {
+  // For SOSI files, check the extension instead of MIME type
+  if (file.name.toLowerCase().endsWith('.sos')) {
+    return null;
+  }
+  
   if (!ALLOWED_TYPES.includes(file.type)) {
-    return "Ugyldig filformat. Vennligst last opp PDF eller XML fil.";
+    return "Ugyldig filformat. Vennligst last opp PDF, XML eller SOSI fil.";
   }
   if (file.size > MAX_FILE_SIZE) {
     return "Filen er for stor. Maksimal størrelse er 10MB.";
@@ -28,7 +32,6 @@ const FileUpload = ({ onUploadSuccess }: { onUploadSuccess: (result: any) => voi
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
-  const [processingStep, setProcessingStep] = useState<string>("");
 
   const handleFileChange = (type: FileType) => (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
@@ -72,7 +75,7 @@ const FileUpload = ({ onUploadSuccess }: { onUploadSuccess: (result: any) => voi
         },
       });
 
-      onUploadSuccess(response.data.result);
+      onUploadSuccess(response.data);
     } catch (err) {
       logger.error("Feil under analyse:", err);
       setError(err instanceof Error ? err.message : "En feil oppstod");

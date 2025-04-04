@@ -20,7 +20,8 @@ using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 using System.Collections.Generic;
 
-namespace backend.Services {
+namespace backend.Services 
+{
     public class PythonIntegrationService : IPythonIntegrationService
     {
         private readonly HttpClient _httpClient;
@@ -47,17 +48,20 @@ namespace backend.Services {
                 using var formData = new MultipartFormDataContent();
                 
                 // Add files with proper content type
-                using var plankartContent = new StreamContent(File.OpenRead(plankartPath));
+                using var plankartStream = File.OpenRead(plankartPath);
+                using var plankartContent = new StreamContent(plankartStream);
                 plankartContent.Headers.ContentType = new MediaTypeHeaderValue(GetContentType(plankartPath));
                 formData.Add(plankartContent, "plankart", Path.GetFileName(plankartPath));
 
-                using var bestemmelserContent = new StreamContent(File.OpenRead(bestemmelserPath));
+                using var bestemmelserStream = File.OpenRead(bestemmelserPath);
+                using var bestemmelserContent = new StreamContent(bestemmelserStream);
                 bestemmelserContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
                 formData.Add(bestemmelserContent, "bestemmelser", Path.GetFileName(bestemmelserPath));
 
                 if (sosiPath != null)
                 {
-                    using var sosiContent = new StreamContent(File.OpenRead(sosiPath));
+                    using var sosiStream = File.OpenRead(sosiPath);
+                    using var sosiContent = new StreamContent(sosiStream);
                     sosiContent.Headers.ContentType = new MediaTypeHeaderValue("text/xml");
                     formData.Add(sosiContent, "sosi", Path.GetFileName(sosiPath));
                 }
@@ -104,7 +108,8 @@ namespace backend.Services {
             try
             {
                 using var formData = new MultipartFormDataContent();
-                using var fileContent = new StreamContent(File.OpenRead(bestemmelserPath));
+                using var fileStream = File.OpenRead(bestemmelserPath);
+                using var fileContent = new StreamContent(fileStream);
                 fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
                 formData.Add(fileContent, "file", Path.GetFileName(bestemmelserPath));
 
