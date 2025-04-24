@@ -1,5 +1,5 @@
 # Base stage
-FROM python:3.9-slim AS base
+FROM python:3.9 AS base
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
@@ -15,6 +15,9 @@ RUN apt-get update && apt-get install -y \
     python3-dev \
     curl \
     && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip and install wheel
+RUN pip install --upgrade pip setuptools wheel
 
 # Copy requirements first to leverage Docker cache
 COPY requirements.txt .
@@ -46,7 +49,7 @@ RUN pip install --no-cache-dir gunicorn
 EXPOSE 8001
 
 # Run gunicorn with proper logging configuration
-CMD ["gunicorn", "main:app", "--bind", "0.0.0.0:8001", "--workers", "4", "--timeout", "120", "--worker-class", "uvicorn.workers.UvicornWorker", "--access-logfile", "-", "--error-logfile", "-", "--log-level", "debug"]
+CMD ["gunicorn", "main:app", "--bind", "0.0.0.0:8001", "--workers", "1", "--timeout", "120", "--worker-class", "uvicorn.workers.UvicornWorker", "--access-logfile", "-", "--error-logfile", "-", "--log-level", "debug", "--preload"]
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \

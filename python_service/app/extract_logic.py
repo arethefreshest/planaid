@@ -345,7 +345,7 @@ async def get_bestemmelser_fields(bestemmelser: UploadFile) -> Set[str]:
             async with httpx.AsyncClient(timeout=60.0) as client:
                 with open(temp_file_path, 'rb') as f:
                     files = {'file': ('bestemmelser.pdf', f, 'application/pdf')}
-                    response = await client.post('http://localhost:8001/api/extract-fields', files=files)
+                    response = await client.post(f'{NER_SERVICE_URL}/api/extract-fields', files=files)
                     try:
                         response.raise_for_status()
                     except httpx.HTTPError as e:

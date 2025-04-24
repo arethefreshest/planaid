@@ -19,6 +19,7 @@ import httpx
 from typing import Dict, Any
 from app.metrics import MetricsCollector
 from app.utils.logger import logger
+import os
 
 app = FastAPI()
 
@@ -133,7 +134,8 @@ async def health_check():
     try:
         async with httpx.AsyncClient() as client:
             # Check NER service health
-            ner_response = await client.get("http://localhost:8001/health")
+            ner_url = os.getenv('NER_SERVICE_URL', 'http://157.230.21.199:8001')
+            ner_response = await client.get(f"{ner_url}/health")
             ner_response.raise_for_status()
             
             return {
