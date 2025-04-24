@@ -1,47 +1,44 @@
 import logging
 import os
-from datetime import datetime
 from pathlib import Path
 
-def setup_logger(name: str) -> logging.Logger:
-    """
-    Set up a logger with consistent formatting and file output
+def setup_logger(name: str, log_level: str = "INFO") -> logging.Logger:
+    # Convert string log level to numeric value
+    numeric_level = getattr(logging, log_level.upper(), logging.INFO)
     
-    Args:
-        name: The name of the logger (typically __name__ from the calling module)
-        
-    Returns:
-        logging.Logger: Configured logger instance
-    """
-    # Create logs directory if it doesn't exist
-    log_dir = Path("logs")
-    log_dir.mkdir(exist_ok=True)
-    
-    # Create logger
+    # Get logger
     logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(numeric_level)  # Set the level here
     
-    # Create formatters
-    file_formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
-    console_formatter = logging.Formatter(
-        '%(levelname)s: %(message)s'
-    )
-    
-    # Create file handler
-    log_file = log_dir / f"ner_service_{datetime.now().strftime('%Y%m%d')}.log"
-    file_handler = logging.FileHandler(log_file)
-    file_handler.setLevel(logging.INFO)
-    file_handler.setFormatter(file_formatter)
+    # Clear any existing handlers to avoid duplicates
+    if logger.handlers:
+        logger.handlers = []
     
     # Create console handler
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.INFO)
+    console_handler.setLevel(numeric_level)
+    console_formatter = logging.Formatter('%(levelname)s: %(message)s')
     console_handler.setFormatter(console_formatter)
-    
-    # Add handlers to logger
-    logger.addHandler(file_handler)
     logger.addHandler(console_handler)
     
-    return logger 
+    # Create file handler
+    try:
+        # Try to create logs directory in /app/logs first (Docker)
+        logs_dir = Path('/app/logs')
+        if not logs_dir.exists():
+            # Fall back to local logs directory
+            logs_dir = Path('logs')
+        logs_dir.mkdir(exist_ok=True)
+        
+        file_handler = logging.FileHandler(logs_dir / f'{name}.log')
+        file_handler.setLevel(numeric_level)
+        file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        file_handler.setFormatter(file_formatter)
+        logger.addHandler(file_handler)
+    except Exception as e:
+        logger.warning(f"Failed to setup file logging: {str(e)}")
+    
+    # Ensure logs propagate to root logger
+    logger.propagate = True
+    
+    return logger

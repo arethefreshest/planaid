@@ -12,7 +12,8 @@ import re
 from typing import List
 import os
 
-logger = setup_logger(__name__)
+# Set up logger for inference module
+logger = setup_logger("inference", log_level="DEBUG")
 
 # Global variables for models
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -215,9 +216,9 @@ def get_predictions(sent_tokens, model, tokenizer):
                 combined_tokens[-1] += ' ' + token
         
         final_preds.extend(combined_tokens)
+        logger.debug(f"Processed sentence: {sent}")
+        logger.debug(f"Found tokens: {combined_tokens}")
 
-        # TODO: Make a regex function that show all zones in 'BKS1-BKS6'
-            
     logger.info(f"Found {len(final_preds)} unique predictions")
     return list(dict.fromkeys(final_preds)) # Only return unique tokens
 

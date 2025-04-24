@@ -16,6 +16,7 @@ from typing import Set, Tuple, List, Optional, Dict # Dict is not accessed
 import logging
 from .models import ConsistencyResult # Not accessed
 from .document.pdf_handler import PdfHandler, extract_text_from_pdf # PdfHandler is not accessed
+from .document.sosi_handler import extract_fields_from_sosi
 from .config import settings, extractor # settings is not accessed
 from fastapi import FastAPI, File, UploadFile, HTTPException # FastAPI & File is not accessed
 import uuid
@@ -29,7 +30,8 @@ import tempfile
 
 logger = logging.getLogger(__name__)
 
-
+# Get NER service URL from environment
+NER_SERVICE_URL = os.getenv('NER_SERVICE_URL', 'http://157.230.21.199:8001')
 
 async def extract_fields_from_file(file: UploadFile) -> Set[str]:
     """
@@ -227,8 +229,10 @@ async def process_consistency_check(plankart: UploadFile, bestemmelser: UploadFi
             async with httpx.AsyncClient(timeout=60.0) as client:
                 with open(temp_file_path, 'rb') as f:
                     files = {'file': ('bestemmelser.pdf', f, 'application/pdf')}
-                    response = await client.post('http://localhost:8001/api/extract-fields', files=files)
+                    logger.info(f"Sending request to NER service at {NER_SERVICE_URL}")
                     try:
+                        response = await client.post(f'{NER_SERVICE_URL}/api/extract-fields', files=files)
+                        logger.info(f"NER service response status: {response.status_code}")
                         response.raise_for_status()
                     except httpx.HTTPError as e:
                         # Try to get the detailed error message from the NER service
@@ -243,6 +247,7 @@ async def process_consistency_check(plankart: UploadFile, bestemmelser: UploadFi
                         raise HTTPException(status_code=500, detail=error_detail)
                     
                     bestemmelser_fields = set(response.json()['fields'])
+                    logger.info(f"Received {len(bestemmelser_fields)} fields from NER service")
 
             # Clean up
             os.unlink(temp_file_path)
@@ -272,9 +277,17 @@ async def process_consistency_check(plankart: UploadFile, bestemmelser: UploadFi
         # Handle SOSI if present
         sosi_fields = set()
         if sosi:
-            sosi_content = await extract_text_from_pdf(sosi)
-            sosi_fields = await extractor.extract_fields(sosi_content)
+            # Read SOSI content
+            sosi_content = await sosi.read()
+            sosi_fields = await extract_fields_from_sosi(sosi_content)
             logger.debug(f"SOSI fields: {sosi_fields}")
+            
+            # Clean and normalize SOSI fields
+            sosi_fields = {
+                normalize_field(field)
+                for field in sosi_fields
+                if normalize_field(field) is not None
+            }
 
         # Calculate differences
         only_plankart = plankart_fields - (bestemmelser_fields | sosi_fields)

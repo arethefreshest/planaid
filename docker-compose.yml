@@ -74,27 +74,21 @@ services:
 
   ner_service:
     build:
-      context: .
-      dockerfile: ner_service/Dockerfile
-      target: development
+      context: ./ner_service
+      dockerfile: Dockerfile
     ports:
       - "8001:8001"
     volumes:
       - ./ner_service:/app
-      - ./ner_service/src:/app/src
-      - ./ner_service/src/models:/app/src/models
-      - ./ner_service/src/model_params.yaml:/app/src/model_params.yaml
-      - ner-models:/root/.cache/spacy
-      - ./metrics/ner_service:/app/metrics
+      - ./logs/ner_service:/app/logs
     environment:
-      - PYTHONUNBUFFERED=1
-      - PYTHONDONTWRITEBYTECODE=1
-      - PYTHONPATH=/app
+      - LOG_LEVEL=DEBUG
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
+    restart: unless-stopped
     networks:
       - planaid-network
     healthcheck:
