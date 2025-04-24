@@ -93,6 +93,7 @@ __pycache__/*
 ner_service/__pycache__/*
 ner_service/src/models/__pycache__/*
 ner_service/src/utils/__pycache__/*
+ner_service/.env.production
 python_service/app/__pycache__/*
 python_service/app/document/__pycache__/*
 python_service/app/llm/__pycache__/*
