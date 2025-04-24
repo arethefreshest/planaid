@@ -12,15 +12,20 @@ const ALLOWED_TYPES = ["application/pdf", "text/xml", "text/plain", "application
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 // Validation function
-const validateFile = (file: File): string | null => {
+const validateFile = (file: File, type: FileType): string | null => {
   // For SOSI files, check the extension instead of MIME type
-  if (file.name.toLowerCase().endsWith('.sos')) {
+  if (type === "sosi" as FileType) {
+    if (!file.name.toLowerCase().endsWith('.sos')) {
+      return "SOSI filer må ha .sos filendelse.";
+    }
     return null;
   }
   
-  if (!ALLOWED_TYPES.includes(file.type)) {
-    return "Ugyldig filformat. Vennligst last opp PDF, XML eller SOSI fil.";
+  // For PDF files (plankart and bestemmelser)
+  if (type !== "sosi" as FileType && !file.type.includes('pdf')) {
+    return `${type.charAt(0).toUpperCase() + type.slice(1)} må være en PDF fil.`;
   }
+  
   if (file.size > MAX_FILE_SIZE) {
     return "Filen er for stor. Maksimal størrelse er 10MB.";
   }
@@ -36,7 +41,7 @@ const FileUpload = ({ onUploadSuccess }: { onUploadSuccess: (result: any) => voi
   const handleFileChange = (type: FileType) => (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
       const file = e.target.files[0];
-      const validationError = validateFile(file);
+      const validationError = validateFile(file, type);
 
       if (validationError) {
         setError(validationError);
@@ -65,7 +70,14 @@ const FileUpload = ({ onUploadSuccess }: { onUploadSuccess: (result: any) => voi
       formData.append("bestemmelser", files.bestemmelser);
       if (files.sosi) {
         formData.append("sosi", files.sosi);
+        logger.info("Including SOSI file in upload");
       }
+
+      logger.info("Sending files to backend:", {
+        plankart: files.plankart.name,
+        bestemmelser: files.bestemmelser.name,
+        sosi: files.sosi?.name
+      });
 
       const response = await axios.post(`${API_URL}/api/check-field-consistency`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -93,8 +105,13 @@ const FileUpload = ({ onUploadSuccess }: { onUploadSuccess: (result: any) => voi
           {["plankart", "bestemmelser", "sosi"].map((type) => (
             <div key={type} style={styles.fileInputWrapper}>
               <label style={styles.fileInput}>
-                {type.toUpperCase()} 
-                <input type="file" onChange={handleFileChange(type as FileType)} accept=".pdf,.xml,.sos" style={{ display: 'none' }} />
+                {type === "sosi" ? "SOSI (valgfri)" : type.toUpperCase()}
+                <input 
+                  type="file" 
+                  onChange={handleFileChange(type as FileType)} 
+                  accept={type === "sosi" ? ".sos" : ".pdf"} 
+                  style={{ display: 'none' }} 
+                />
               </label>
               {files[type as FileType] && <p style={styles.fileName}>{files[type as FileType]?.name}</p>}
             </div>

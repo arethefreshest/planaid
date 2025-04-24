@@ -64,6 +64,10 @@ namespace backend.Controllers
             {
                 _logger.LogInformation($"Received files: {plankart.FileName}, {bestemmelser.FileName}");
                 _logger.LogInformation($"Content types: {plankart.ContentType}, {bestemmelser.ContentType}");
+                if (sosi != null)
+                {
+                    _logger.LogInformation($"SOSI file included: {sosi.FileName}, type: {sosi.ContentType}");
+                }
                 
                 if (plankart == null || bestemmelser == null)
                 {

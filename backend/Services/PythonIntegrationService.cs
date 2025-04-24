@@ -45,46 +45,59 @@ namespace backend.Services
                     throw new InvalidOperationException("HttpClient BaseAddress is not configured");
                 }
 
-                using var formData = new MultipartFormDataContent();
-                
-                // Add files with proper content type
-                using var plankartStream = File.OpenRead(plankartPath);
-                using var plankartContent = new StreamContent(plankartStream);
-                plankartContent.Headers.ContentType = new MediaTypeHeaderValue(GetContentType(plankartPath));
-                formData.Add(plankartContent, "plankart", Path.GetFileName(plankartPath));
+                // Create streams and content objects that will be disposed at the end
+                var plankartStream = File.OpenRead(plankartPath);
+                var plankartContent = new StreamContent(plankartStream);
+                var bestemmelserStream = File.OpenRead(bestemmelserPath);
+                var bestemmelserContent = new StreamContent(bestemmelserStream);
+                var formData = new MultipartFormDataContent();
 
-                using var bestemmelserStream = File.OpenRead(bestemmelserPath);
-                using var bestemmelserContent = new StreamContent(bestemmelserStream);
-                bestemmelserContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
-                formData.Add(bestemmelserContent, "bestemmelser", Path.GetFileName(bestemmelserPath));
-
-                if (sosiPath != null)
+                try
                 {
-                    using var sosiStream = File.OpenRead(sosiPath);
-                    using var sosiContent = new StreamContent(sosiStream);
-                    sosiContent.Headers.ContentType = new MediaTypeHeaderValue("text/xml");
-                    formData.Add(sosiContent, "sosi", Path.GetFileName(sosiPath));
-                }
+                    // Add files with proper content type
+                    plankartContent.Headers.ContentType = new MediaTypeHeaderValue(GetContentType(plankartPath));
+                    formData.Add(plankartContent, "plankart", Path.GetFileName(plankartPath));
 
-                var requestUri = new Uri(_httpClient.BaseAddress!, "api/check-field-consistency");
-                _logger.LogInformation($"Sending request to: {requestUri}");
-                
-                var response = await _httpClient.PostAsync(requestUri, formData);
-                var content = await response.Content.ReadAsStringAsync();
-                
-                if (!response.IsSuccessStatusCode)
-                {
-                    _logger.LogError($"Python service returned error. Status: {response.StatusCode}, Content: {content}");
-                    throw new HttpRequestException($"Python service error: {content}");
-                }
-                
-                if (string.IsNullOrEmpty(content))
-                {
-                    _logger.LogError("Python service returned empty response");
-                    throw new HttpRequestException("Python service returned empty response");
-                }
+                    bestemmelserContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+                    formData.Add(bestemmelserContent, "bestemmelser", Path.GetFileName(bestemmelserPath));
 
-                return content;
+                    if (sosiPath != null)
+                    {
+                        var sosiStream = File.OpenRead(sosiPath);
+                        var sosiContent = new StreamContent(sosiStream);
+                        sosiContent.Headers.ContentType = new MediaTypeHeaderValue("text/xml");
+                        formData.Add(sosiContent, "sosi", Path.GetFileName(sosiPath));
+                    }
+
+                    var requestUri = new Uri(_httpClient.BaseAddress!, "api/check-field-consistency");
+                    _logger.LogInformation($"Sending request to: {requestUri}");
+                    
+                    var response = await _httpClient.PostAsync(requestUri, formData);
+                    var content = await response.Content.ReadAsStringAsync();
+                    
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        _logger.LogError($"Python service returned error. Status: {response.StatusCode}, Content: {content}");
+                        throw new HttpRequestException($"Python service error: {content}");
+                    }
+                    
+                    if (string.IsNullOrEmpty(content))
+                    {
+                        _logger.LogError("Python service returned empty response");
+                        throw new HttpRequestException("Python service returned empty response");
+                    }
+
+                    return content;
+                }
+                finally
+                {
+                    // Ensure all resources are properly disposed
+                    plankartContent.Dispose();
+                    bestemmelserContent.Dispose();
+                    plankartStream.Dispose();
+                    bestemmelserStream.Dispose();
+                    formData.Dispose();
+                }
             }
             catch (Exception ex)
             {
@@ -107,23 +120,33 @@ namespace backend.Services
         {
             try
             {
-                using var formData = new MultipartFormDataContent();
-                using var fileStream = File.OpenRead(bestemmelserPath);
-                using var fileContent = new StreamContent(fileStream);
-                fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
-                formData.Add(fileContent, "file", Path.GetFileName(bestemmelserPath));
+                var fileStream = File.OpenRead(bestemmelserPath);
+                var fileContent = new StreamContent(fileStream);
+                var formData = new MultipartFormDataContent();
 
-                var response = await _nerHttpClient.PostAsync("api/extract-fields", formData);
-                var content = await response.Content.ReadAsStringAsync();
-
-                if (!response.IsSuccessStatusCode)
+                try
                 {
-                    _logger.LogError($"NER service returned error: {content}");
-                    throw new HttpRequestException($"NER service error: {content}");
-                }
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+                    formData.Add(fileContent, "file", Path.GetFileName(bestemmelserPath));
 
-                var result = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(content);
-                return result?["fields"]?.ToArray() ?? Array.Empty<string>();
+                    var response = await _nerHttpClient.PostAsync("api/extract-fields", formData);
+                    var content = await response.Content.ReadAsStringAsync();
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        _logger.LogError($"NER service returned error: {content}");
+                        throw new HttpRequestException($"NER service error: {content}");
+                    }
+
+                    var result = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(content);
+                    return result?["fields"]?.ToArray() ?? Array.Empty<string>();
+                }
+                finally
+                {
+                    fileContent.Dispose();
+                    fileStream.Dispose();
+                    formData.Dispose();
+                }
             }
             catch (Exception ex)
             {
