@@ -38,31 +38,32 @@ const log = (level: LogLevel, message: string, data?: any) => {
   
   // Always log to console in development
   if (process.env.NODE_ENV === 'development') {
+    const timestamp = new Date().toLocaleTimeString();
     switch (level) {
       case 'info':
-        console.info(`[${level.toUpperCase()}] ${message}`, data);
+        console.info(`[${timestamp}] [INFO] ${message}`, data);
         break;
       case 'error':
-        console.error(`[${level.toUpperCase()}] ${message}`, data);
+        console.error(`[${timestamp}] [ERROR] ${message}`, data);
         break;
       case 'warn':
-        console.warn(`[${level.toUpperCase()}] ${message}`, data);
+        console.warn(`[${timestamp}] [WARN] ${message}`, data);
         break;
       case 'debug':
-        console.debug(`[${level.toUpperCase()}] ${message}`, data);
+        console.debug(`[${timestamp}] [DEBUG] ${message}`, data);
         break;
     }
   }
-
-  // Send logs to backend
+  
+  // Send to backend
   fetch(`${API_URL}/api/log`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(logMessage)
-  }).catch(err => {
-    console.error('Failed to send log to backend:', err);
+  }).catch(error => {
+    console.error('Failed to send log to backend:', error);
   });
 };
 

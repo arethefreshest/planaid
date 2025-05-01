@@ -6,6 +6,7 @@ interface Result {
   matching_fields: string[];
   only_in_plankart: string[];
   only_in_bestemmelser: string[];
+  only_in_sosi: string[];
 }
 
 const ConsistencyResults = ({ result }: { result: Result }) => {
@@ -16,6 +17,7 @@ const ConsistencyResults = ({ result }: { result: Result }) => {
       Matching: { background: "#d1fae5", color: "#065f46" }, // Green
       Plankart: { background: "#bfdbfe", color: "#1e3a8a" }, // Blue
       Bestemmelser: { background: "#fde68a", color: "#92400e" }, // Yellow
+      SOSI: { background: "#e9d5ff", color: "#6b21a8" }, // Purple for SOSI
     } as const; // Use 'as const' to infer literal types
 
     type Category = keyof typeof colorMap; // Define a type for the keys of colorMap
@@ -23,6 +25,7 @@ const ConsistencyResults = ({ result }: { result: Result }) => {
     let category: Category = "Matching"; // Initialize category with a valid key
     if (result.only_in_plankart.includes(field)) category = "Plankart";
     if (result.only_in_bestemmelser.includes(field)) category = "Bestemmelser";
+    if (result.only_in_sosi.includes(field)) category = "SOSI";
 
     return {
       display: "inline-flex",
@@ -73,6 +76,19 @@ const ConsistencyResults = ({ result }: { result: Result }) => {
           <h4 style={styles.title}>Kun i Bestemmelser</h4>
           <div style={styles.container}>
             {result.only_in_bestemmelser.map((field: string) => (
+              <span key={field} style={getBadgeStyle(field)}>
+                {field}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {result.only_in_sosi && result.only_in_sosi.length > 0 && (
+        <div style={styles.section}>
+          <h4 style={styles.title}>Kun i SOSI</h4>
+          <div style={styles.container}>
+            {result.only_in_sosi.map((field: string) => (
               <span key={field} style={getBadgeStyle(field)}>
                 {field}
               </span>

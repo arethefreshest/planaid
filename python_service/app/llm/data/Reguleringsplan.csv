@@ -1,0 +1,249 @@
+Formål;SOSI-kode;Benevnelseskode;Kortform;Fargekode - Hex;Fargekode - RGB;Fargekode - CMYK
+1. Bebyggelse og anlegg;(1000);;;;;
+Bebyggelse og anlegg;1001;BA;;FFCC00;;
+Boligbebyggelse;1110;B;;FFFF33;;
+Boligbebyggelse-frittliggende småhusbebyggelse;1111;BF;;FFFF99;;
+Boligbebyggelse-konsentrert småhusbebyggelse;1112;BK;;FFFF33;;
+Boligbebyggelse-blokkbebyggelse;1113;BB;;FFFF33;;
+Garasjeanlegg for bolig-/fritidsbebyggelse;1119;BGF;;FFFF33;;
+Fritidsbebyggelse;1120;FB;;FFCC66;;
+Fritidsbebyggelse-frittliggende;1121;FBF;;FFE7AE;;
+Fritidsbebyggelse-konsentrert;1122;FBK;;FFCC66;;
+Fritidsbebyggelse-blokk;1123;FBB;;FFCC66;;
+Kolonihage;1124;FBH;;FFCC66;;
+Sentrumsformål;1130;SF;;CC9900;;
+Kjøpesenter;1140;KS;;CC99CC;;
+Forretninger;1150;FOR;;CCCCFF;;
+Offentlig eller privat tjenesteyting;1160;T;;FF9999;;
+Barnehage;1161;BH;;FF9999;;
+Undervisning;1162;UN;;FF9999;;
+Helse-/omsorgsinstitusjon;1168;REL;;FF9999;;
+Kulturinstutisjon;1167;ADM;;CC6600;;
+Forsamlingslokale for religionutøvelse;1164;KU;;FF9999;;
+Administrasjon;1166;HOM;;FF9999;;
+Annen offentlig eller privat tjenesteyting;1169;AT;;FF9999;;
+Fritids- og turistformål;1170;FTU;;9999CC;;
+Utleiehytter;1171;UTL;;9999CC;;
+Fornøyelsespark eller temapark;1172;FPT;;9999CC;;
+Campingplass;1173;C;;9999CC;;
+Leirplass;1174;LP;;9999CC;;
+Råstoffutvinning;1200;RU;;CC9999;;
+Steinbrudd og masseuttak;1201;SM;;CC9999;;
+Næringsbebyggelse;1300;NÆ;;9966FF;;
+Kontor;1310;K;;CC99FF;;
+Hotell/overnatting;1320;HO;;CC99FF;;
+Bevertning;1330;BE;;CC99FF;;
+Industri;1340;IND;;CC66FF;;
+Lager;1350;LA;;CC66FF;;
+Bensinstasjon/vegserviceanlegg;1360;BV;;CC66FF;;
+Annen næring;1390;ANÆ;;9966FF;;
+Idrettsanlegg;1400;IDR;;99CC00;;
+Skianlegg;1410;ISA;;99CC00;;
+Skiløypetrasé;1420;SKI;;99CC00;;
+Idrettsstadion;1430;IS;;669900;;
+Nærmiljøanlegg;1440;NMA;;99CC00;;
+Golfbane;1450;GO;;CCFF33;;
+Motorsportanlegg;1460;MOT;;669900;;
+Skytebane;1470;SKB;;669900;;
+Andre idrettsanlegg;1490;AI;;99CC00;;
+Andre typer bebyggelse og anlegg;1500;ABA;;FF9933;;
+Godsterminal;1501;GOT;;FF9933;;
+Godslager;1502;GOL;;FF9933;;
+Energianlegg;1510;EA;;FF9933;;
+Fjernvarmeanlegg;1520;FVA;;FF9933;;
+Vindkraftanlegg;1530;VKA;;FF9933;;
+Vann- og avløpsanlegg;1540;VA;;FF9933;;
+Vannforsyningsanlegg;1541;VF;;FF9933;;
+Avløpsanlegg;1542;AV;;FF9933;;
+Renovasjonsanlegg;1550;RA;;FF9933;;
+Øvrige kommunaltekniske anlegg;1560;ØK;;FF9933;;
+Telekommunikasjonsanlegg;1570;TK;;FF9933;;
+Småbåtanlegg i sjø og vassdrag;1587;SMB;;FF9933;;
+Småbåtanlegg i sjø og vassdrag med tilhørende strandsone;1588;SMS;;FF9933;;
+Uthus/naust/badehus;1589;UNB;;FF9933;;
+Annen særskilt angitt bebyggelse og anlegg;1590;ASB;;FF9933;;
+Uteoppholdsareal;1600;UTE;;66CC99;;
+Lekeplass;1610;LEK;;66CC99;;
+Gårdsplass;1620;GPL;;66CC99;;
+Parsellhage;1630;HA;;66CC99;;
+Annet uteoppholdsareal;1690;AUT;;66CC99;;
+Grav- og urnelund;1700;GU;;CC6699;;
+Krematorium;1710;KR;;CC6699;;
+Nødvendige bygg og anlegg for grav- og urnelund;1730;BGU;;CC6699;;
+Kombinert bebyggelse og anleggsformål;1800;KBA;;"FFCC00
+FFFFFF";;
+Bolig/forretning;1801;B/F;;"FFFF00
+CCCCFF";;
+Bolig/forretning/kontor;1802;B/F/K;;"FFFF00
+CCCCFFCC99FF";;
+Bolig/tjenesteyting;1803;B/T;;"FFFF00
+FF9999";;
+Bolig/kontor;1804;B/K;;"FFFF00
+CC99FF";;
+Forretning/kontor;1810;F/K;;"CCCCFF
+CC99FF";;
+Forretning/kontor/industri;1811;F/K/I;;"CCCCFF
+CC66FF
+CC99FF";;
+Forretning/industri;1812;F/I;;"CCCCFF
+CC66FF";;
+Forretning/kontor/tjenesteyting;1813;F/K/T;;"CCCCFF
+CC99FF
+FF9999";;
+Forretning/tjenesteyting;1814;F/T;;"CCCCFF
+FF9999";;
+Næring/tjenesteyting;1824;N/T;;"9966FF
+FF9999";;
+Kontor/lager;1825;K/L;;"CC99FF
+9966FF";;
+Industri/lager;1826;I/L;;"CC66FF
+FFCC00";;
+Kontor/industri;1830;K/I;;"CC99FF
+CC66FF";;
+Kontor/tjenesteyting;1831;K/T;;"CC99FF
+FF9999";;
+Angitt bebyggelse og anleggsformål kombinert med andre angitte hovedformål;1900;BAA;;"FFCC00
+FFFF99";;
+;;;;;;
+2. Samferdselsanlegg og teknisk infrastruktur;(2000);;;;;
+Samferdselsanlegg og teknisk infrastruktur (arealer);2001;ST;;999999;;
+Veg;2010;V;;CCCCCC;;
+Kjøreveg;2011;KV;;CCCCCC;;
+Fortau;2012;FO;;FFCCCC;;
+Torg;2013;TO;;FFCCCC;;
+Gatetun;2014;GT;;F0DDDB;;
+Gang-/sykkelveg;2015;GS;;FFCCCC;;
+Gangveg/gangareal/gågate;2016;GG;;FFCCCC;;
+Sykkelanlegg;2017;SA;;FFCCCC;;
+Annen veggrunn - tekniske anlegg;2018;AVT;;999999;;
+Annen veggrunn - grøntareal;2019;AVG;;999966;;
+Bane (nærmere angitt baneformål);2020;BAN;;CC9966;;
+Trasé for jernbane;2021;JB;;CC9966;;
+Trasé for sporveg/forstadsbane;2022;SV;;CC9966;;
+Trasé for taubane;2023;TB;;CC9966;;
+Stasjons-/terminalbygg;2024;BST;;CC9966;;
+Holdeplass/plattform;2025;HPP;;CC9966;;
+Leskur/plattformtak;2026;LPL;;CC9966;;
+Tekniske bygg/konstruksjoner;2027;SBK;;CC9966;;
+Annen banegrunn - tekniske anlegg;2028;ABT;;CC9966;;
+Annen banegrunn - grøntareal;2029;ABG;;999966;;
+Lufthavn;2030;LHA;;999999;;
+Lufthavn - landings-/taxebane;2031;LHL;;999999;;
+Lufthavn - terminalbygg;2032;LT;;999999;;
+Lufthavn - hangarer/administrasjonsbygg;2033;LHH;;999999;;
+Landingsplass for helikopter o.a.;2034;LHE;;999999;;
+Havn;2040;H;;99CCCC;;
+Kai;2041;KAI;;99CCCC;;
+Havneterminaler;2042;HT;;99CCCC;;
+Havnelager;2043;HL;;99CCCC;;
+Molo;2044;MO;;33BEBE;;
+Navigasjonsinstallasjon;2045;NI;;33BEBE;;
+Hovednett for sykkel;2050;HS;;FFCCCC;;
+Kollektivnett;2060;KO;;CC9966;;
+Trasé for nærmere angitt kollektivtransport;2061;AK;;CC9966;;
+Kollektivknutepunkt;2070;KK;;CC9966;;
+Kollektivanlegg;2071;KA;;CC9966;;
+Kollektivterminal;2072;KOT;;CC9966;;
+Kollektivholdeplass;2073;KH;;CC9966;;
+Pendler-/innfartsparkering;2074;PI;;CC9966;;
+Parkering;2080;P;;B9B9B9;;
+Rasteplass;2081;RP;;B9B9B9;;
+Parkeringsplasser;2082;PP;;B9B9B9;;
+Parkeringshus/-anlegg;2083;PH;;B9B9B9;;
+Teknisk infrastruktur;2101;;;CCB999;;
+Energinett;2110;TIS;;FFCC99;;
+Fjernvarmenett;2120;EN;;FFCC99;;
+Vann- og avløpsnett;2140;FVN;;FFCC99;;
+Vannforsyningsnett;2141;VAN;;FFCC99;;
+Avløpsnett;2142;VFN;;FFCC99;;
+Overvannsnett;2143;AVN;;FFCC99;;
+Avfallssug;2150;OVN;;FFCC99;;
+Telekommunikasjonsnett;2160;AVF;;FFCC99;;
+Sikringsanlegg;2170;TKN;;DC9999;;
+Andre teknisk infrastrukturtraseer;2180;SIA;;FFCC99;;
+Kombinerte tekniske infrastrukturtraseer;2190;ATI;;FFCC99;;
+Kombinerte formål for samferdselsanlegg og/eller tekniske infrastrukturtraseer;2800;KIT;;"CCCCCCFFFFFF";;
+Angitte samferdselsanlegg og/eller tekniske infrastrukturtraseer kombinert med andre gitte hovedformål;2900;SK;;"CCCCCC
+FFCC99";;
+;;;;;;
+3. Grønnstruktur;(3000);;;;;
+Blå/grønnstruktur;3001;BG;;66FF99;;
+Naturområde;3020;GN;;99FF99;;
+Turdrag;3030;TD;;99FF99;;
+Turveg;3031;TV;;99FF99;;
+Friområde;3040;FRI;;99FF99;;
+Badeplass/-område;3041;BAD;;99FF99;;
+Park;3050;PA;;99FF99;;
+Vegetasjonsskjerm;3060;VS;;99FF99;;
+Vannspeil;3061;VSP;;CCFFFF;;
+Overvannstiltak;3100;OVT;;33EBEB;;
+Infiltrasjon/fordrøyning/avledning;3110;INF;;33EBEB;;
+Kombinerte grønnstrukturformål;3800;KG;;"99FF99
+FFFFFF";;
+Angitt grønnstruktur kombinert med andre angitte hovedformål ;3900;GAA;;"66CC66
+99FF99";;
+;;;;;;
+4. Forsvaret;(4000);;;;;
+Forsvaret;4001;F;;CCCC99;;
+Ulike typer militære formål;4010;FU;;CCCC99;;
+Skytefelt/øvingsområde;4020;FS;;CCCC99;;
+Forlegning/leir;4030;FF;;CCCC99;;
+Kombinerte militærformål;4800;FK;;"CCCC99
+FFFFFF";;
+Angitt militært formål kombinert med andre angitte hovedformål;4900;FAA;;"CCCC99
+CCFF99";;
+;;;;;;
+5. Landbruks-, natur og friluftsområder samt reindrift (LNFR);(5000);;;;;
+LNFR-areal for nødvendige tiltak for landbruk og reindrift og gårdstilknyttet næringsvirksomhet basert på gårdens ressursgrunnlag;5100;LNFR;;CCFF99;;
+Landbruksformål;5110;L;;CCFF99;;
+Jordbruk;5111;J;;CCFF99;;
+Skogbruk;5112;SKOG;;CCFF99;;
+Seterområde;5113;SE;;33FF99;;
+Gartneri;5114;GA;;33FF99;;
+Pelsdyranlegg;5115;PD;;33FF99;;
+Naturformål;5120;N;;99FF66;;
+Friluftsformål;5130;FL;;99FF66;;
+Reindriftsformål;5140;R;;99FF66;;
+LNFR-areal for spredt bolig-, fritids- eller næringsbebyggelse mv.;5200;LS;;CCFFCC;;
+Spredt boligbebyggelse;5210;LSB;;CCFFCC;;
+Spredt fritidsbebyggelse;5220;LSF;;CCFFCC;;
+Spredt næringsbebyggelse;5230;LSN;;CCFFCC;;
+Naturvern;5300;NV;;00CC66;;
+Jordvern;5400;JV;;00CC66;;
+Særlige landskapshensyn;5500;LH;;00CC66;;
+Vern av kulturminner og kulturmiljø;5600;KMV;;00CC66;;
+LNFR-formål kombinert med andre angitte hovedformål;5900;LAA;;"CCFF99
+FFFFFF";;
+;;;;;;
+6. Bruk og vern av sjø og vassdrag;(6000);;;;;
+Bruk og vern av sjø og vassdrag med tilhørende strandsone;6001;BSV;;CCFFFF;;
+Ferdsel;6100;FE;;33CCFF;;
+Ankringsområde;6110;ANK;;33AFAF;;
+Opplagsområde;6120;OP;;33AFAF;;
+Riggområde;6130;RI;;33AFAF;;
+Farled;6200;FA;;33CCFF;;
+Hoved- og biled;6211;LED;;33CCFF;;
+Havneområde i sjø;6220;HOS;;33CCCC;;
+Småbåthavn;6230;SH;;33CCCC;;
+Bøyehavn;6240;BØH;;33CCFF;;
+Fiske;6300;FI;;6699FF;;
+Fiskeområde;6310;FIO;;9966FF;;
+Låssettingsplasser;6320;LÅS;;6699FF;;
+Gytefelt eller oppvekstområde for yngel;6330;GYO;;6699FF;;
+Akvakultur;6400;AKV;;FFCCFF;;
+Akvakulturanlegg i sjø og vassdrag;6410;ASV;;FFCCFF;;
+Akvakulturanlegg i sjø og vassdrag med tilhørende landanlegg;6420;ASVL;;FFCCFF;;
+Fangstbasert levendelagring;6430;FAL;;CC99FF;;
+Drikkevann;6500;DV;;3399FF;;
+Naturområde;6600;NO;;99FFFF;;
+Naturområde i sjø og vassdrag;6610;NSV;;99FFFF;;
+Naturområde i sjø og vassdrag med tilhørende strandsone;6620;NSVS;;99FFFF;;
+Friluftsområde;6700;FV;;99FFFF;;
+Friluftsområde i sjø og vassdrag;6710;FLV;;99FFFF;;
+Friluftsområde i sjø og vassdrag med tilhørende strandsone;6720;FLVS;;99FFFF;;
+Idrett og vannsport;6760;IV;;66CCCC;;
+Badeområde;6770;VBAD;;66FFFF;;
+Kombinerte formål i sjø og vassdrag med eller uten tilhørende strandsone;6800;VK;;"CCFFFF
+FFFFFF";;
+Angitt formål i sjø og vassdrag med eller uten tilhørende strandsone kombinert med andre angitte hovedformål;6900;VAA;;"CCFFFF
+66FFFF";;

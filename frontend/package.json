@@ -13,7 +13,8 @@
     "react-scripts": "^5.0.1",
     "serve": "^14.2.1",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "core-js": "^3.35.1"
   },
   "overrides": {
     "nth-check": "^2.1.1",
@@ -70,6 +71,7 @@
   },
   "proxy": "http://backend:5251",
   "resolutions": {
-    "postcss": "^8.4.35"
+    "postcss": "^8.4.35",
+    "core-js": "^3.35.1"
   }
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import logo from '../images/planlogopng1.png'
 import xIcon from '../images/x.png';
 import instaIcon from '../images/insta.png';

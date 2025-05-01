@@ -1,5 +1,5 @@
 # Base stage
-FROM python:3.12-slim AS base
+FROM python:3.10-slim AS base
 WORKDIR /app
 
 # Install system dependencies including libmagic and pdfplumber

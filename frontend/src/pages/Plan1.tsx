@@ -1,17 +1,14 @@
 import Layout from '../components/Layout';
-import React, { useState } from "react";
+import React from "react";
 import FileUpload from '../components/FileUpload';
 
 export type FileType = 'plankart' | 'bestemmelser' | 'sosi';
 
-
-
 const Plan1 = () => {
-  const [result, setResult] = useState<any | null>(null);
   return (
     <Layout>
       <div style={styles.container}>
-        <FileUpload onUploadSuccess={setResult} />
+        <FileUpload onUploadSuccess={() => {}} />
       </div>
     </Layout>
   );

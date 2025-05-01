@@ -17,7 +17,7 @@ const Start = () => {
         <div style={styles.imageContainer}>
           <img
             src={bygg3d}
-            alt="Example Image"
+            alt="3D building visualization"
             style={styles.image}
           />
         </div>

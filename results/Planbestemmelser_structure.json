@@ -1,0 +1,753 @@
+{
+  "schema_name": "DoclingDocument",
+  "version": "1.3.0",
+  "name": "Planbestemmelser",
+  "furniture": {
+    "self_ref": "#/furniture",
+    "children": [],
+    "content_layer": "furniture",
+    "name": "_root_",
+    "label": "unspecified"
+  },
+  "body": {
+    "self_ref": "#/body",
+    "children": [
+      {
+        "$ref": "#/texts/0"
+      },
+      {
+        "$ref": "#/texts/1"
+      },
+      {
+        "$ref": "#/texts/3"
+      },
+      {
+        "$ref": "#/texts/32"
+      },
+      {
+        "$ref": "#/texts/35"
+      },
+      {
+        "$ref": "#/texts/42"
+      }
+    ],
+    "content_layer": "body",
+    "name": "_root_",
+    "label": "unspecified"
+  },
+  "groups": [],
+  "texts": [
+    {
+      "self_ref": "#/texts/0",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Evje og Hornnes kommune Vedtatt dato: 13.06.2024 Reguleringsbestemmelser for Evjetun Leirsted Detaljregulering, planID 202202 Datert: 08.04.2024 Vedtatt av kommunestyret PS 51/24, 13.06.2024",
+      "text": "Evje og Hornnes kommune Vedtatt dato: 13.06.2024 Reguleringsbestemmelser for Evjetun Leirsted Detaljregulering, planID 202202 Datert: 08.04.2024 Vedtatt av kommunestyret PS 51/24, 13.06.2024"
+    },
+    {
+      "self_ref": "#/texts/1",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/2"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "1. Planens hensikt",
+      "text": "1 Planens hensikt",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/2",
+      "parent": {
+        "$ref": "#/texts/1"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Hensikten og form\u00e5let med planarbeider er \u00e5 lage en helhetlig plan for \u00e5 sikre forutsigbarhet for fremtidig utvikling av omr\u00e5det. Omr\u00e5det er avsatt til offentlig eller privat tjenesteyting i Kommunedelplanen for Evje og Hornnes kommune Det er \u00f8nske om \u00e5 tilrettelegge aktiviteter og tilbud for alle aldersgrupper og med st\u00f8rst mulig tilpassing. Noen av planlagte tiltak som vil omfattes av planen er: Utvidelse av bobiloppstillingsplasser og teltplasser, Oppgradering sanit\u00e6rbygg, areal for frisbeegolf /aktivitetsl\u00f8ype, nye utleiehytter, utvidelse p\u00e5bygg hovedhus, etablering av st\u00f8yskjerming / voll etc.",
+      "text": "Hensikten og form\u00e5let med planarbeider er \u00e5 lage en helhetlig plan for \u00e5 sikre forutsigbarhet for fremtidig utvikling av omr\u00e5det. Omr\u00e5det er avsatt til offentlig eller privat tjenesteyting i Kommunedelplanen for Evje og Hornnes kommune Det er \u00f8nske om \u00e5 tilrettelegge aktiviteter og tilbud for alle aldersgrupper og med st\u00f8rst mulig tilpassing. Noen av planlagte tiltak som vil omfattes av planen er: Utvidelse av bobiloppstillingsplasser og teltplasser, Oppgradering sanit\u00e6rbygg, areal for frisbeegolf /aktivitetsl\u00f8ype, nye utleiehytter, utvidelse p\u00e5bygg hovedhus, etablering av st\u00f8yskjerming / voll etc."
+    },
+    {
+      "self_ref": "#/texts/3",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/4"
+        },
+        {
+          "$ref": "#/texts/8"
+        },
+        {
+          "$ref": "#/texts/15"
+        },
+        {
+          "$ref": "#/texts/24"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2. Bestemmelser til arealform\u00e5l",
+      "text": "2 Bestemmelser til arealform\u00e5l",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/4",
+      "parent": {
+        "$ref": "#/texts/3"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/5"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.1 Bebyggelse og anlegg (\u00a7 12-5 nr. 1)",
+      "text": "2.1 Bebyggelse og anlegg (\u00a7 12-5 nr. 1)",
+      "level": 2
+    },
+    {
+      "self_ref": "#/texts/5",
+      "parent": {
+        "$ref": "#/texts/4"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/6"
+        },
+        {
+          "$ref": "#/texts/7"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.1.1 Annen offentlig eller privat tjenesteyting (BAT1-2)",
+      "text": "2.1.1 Annen offentlig eller privat tjenesteyting (BAT1-2)",
+      "level": 3
+    },
+    {
+      "self_ref": "#/texts/6",
+      "parent": {
+        "$ref": "#/texts/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Bebyggelsestype (pbl \u00a712-7) Innenfor BAT1-2 tillates det bobiloppstillingsplasser, parkering, sanit\u00e6rbygg og annen teknisk infrastruktur, utleiehytter, servicebygg og andre bygg og aktivitetsanlegg som naturlig h\u00f8rer til driften av Evjetun leirsted. Det arkitektoniske uttrykket p\u00e5 nye tiltak skal tilpasses eksisterende bebyggelse og omgivelser. Situasjonsplan Situasjonsplan: Ved s\u00f8knad om tillatelse til tiltak skal situasjonsplan vedlegges i tilpasset m\u00e5lestokk som viser plassering av bebyggelse og h\u00f8yde p\u00e5 bebyggelse og planert terreng. Situasjonsplan skal ogs\u00e5 vise plassering av parkering, snu og man\u00f8vreringsareal, sn\u00f8lagring, renovasjonsareal, avkj\u00f8rsel, st\u00f8yvoll og evt. st\u00f8ttemurer. Overganger til tilgrensende arealer med terrengh\u00f8yder og snitt m\u00e5 vises. Tilgjengelighet (pbl \u00a712-7) For nye overnattingshytter s\u00e5 skal 70 % av boenhetene som ligger p\u00e5 bakkeplan tilfredsstille krav til tilgjengelig boenhet, ved at alle hovedfunksjoner skal ligge p\u00e5 inngangsplan. Med hovedfunksjoner menes stue, kj\u00f8kken, soverom, bad og toalett. Minst 20 % av boenhetene som tilfredsstiller tilgjengelighetskravet skal ogs\u00e5 oppfylle krav om universell utforming. Ved s\u00f8knad om tillatelse til tiltak skal det beskrives og vises p\u00e5 kart hvordan universell utforming er ivaretatt i planen.",
+      "text": "Bebyggelsestype (pbl \u00a712-7) Innenfor BAT1-2 tillates det bobiloppstillingsplasser, parkering, sanit\u00e6rbygg og annen teknisk infrastruktur, utleiehytter, servicebygg og andre bygg og aktivitetsanlegg som naturlig h\u00f8rer til driften av Evjetun leirsted. Det arkitektoniske uttrykket p\u00e5 nye tiltak skal tilpasses eksisterende bebyggelse og omgivelser. Situasjonsplan Situasjonsplan: Ved s\u00f8knad om tillatelse til tiltak skal situasjonsplan vedlegges i tilpasset m\u00e5lestokk som viser plassering av bebyggelse og h\u00f8yde p\u00e5 bebyggelse og planert terreng. Situasjonsplan skal ogs\u00e5 vise plassering av parkering, snu og man\u00f8vreringsareal, sn\u00f8lagring, renovasjonsareal, avkj\u00f8rsel, st\u00f8yvoll og evt. st\u00f8ttemurer. Overganger til tilgrensende arealer med terrengh\u00f8yder og snitt m\u00e5 vises. Tilgjengelighet (pbl \u00a712-7) For nye overnattingshytter s\u00e5 skal 70 % av boenhetene som ligger p\u00e5 bakkeplan tilfredsstille krav til tilgjengelig boenhet, ved at alle hovedfunksjoner skal ligge p\u00e5 inngangsplan. Med hovedfunksjoner menes stue, kj\u00f8kken, soverom, bad og toalett. Minst 20 % av boenhetene som tilfredsstiller tilgjengelighetskravet skal ogs\u00e5 oppfylle krav om universell utforming. Ved s\u00f8knad om tillatelse til tiltak skal det beskrives og vises p\u00e5 kart hvordan universell utforming er ivaretatt i planen."
+    },
+    {
+      "self_ref": "#/texts/7",
+      "parent": {
+        "$ref": "#/texts/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Plassering av bebyggelse (pbl \u00a712-7) All bebyggelse skal plasseres innenfor byggegrenser vist p\u00e5 plankartet. Parkeringsplasser, st\u00f8yskjerm eller st\u00f8yvoll tillates innenfor byggegrense mot rv. 9 i omr\u00e5det BAT1 og BAT2. Utnyttelse (pbl \u00a712-7) Prosent bebygd areal (%-BYA) = 30 H\u00f8yder (pbl \u00a712-7) Tillatt m\u00f8neh\u00f8yde for bygning er maksimum 10 m over gjennomsnittlig planert terreng. Nye tiltak skal plasseres p\u00e5 minimun kote +184,6. Terrengtilpasninger (pbl \u00a712-7) Ved s\u00f8knad om byggetillatelse skal det legges frem snitt som viser forhold til nabotomt/ nabobebyggelse og tilst\u00f8tende vei. St\u00f8y (pbl \u00a712-7 nr 4) Det kan anlegges st\u00f8yvoll/ st\u00f8yskjerm innenfor omr\u00e5dene BAT1 og BAT2. Krav til avfallsh\u00e5ndtering Avfallsh\u00e5ndtering skal l\u00f8ses i henhold til enhver tids gjeldende avfallsteknisk norm. Overvannsh\u00e5ndtering Ved s\u00f8knad om tillatelse til tiltak i planomr\u00e5det, s\u00e5 skal det legges ved en plan for overvannsh\u00e5ndtering. Overvann skal fortrinnsvis h\u00e5ndteres ved bruk av \u00e5pne, naturbaserte l\u00f8sninger med tilstrekkelig kapasitet. L\u00f8sningene skal dimensjoneres for et klimajustert nedb\u00f8r med 100 \u00e5rs gjentaksintervall. Parkering (pbl \u00a712-7 nr 7) Parkeringsplasser og bobilparkering skal vises p\u00e5 situasjonsplan. Det skal avsetter 1 parkeringsplass (18 m2 pr. p-plass) per utleieenhet. Minimumskravet for parkeringsplasser for forsamlingslokaler og lignende er 1 parkeringsplass per 50 m\u00b2 BYA. Det skal avsettes minimum en bilplass for el-billading. HC-plasser skal plasseres n\u00e6rmest hovedbygg.",
+      "text": "Plassering av bebyggelse (pbl \u00a712-7) All bebyggelse skal plasseres innenfor byggegrenser vist p\u00e5 plankartet. Parkeringsplasser, st\u00f8yskjerm eller st\u00f8yvoll tillates innenfor byggegrense mot rv. 9 i omr\u00e5det BAT1 og BAT2. Utnyttelse (pbl \u00a712-7) Prosent bebygd areal (%-BYA) = 30 H\u00f8yder (pbl \u00a712-7) Tillatt m\u00f8neh\u00f8yde for bygning er maksimum 10 m over gjennomsnittlig planert terreng. Nye tiltak skal plasseres p\u00e5 minimun kote +184,6. Terrengtilpasninger (pbl \u00a712-7) Ved s\u00f8knad om byggetillatelse skal det legges frem snitt som viser forhold til nabotomt/ nabobebyggelse og tilst\u00f8tende vei. St\u00f8y (pbl \u00a712-7 nr 4) Det kan anlegges st\u00f8yvoll/ st\u00f8yskjerm innenfor omr\u00e5dene BAT1 og BAT2. Krav til avfallsh\u00e5ndtering Avfallsh\u00e5ndtering skal l\u00f8ses i henhold til enhver tids gjeldende avfallsteknisk norm. Overvannsh\u00e5ndtering Ved s\u00f8knad om tillatelse til tiltak i planomr\u00e5det, s\u00e5 skal det legges ved en plan for overvannsh\u00e5ndtering. Overvann skal fortrinnsvis h\u00e5ndteres ved bruk av \u00e5pne, naturbaserte l\u00f8sninger med tilstrekkelig kapasitet. L\u00f8sningene skal dimensjoneres for et klimajustert nedb\u00f8r med 100 \u00e5rs gjentaksintervall. Parkering (pbl \u00a712-7 nr 7) Parkeringsplasser og bobilparkering skal vises p\u00e5 situasjonsplan. Det skal avsetter 1 parkeringsplass (18 m2 pr. p-plass) per utleieenhet. Minimumskravet for parkeringsplasser for forsamlingslokaler og lignende er 1 parkeringsplass per 50 m\u00b2 BYA. Det skal avsettes minimum en bilplass for el-billading. HC-plasser skal plasseres n\u00e6rmest hovedbygg."
+    },
+    {
+      "self_ref": "#/texts/8",
+      "parent": {
+        "$ref": "#/texts/3"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/9"
+        },
+        {
+          "$ref": "#/texts/11"
+        },
+        {
+          "$ref": "#/texts/13"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.2 Samferdselsanlegg og teknisk infrastruktur (\u00a7 12-5 nr. 2)",
+      "text": "2.2 Samferdselsanlegg og teknisk infrastruktur (\u00a7 12-5 nr. 2)",
+      "level": 2
+    },
+    {
+      "self_ref": "#/texts/9",
+      "parent": {
+        "$ref": "#/texts/8"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/10"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.2.1 Fellesbestemmelser for samferdselsanlegg og teknisk infrastruktur",
+      "text": "2.2.1 Fellesbestemmelser for samferdselsanlegg og teknisk infrastruktur",
+      "level": 3
+    },
+    {
+      "self_ref": "#/texts/10",
+      "parent": {
+        "$ref": "#/texts/9"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Ved behov for oppgradering av teknisk infrastruktur skal det utarbeides teknisk plan for omr\u00e5det som skal inneholde l\u00f8sning av VA anlegg, overflatevann og hvordan byggeomr\u00e5det skal forsynes med str\u00f8m. Tekniske planer for vann og avl\u00f8p skal omfatte hele planomr\u00e5det med n\u00f8dvendige tilknytninger til og omlegginger av eksisterende nett. Teknisk infrastruktur kan kun etableres innenfor omr\u00e5der regulert til utbyggingsform\u00e5l.",
+      "text": "Ved behov for oppgradering av teknisk infrastruktur skal det utarbeides teknisk plan for omr\u00e5det som skal inneholde l\u00f8sning av VA anlegg, overflatevann og hvordan byggeomr\u00e5det skal forsynes med str\u00f8m. Tekniske planer for vann og avl\u00f8p skal omfatte hele planomr\u00e5det med n\u00f8dvendige tilknytninger til og omlegginger av eksisterende nett. Teknisk infrastruktur kan kun etableres innenfor omr\u00e5der regulert til utbyggingsform\u00e5l."
+    },
+    {
+      "self_ref": "#/texts/11",
+      "parent": {
+        "$ref": "#/texts/8"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/12"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.2.2 Bruk av veigrunn",
+      "text": "2.2.2 Bruk av veigrunn",
+      "level": 3
+    },
+    {
+      "self_ref": "#/texts/12",
+      "parent": {
+        "$ref": "#/texts/11"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "o_V1 er avkj\u00f8rsel til omr\u00e5det fra riksveg 9.",
+      "text": "o_V1 er avkj\u00f8rsel til omr\u00e5det fra riksveg 9."
+    },
+    {
+      "self_ref": "#/texts/13",
+      "parent": {
+        "$ref": "#/texts/8"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/14"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.2.3 Annen veggrunn \u2013 offentlig gr\u00f8ntareal (o_AVG1-4)",
+      "text": "2.2.3 Annen veggrunn \u2013 offentlig gr\u00f8ntareal (o_AVG1-4)",
+      "level": 3
+    },
+    {
+      "self_ref": "#/texts/14",
+      "parent": {
+        "$ref": "#/texts/13"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Arealene skal benyttes til overvannsh\u00e5ndtering, skj\u00e6ring, fylling, frisiktsoner, sn\u00f8opplag m.v.",
+      "text": "Arealene skal benyttes til overvannsh\u00e5ndtering, skj\u00e6ring, fylling, frisiktsoner, sn\u00f8opplag m.v."
+    },
+    {
+      "self_ref": "#/texts/15",
+      "parent": {
+        "$ref": "#/texts/3"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/16"
+        },
+        {
+          "$ref": "#/texts/18"
+        },
+        {
+          "$ref": "#/texts/20"
+        },
+        {
+          "$ref": "#/texts/22"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.3 Gr\u00f8nnstruktur (\u00a7 12-5 nr. 3)",
+      "text": "2.3 Gr\u00f8nnstruktur (\u00a7 12-5 nr. 3)",
+      "level": 2
+    },
+    {
+      "self_ref": "#/texts/16",
+      "parent": {
+        "$ref": "#/texts/15"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/17"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.3.1 Turveg (f_TV1-4)",
+      "text": "2.3.1 Turveg (f_TV1-4)",
+      "level": 3
+    },
+    {
+      "self_ref": "#/texts/17",
+      "parent": {
+        "$ref": "#/texts/16"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Det skal etableres turveger som gir tilgang til friluftsomr\u00e5dene i planomr\u00e5det. Turvegene skal tilrettelegges for b\u00e5de g\u00e5ende og syklende. f_TV2 skal ha god tilgjengelighet for personer med nedsatt funksjonsevne. f_TV1-4 skal opparbeides med bredde 2,5 m. Turvegene skal ha fast dekke. Turvegen skal skiltes som offentlig tilgjengelig tursti.",
+      "text": "Det skal etableres turveger som gir tilgang til friluftsomr\u00e5dene i planomr\u00e5det. Turvegene skal tilrettelegges for b\u00e5de g\u00e5ende og syklende. f_TV2 skal ha god tilgjengelighet for personer med nedsatt funksjonsevne. f_TV1-4 skal opparbeides med bredde 2,5 m. Turvegene skal ha fast dekke. Turvegen skal skiltes som offentlig tilgjengelig tursti."
+    },
+    {
+      "self_ref": "#/texts/18",
+      "parent": {
+        "$ref": "#/texts/15"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/19"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.3.2 Friomr\u00e5de (FRI1-3)",
+      "text": "2.3.2 Friomr\u00e5de (FRI1-3)",
+      "level": 3
+    },
+    {
+      "self_ref": "#/texts/19",
+      "parent": {
+        "$ref": "#/texts/18"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Omr\u00e5dene FRI1 -FRI3 skal benyttes som friomr\u00e5der.  Det tillates etablering av gangveier/stier innenfor disse omr\u00e5dene. St\u00f8rre friluftsaktivitetsanlegg, slik som frisbeegolf, kan kun etableres innenfor FRI2. Det stilles krav om at inngrepet i naturen skal minimeres. Ved s\u00f8knad om tillatelse til tiltak skal det utarbeides en utomhusplan. Utomhusplanen skal vise: - Vegetasjon/enkelttr\u00e6r, terreng og andre elementer som skal bevares - Terrengbearbeiding og overganger mot tilst\u00f8tende omr\u00e5der. - Utforming av aktiviteter. - Utforming av turveier/stier.",
+      "text": "Omr\u00e5dene FRI1 -FRI3 skal benyttes som friomr\u00e5der. Det tillates etablering av gangveier/stier innenfor disse omr\u00e5dene. St\u00f8rre friluftsaktivitetsanlegg, slik som frisbeegolf, kan kun etableres innenfor FRI2. Det stilles krav om at inngrepet i naturen skal minimeres. Ved s\u00f8knad om tillatelse til tiltak skal det utarbeides en utomhusplan. Utomhusplanen skal vise: - Vegetasjon/enkelttr\u00e6r, terreng og andre elementer som skal bevares - Terrengbearbeiding og overganger mot tilst\u00f8tende omr\u00e5der. - Utforming av aktiviteter. - Utforming av turveier/stier."
+    },
+    {
+      "self_ref": "#/texts/20",
+      "parent": {
+        "$ref": "#/texts/15"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/21"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.3.3 Badeplass/-omr\u00e5de (f_BAD)",
+      "text": "2.3.3 Badeplass/-omr\u00e5de (f_BAD)",
+      "level": 3
+    },
+    {
+      "self_ref": "#/texts/21",
+      "parent": {
+        "$ref": "#/texts/20"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Innenfor omr\u00e5de avsatt til badeplass, f_BAD, tillates det lagt til rette for bading og annen naturlig aktivitet i tilknytning til badeplassen. Det tillates fjernet vegetasjon og lagt til rette med enkle tiltak som badestige, platting/sitteplasser og lignende. Det er ogs\u00e5 tillatt \u00e5 etablere enkel infrastruktur som toaletter, s\u00f8ppelkasser og benker for \u00e5 \u00f8ke tilgjengeligheten og trivselen i omr\u00e5det.",
+      "text": "Innenfor omr\u00e5de avsatt til badeplass, f_BAD, tillates det lagt til rette for bading og annen naturlig aktivitet i tilknytning til badeplassen. Det tillates fjernet vegetasjon og lagt til rette med enkle tiltak som badestige, platting/sitteplasser og lignende. Det er ogs\u00e5 tillatt \u00e5 etablere enkel infrastruktur som toaletter, s\u00f8ppelkasser og benker for \u00e5 \u00f8ke tilgjengeligheten og trivselen i omr\u00e5det."
+    },
+    {
+      "self_ref": "#/texts/22",
+      "parent": {
+        "$ref": "#/texts/15"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/23"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.3.4 Naturomr\u00e5de (GN1-GN4)",
+      "text": "2.3.4 Naturomr\u00e5de (GN1-GN4)",
+      "level": 3
+    },
+    {
+      "self_ref": "#/texts/23",
+      "parent": {
+        "$ref": "#/texts/22"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Omr\u00e5de er avsatt til gr\u00f8nnstruktur med underform\u00e5l naturomr\u00e5de. Omr\u00e5det skal ha en funksjon som friluftsomr\u00e5de for allmennheten, med s\u00e6rlig vekt p\u00e5 natur- og friluftsopplevelser og rekreasjon. Det er viktig \u00e5 vise hensyn og respekt for milj\u00f8- og naturverdiene i omr\u00e5det. I perioden mellom 1. april og 15. juli oppfordres det til \u00e5 unng\u00e5 un\u00f8dig ferdsel innenfor omr\u00e5dene GN1 og GN4 for \u00e5 beskytte hekkeomr\u00e5der og annet viktig biologisk mangfold. Det er ikke tillatt med hogst eller tilrettelegging innenfor GN1 og GN4.",
+      "text": "Omr\u00e5de er avsatt til gr\u00f8nnstruktur med underform\u00e5l naturomr\u00e5de. Omr\u00e5det skal ha en funksjon som friluftsomr\u00e5de for allmennheten, med s\u00e6rlig vekt p\u00e5 natur- og friluftsopplevelser og rekreasjon. Det er viktig \u00e5 vise hensyn og respekt for milj\u00f8- og naturverdiene i omr\u00e5det. I perioden mellom 1. april og 15. juli oppfordres det til \u00e5 unng\u00e5 un\u00f8dig ferdsel innenfor omr\u00e5dene GN1 og GN4 for \u00e5 beskytte hekkeomr\u00e5der og annet viktig biologisk mangfold. Det er ikke tillatt med hogst eller tilrettelegging innenfor GN1 og GN4."
+    },
+    {
+      "self_ref": "#/texts/24",
+      "parent": {
+        "$ref": "#/texts/3"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/25"
+        },
+        {
+          "$ref": "#/texts/28"
+        },
+        {
+          "$ref": "#/texts/30"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.4 Bruk og vern av sj\u00f8 og vassdrag med tilh\u00f8rende strandsone (\u00a7 12-5 nr. 6)",
+      "text": "2.4 Bruk og vern av sj\u00f8 og vassdrag med tilh\u00f8rende strandsone (\u00a7 12-5 nr. 6)",
+      "level": 2
+    },
+    {
+      "self_ref": "#/texts/25",
+      "parent": {
+        "$ref": "#/texts/24"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/26"
+        },
+        {
+          "$ref": "#/texts/27"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.4.1 Fellesbestemmelse",
+      "text": "2.4.1 Fellesbestemmelse",
+      "level": 3
+    },
+    {
+      "self_ref": "#/texts/26",
+      "parent": {
+        "$ref": "#/texts/25"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Langs bredden av vassdrag med \u00e5rssikker vannf\u00f8ring skal det opprettholdes et begrenset naturlig vegetasjonsbelte som motvirker avrenning og gir levested for planter og dyr. Denne regelen gjelder likevel",
+      "text": "Langs bredden av vassdrag med \u00e5rssikker vannf\u00f8ring skal det opprettholdes et begrenset naturlig vegetasjonsbelte som motvirker avrenning og gir levested for planter og dyr. Denne regelen gjelder likevel"
+    },
+    {
+      "self_ref": "#/texts/27",
+      "parent": {
+        "$ref": "#/texts/25"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "ikke for byggverk som st\u00e5r i n\u00f8dvendig sammenheng med vassdraget, eller hvor det trengs \u00e5pning for \u00e5 sikre tilgang til vassdraget. Ved etablering av badeplass m\u00e5 det sikres at tiltaket ikke medf\u00f8rer \u00f8kt erosjonsrisiko.",
+      "text": "ikke for byggverk som st\u00e5r i n\u00f8dvendig sammenheng med vassdraget, eller hvor det trengs \u00e5pning for \u00e5 sikre tilgang til vassdraget. Ved etablering av badeplass m\u00e5 det sikres at tiltaket ikke medf\u00f8rer \u00f8kt erosjonsrisiko."
+    },
+    {
+      "self_ref": "#/texts/28",
+      "parent": {
+        "$ref": "#/texts/24"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/29"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.4.2 Friluftsomr\u00e5de (o_FV)",
+      "text": "2.4.2 Friluftsomr\u00e5de (o_FV)",
+      "level": 3
+    },
+    {
+      "self_ref": "#/texts/29",
+      "parent": {
+        "$ref": "#/texts/28"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Form\u00e5lsomr\u00e5det o_FV omfatter vassdragsarealer for ordin\u00e6r vassdragsrelatert friluftsaktivitet og ferdsel.",
+      "text": "Form\u00e5lsomr\u00e5det o_FV omfatter vassdragsarealer for ordin\u00e6r vassdragsrelatert friluftsaktivitet og ferdsel."
+    },
+    {
+      "self_ref": "#/texts/30",
+      "parent": {
+        "$ref": "#/texts/24"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/31"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "2.4.3 Badeomr\u00e5de (f_VBAD)",
+      "text": "2.4.3 Badeomr\u00e5de (f_VBAD)",
+      "level": 3
+    },
+    {
+      "self_ref": "#/texts/31",
+      "parent": {
+        "$ref": "#/texts/30"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Form\u00e5lsomr\u00e5det f_VBAD tillates benyttet til felles badeplass i tilknytning til tilgrensende badeplass/- omr\u00e5de p\u00e5 land. Det tillates etablert sesongbaserte aktiviteter i elva som vannpark, og lignende. Det tillates aktiviteter i badeomr\u00e5det som er forenlig med form\u00e5let om \u00e5 tilrettelegge for bading og friluftsliv, og som ikke p\u00e5virker naturmilj\u00f8et negativt. Slike aktiviteter kan inkludere lek og ballspill p\u00e5 sandstranden, piknik og grilling p\u00e5 anviste omr\u00e5der, og bruk av ikke-motoriserte vannfart\u00f8y som kanoer, sup og kajakker. All annen aktivitet som kan skade naturmilj\u00f8et, herunder fiske og bruk av motoriserte vannfart\u00f8y, er ikke tillatt.",
+      "text": "Form\u00e5lsomr\u00e5det f_VBAD tillates benyttet til felles badeplass i tilknytning til tilgrensende badeplass/- omr\u00e5de p\u00e5 land. Det tillates etablert sesongbaserte aktiviteter i elva som vannpark, og lignende. Det tillates aktiviteter i badeomr\u00e5det som er forenlig med form\u00e5let om \u00e5 tilrettelegge for bading og friluftsliv, og som ikke p\u00e5virker naturmilj\u00f8et negativt. Slike aktiviteter kan inkludere lek og ballspill p\u00e5 sandstranden, piknik og grilling p\u00e5 anviste omr\u00e5der, og bruk av ikke-motoriserte vannfart\u00f8y som kanoer, sup og kajakker. All annen aktivitet som kan skade naturmilj\u00f8et, herunder fiske og bruk av motoriserte vannfart\u00f8y, er ikke tillatt."
+    },
+    {
+      "self_ref": "#/texts/32",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/33"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "3. Bestemmelser til hensynssoner",
+      "text": "3 Bestemmelser til hensynssoner",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/33",
+      "parent": {
+        "$ref": "#/texts/32"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/34"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "3.1 St\u00f8ysoner (H220)",
+      "text": "3.1 St\u00f8ysoner (H220)",
+      "level": 2
+    },
+    {
+      "self_ref": "#/texts/34",
+      "parent": {
+        "$ref": "#/texts/33"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Virksomheten skal f\u00f8lge grenseverdier satt i retningslinje for behandling av st\u00f8y i arealplanlegging (T-",
+      "text": "Virksomheten skal f\u00f8lge grenseverdier satt i retningslinje for behandling av st\u00f8y i arealplanlegging (T-"
+    },
+    {
+      "self_ref": "#/texts/35",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/36"
+        },
+        {
+          "$ref": "#/texts/38"
+        },
+        {
+          "$ref": "#/texts/40"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "1442/2021)",
+      "text": "1442 /2021)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/36",
+      "parent": {
+        "$ref": "#/texts/35"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/37"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "3.2 Flomsone (H320)",
+      "text": "3.2 Flomsone (H320)",
+      "level": 2
+    },
+    {
+      "self_ref": "#/texts/37",
+      "parent": {
+        "$ref": "#/texts/36"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Bygninger og konstruksjoner som er planlagt \u00e5 ligge innenfor flomsone, m\u00e5 dimensjoneres og plasseres slik at det ikke medf\u00f8rer fare for liv og helse, skader p\u00e5 eiendom eller \u00f8konomisk tap ved flom. Dette kan blant annet gj\u00f8res ved \u00e5 plassere bygninger og konstruksjoner p\u00e5 tilstrekkelig h\u00f8yde over koteh\u00f8yden for flom, K+184,6 eller ved \u00e5 utforme bygninger og konstruksjoner slik at de t\u00e5ler flomvann.",
+      "text": "Bygninger og konstruksjoner som er planlagt \u00e5 ligge innenfor flomsone, m\u00e5 dimensjoneres og plasseres slik at det ikke medf\u00f8rer fare for liv og helse, skader p\u00e5 eiendom eller \u00f8konomisk tap ved flom. Dette kan blant annet gj\u00f8res ved \u00e5 plassere bygninger og konstruksjoner p\u00e5 tilstrekkelig h\u00f8yde over koteh\u00f8yden for flom, K+184,6 eller ved \u00e5 utforme bygninger og konstruksjoner slik at de t\u00e5ler flomvann."
+    },
+    {
+      "self_ref": "#/texts/38",
+      "parent": {
+        "$ref": "#/texts/35"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/39"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "3.3 B\u00e5ndleggingssone (H740)",
+      "text": "3.3 B\u00e5ndleggingssone (H740)",
+      "level": 2
+    },
+    {
+      "self_ref": "#/texts/39",
+      "parent": {
+        "$ref": "#/texts/38"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Innenfor faresone for h\u00f8yspent tillates det ikke oppf\u00f8rt bygninger for varig opphold.",
+      "text": "Innenfor faresone for h\u00f8yspent tillates det ikke oppf\u00f8rt bygninger for varig opphold."
+    },
+    {
+      "self_ref": "#/texts/40",
+      "parent": {
+        "$ref": "#/texts/35"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/41"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "3.4 Frisikt (H140)",
+      "text": "3.4 Frisikt (H140)",
+      "level": 2
+    },
+    {
+      "self_ref": "#/texts/41",
+      "parent": {
+        "$ref": "#/texts/40"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Innenfor frisiktarealet tillates ikke murer, gjerder eller vegetasjon h\u00f8yere enn 0,5 m over tilst\u00f8tende veiers niv\u00e5. Terreng skal tilpasses tilst\u00f8tende veiers niv\u00e5.",
+      "text": "Innenfor frisiktarealet tillates ikke murer, gjerder eller vegetasjon h\u00f8yere enn 0,5 m over tilst\u00f8tende veiers niv\u00e5. Terreng skal tilpasses tilst\u00f8tende veiers niv\u00e5."
+    },
+    {
+      "self_ref": "#/texts/42",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/43"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "4. Bestemmelser til bestemmelsesomr\u00e5der",
+      "text": "4 Bestemmelser til bestemmelsesomr\u00e5der",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/43",
+      "parent": {
+        "$ref": "#/texts/42"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/44"
+        }
+      ],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [],
+      "orig": "4.1 Bestemmelser til bestemmelsesomr\u00e5de (omr\u00e5de #1, #gangbro/undergrunn)",
+      "text": "4.1 Bestemmelser til bestemmelsesomr\u00e5de (omr\u00e5de #1, #gangbro/undergrunn)",
+      "level": 2
+    },
+    {
+      "self_ref": "#/texts/44",
+      "parent": {
+        "$ref": "#/texts/43"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Innenfor omr\u00e5det tillates det etablert gangbro eller undergrunn for kryssing av riksveg 9.",
+      "text": "Innenfor omr\u00e5det tillates det etablert gangbro eller undergrunn for kryssing av riksveg 9."
+    }
+  ],
+  "pictures": [],
+  "tables": [],
+  "key_value_items": [],
+  "form_items": [],
+  "pages": {}
+}

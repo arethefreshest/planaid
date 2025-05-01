@@ -32,6 +32,7 @@ services:
       - dotnet-cache:/root/.nuget/packages
       - backend-obj:/src/obj
       - backend-bin:/src/bin
+      - ./metrics/backend:/app/metrics
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - PythonServiceUrl=http://python_service:8000
@@ -57,6 +58,7 @@ services:
       - ./python_service/app:/app/app
       - ./python_service/requirements.txt:/app/requirements.txt
       - ./.env:/app/.env
+      - ./metrics/python_service:/app/metrics
     environment:
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONPATH=/app
@@ -72,26 +74,21 @@ services:
 
   ner_service:
     build:
-      context: .
-      dockerfile: ner_service/Dockerfile
-      target: development
+      context: ./ner_service
+      dockerfile: Dockerfile
     ports:
       - "8001:8001"
     volumes:
       - ./ner_service:/app
-      - ./ner_service/src:/app/src
-      - ./ner_service/src/models:/app/src/models
-      - ./ner_service/src/model_params.yaml:/app/src/model_params.yaml
-      - ner-models:/root/.cache/spacy
+      - ./logs/ner_service:/app/logs
     environment:
-      - PYTHONUNBUFFERED=1
-      - PYTHONDONTWRITEBYTECODE=1
-      - PYTHONPATH=/app
+      - LOG_LEVEL=DEBUG
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
+    restart: unless-stopped
     networks:
       - planaid-network
     healthcheck:
@@ -116,6 +113,8 @@ volumes:
   backend-bin:
   redis-data:
   ner-models:
+  metrics_data:
+    driver: local
 
 networks:
   planaid-network:

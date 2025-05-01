@@ -12,22 +12,91 @@ Features:
 - Text section extraction and analysis
 """
 
-from typing import Set, Tuple, List, Optional, Dict
+from typing import Set, Tuple, List, Optional, Dict # Dict is not accessed
 import logging
-from .models import ConsistencyResult
-from .document.pdf_handler import PdfHandler, extract_text_from_pdf
-from .config import settings, extractor
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from .models import ConsistencyResult # Not accessed
+from .document.pdf_handler import PdfHandler, extract_text_from_pdf # PdfHandler is not accessed
+from .document.sosi_handler import extract_fields_from_sosi
+from .config import settings, extractor # settings is not accessed
+from fastapi import FastAPI, File, UploadFile, HTTPException # FastAPI & File is not accessed
 import uuid
 import os
 import re
-from pydantic import BaseModel
+from pydantic import BaseModel # Not accessed
 import asyncio
 import httpx
+from app.utils.logger import logger
+import tempfile
+import json
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
+# Get NER service URL from environment
+NER_SERVICE_URL = os.getenv('NER_SERVICE_URL', 'http://157.230.21.199:8001')
 
+# Setup metrics directory
+METRICS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'metrics')
+CONSISTENCY_METRICS_DIR = os.path.join(METRICS_DIR, 'consistency')
+os.makedirs(CONSISTENCY_METRICS_DIR, exist_ok=True)
+
+def log_consistency_metrics(result: Dict, plankart_fields: Set[str], bestemmelser_fields: Set[str], sosi_data: Optional[Dict] = None) -> None:
+    """Log detailed consistency check metrics"""
+    try:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        metrics = {
+            "timestamp": datetime.now().isoformat(),
+            "document_fields": {
+                "plankart": sorted(list(plankart_fields)),
+                "bestemmelser": sorted(list(bestemmelser_fields)),
+                "sosi": sosi_data["fields"] if sosi_data else None
+            },
+            "comparison_results": {
+                "matching_fields": result["matching_fields"],
+                "only_in_plankart": result["only_in_plankart"],
+                "only_in_bestemmelser": result["only_in_bestemmelser"],
+                "only_in_sosi": result["only_in_sosi"]
+            },
+            "statistics": {
+                "total_fields": {
+                    "plankart": len(plankart_fields),
+                    "bestemmelser": len(bestemmelser_fields),
+                    "sosi": sosi_data["metadata"]["total_fields"] if sosi_data else 0
+                },
+                "match_percentages": {
+                    "plankart_match": round(len(result["matching_fields"]) / len(plankart_fields) * 100, 2) if plankart_fields else 0,
+                    "bestemmelser_match": round(len(result["matching_fields"]) / len(bestemmelser_fields) * 100, 2) if bestemmelser_fields else 0,
+                    "sosi_match": round(len(result["matching_fields"]) / sosi_data["metadata"]["total_fields"] * 100, 2) if sosi_data else 0
+                }
+            }
+        }
+        
+        # Log to file
+        log_file = os.path.join(CONSISTENCY_METRICS_DIR, f'consistency_check_{timestamp}.json')
+        with open(log_file, 'w', encoding='utf-8') as f:
+            json.dump(metrics, f, indent=2, ensure_ascii=False)
+        
+        # Log summary to console
+        logger.info("Consistency Check Results:")
+        logger.info(f"Total fields found - Plankart: {len(plankart_fields)}, Bestemmelser: {len(bestemmelser_fields)}, "
+                    f"SOSI: {sosi_data['metadata']['total_fields'] if sosi_data else 0}")
+        logger.info(f"Matching fields: {len(result['matching_fields'])}")
+        logger.info(f"Fields only in Plankart: {len(result['only_in_plankart'])}")
+        logger.info(f"Fields only in Bestemmelser: {len(result['only_in_bestemmelser'])}")
+        logger.info(f"Fields only in SOSI: {len(result['only_in_sosi'])}")
+        
+        # Log specific fields
+        logger.info("\nDetailed field breakdown:")
+        if result["matching_fields"]:
+            logger.info("Matching fields: " + ", ".join(result["matching_fields"]))
+        if result["only_in_plankart"]:
+            logger.info("Only in Plankart: " + ", ".join(result["only_in_plankart"]))
+        if result["only_in_bestemmelser"]:
+            logger.info("Only in Bestemmelser: " + ", ".join(result["only_in_bestemmelser"]))
+        if result["only_in_sosi"]:
+            logger.info("Only in SOSI: " + ", ".join(result["only_in_sosi"]))
+    except Exception as e:
+        logger.error(f"Error logging consistency metrics: {str(e)}")
 
 async def extract_fields_from_file(file: UploadFile) -> Set[str]:
     """
@@ -149,12 +218,18 @@ def extract_date(type_: str, text: str) -> Optional[str]:
             return match.group(1)
     return None
 
-def normalize_field(field: str) -> str:
+def normalize_field(field: str) -> Optional[str]:
     """Normalize field names for comparison"""
     field = field.strip()
     
-    # Skip area measurements and coordinates
-    if 'a=' in field.lower() or re.match(r'^[NS]\d{7}$', field):
+    # Skip non-field content
+    if any(noise in field for noise in [
+        'SAKSBEHANDLING',
+        'PLANKONSULENT',
+        'PLANEN ER',
+        'DATOSIGN',
+        'NN2000'
+    ]):
         return None
     
     # Keep original case for special patterns
@@ -175,18 +250,27 @@ def normalize_field(field: str) -> str:
         rest = field[2:].upper()
         return f"{prefix}{rest}"
         
+    # Only keep valid field patterns
+    if not re.match(r'^([fo]_)?[A-Z]+\d*$', field) and not re.match(r'^#\d+$', field):
+        return None
+        
     return field.upper()
 
 async def extract_text_from_pdf(file: UploadFile) -> bytes:
     """Extract raw bytes from PDF file in chunks"""
-    chunk_size = 8192  # 8KB chunks
-    content = bytearray()
-    while True:
-        chunk = await file.read(chunk_size)
-        if not chunk:
-            break
-        content.extend(chunk)
-    return bytes(content)
+    try:
+        # Read the file content
+        content = await file.read()
+        if not content:
+            logger.error("Empty file received")
+            raise HTTPException(status_code=400, detail="File is empty")
+            
+        # Reset file position for future reads
+        await file.seek(0)
+        return content
+    except Exception as e:
+        logger.error(f"Error reading PDF file: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error reading PDF file: {str(e)}")
 
 async def process_consistency_check(plankart: UploadFile, bestemmelser: UploadFile, sosi: UploadFile = None):
     """Process consistency check between files"""
@@ -207,23 +291,12 @@ async def process_consistency_check(plankart: UploadFile, bestemmelser: UploadFi
         }
         
         # Get bestemmelser fields from NER service
-        try:
-            async with httpx.AsyncClient(timeout=60.0) as client:
-                files = {'file': ('bestemmelser.pdf', await extract_text_from_pdf(bestemmelser), 'application/pdf')}
-                response = await client.post('http://ner_service:8001/api/extract-fields', files=files)
-                response.raise_for_status()
-                raw_fields = set(response.json()['fields'])
-        except httpx.HTTPError as e:
-            logger.error(f"NER service error: {str(e)}")
-            raise HTTPException(status_code=502, detail="NER service unavailable")
-        except Exception as e:
-            logger.error(f"Error processing bestemmelser: {str(e)}")
-            raise HTTPException(status_code=500, detail="Error processing bestemmelser")
+        bestemmelser_fields = await get_bestemmelser_fields(bestemmelser)
         
         # Clean and normalize bestemmelser fields
         bestemmelser_fields = {
             normalize_field(field)
-            for field in raw_fields 
+            for field in bestemmelser_fields 
             if (
                 len(field.strip()) > 1  # Remove single characters
                 and not field.strip().startswith('på')  # Remove common noise
@@ -234,60 +307,105 @@ async def process_consistency_check(plankart: UploadFile, bestemmelser: UploadFi
         logger.debug(f"Cleaned bestemmelser fields: {bestemmelser_fields}")
 
         # Handle SOSI if present
-        sosi_fields = set()
+        sosi_data = None
         if sosi:
-            sosi_content = await extract_text_from_pdf(sosi)
-            sosi_fields = await extractor.extract_fields(sosi_content)
-            logger.debug(f"SOSI fields: {sosi_fields}")
+            # Read SOSI content
+            sosi_content = await sosi.read()
+            sosi_data = await extract_fields_from_sosi(sosi_content)
+            
+            # Get all relevant fields from SOSI
+            sosi_fields = set(sosi_data["fields"]["zone_identifiers"])
+            sosi_hensynssoner = set(sosi_data["fields"]["hensynssoner"])
+            
+            # Normalize SOSI fields
+            sosi_fields = {
+                normalize_field(field)
+                for field in sosi_fields
+                if normalize_field(field) is not None
+            }
+            
+            # Keep hensynssoner as is since they have special format
+            sosi_all_fields = sosi_fields | sosi_hensynssoner
 
         # Calculate differences
-        only_plankart = plankart_fields - (bestemmelser_fields | sosi_fields)
-        only_bestemmelser = bestemmelser_fields - (plankart_fields | sosi_fields)
-        only_sosi = sosi_fields - (plankart_fields | bestemmelser_fields) if sosi else set()
-        
-        return {
-            "matching_fields": sorted(list(plankart_fields & bestemmelser_fields & (sosi_fields if sosi else plankart_fields))),
-            "only_in_plankart": sorted(list(only_plankart)),
-            "only_in_bestemmelser": sorted(list(only_bestemmelser)),
-            "only_in_sosi": sorted(list(only_sosi)),
-            "is_consistent": len(only_plankart) == 0 and len(only_bestemmelser) == 0 and len(only_sosi) == 0,
-            "document_fields": {
-                "plankart": {
-                    "raw_fields": sorted(list(plankart_fields)),
-                    "normalized_fields": sorted(list({normalize_field(field) for field in plankart_fields})),
-                    "text_sections": []
-                },
-                "bestemmelser": {
-                    "raw_fields": sorted(list(bestemmelser_fields)),
-                    "normalized_fields": sorted(list({normalize_field(field) for field in bestemmelser_fields})),
-                    "text_sections": []
-                },
-                "sosi": {
-                    "raw_fields": sorted(list(sosi_fields)),
-                    "normalized_fields": sorted(list({normalize_field(field) for field in sosi_fields})),
-                    "text_sections": []
-                } if sosi else None
+        if sosi_data:
+            matching_fields = sorted(list(sosi_all_fields & (plankart_fields | bestemmelser_fields)))
+            only_in_plankart = sorted(list(plankart_fields - sosi_all_fields))
+            only_in_bestemmelser = sorted(list(bestemmelser_fields - sosi_all_fields))
+            only_in_sosi = sorted(list(sosi_all_fields - (plankart_fields | bestemmelser_fields)))
+            
+            result = {
+                "matching_fields": matching_fields,
+                "only_in_plankart": only_in_plankart,
+                "only_in_bestemmelser": only_in_bestemmelser,
+                "only_in_sosi": only_in_sosi,
+                "sosi_structure": sosi_data["structure"],
+                "sosi_metadata": sosi_data["metadata"],
+                "field_types": {
+                    "zone_identifiers": sorted(list(sosi_fields)),
+                    "hensynssoner": sorted(list(sosi_hensynssoner)),
+                    "purposes": sorted(list(sosi_data["fields"]["purposes"]))
+                }
             }
-        }
+        else:
+            matching_fields = sorted(list(plankart_fields & bestemmelser_fields))
+            only_in_plankart = sorted(list(plankart_fields - bestemmelser_fields))
+            only_in_bestemmelser = sorted(list(bestemmelser_fields - plankart_fields))
+            
+            result = {
+                "matching_fields": matching_fields,
+                "only_in_plankart": only_in_plankart,
+                "only_in_bestemmelser": only_in_bestemmelser,
+                "only_in_sosi": [],
+                "sosi_structure": None,
+                "sosi_metadata": None,
+                "field_types": None
+            }
+        
+        # Log detailed metrics
+        log_consistency_metrics(result, plankart_fields, bestemmelser_fields, sosi_data)
+        
+        return result
+            
     except Exception as e:
-        logger.error(f"Consistency check error: {str(e)}")
-        logger.debug("Full error:", exc_info=True)
+        logger.error(f"Error in consistency check: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 async def get_bestemmelser_fields(bestemmelser: UploadFile) -> Set[str]:
     """Get fields from bestemmelser using NER service with retry"""
     max_retries = 3
     retry_delay = 1
-    
+
     for attempt in range(max_retries):
         try:
-            async with httpx.AsyncClient(timeout=60.0) as client:  # Increased timeout to 60 seconds
-                files = {'file': ('bestemmelser.pdf', await bestemmelser.read(), 'application/pdf')}
-                response = await client.post('http://ner_service:8001/api/extract-fields', files=files)
-                response.raise_for_status()
-                return set(response.json()['fields'])
+            # Read content first
+            content = await bestemmelser.read()
+            if not content:
+                logger.error("Empty file received")
+                raise HTTPException(status_code=400, detail="File is empty")
+
+            # ⚠️ Reset filposisjon etter read()
+            await bestemmelser.seek(0)
+
+            # Lag midlertidig fil
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as temp_file:
+                temp_file.write(content)
+                temp_file_path = temp_file.name
+
+            # Send til NER-service
+            async with httpx.AsyncClient(timeout=60.0) as client:
+                with open(temp_file_path, 'rb') as f:
+                    files = {'file': ('bestemmelser.pdf', f, 'application/pdf')}
+                    response = await client.post(f'{NER_SERVICE_URL}/api/extract-fields', files=files)
+                    response.raise_for_status()
+                    fields = set(response.json()['fields'])
+
+            os.unlink(temp_file_path)
+            await bestemmelser.seek(0)  # Viktig for videre bruk
+            return fields
+
         except httpx.HTTPError as e:
             if attempt == max_retries - 1:
                 logger.error(f"NER service communication error after {max_retries} attempts: {str(e)}")
-                raise HTTPException(status_code=502, detail=str(e))  # Include error details
-            await asyncio.sleep(retry_delay * (attempt + 1))  # Exponential backoff
+                raise HTTPException(status_code=502, detail=str(e))
+            await asyncio.sleep(retry_delay * (attempt + 1))

@@ -12,11 +12,9 @@ Features:
 
 from pypdf import PdfReader
 import io
-import logging
-from typing import List
+from typing import List # List is not accessed
 import pdfplumber
-
-logger = logging.getLogger(__name__)
+from app.utils.logger import logger
 
 class PdfHandler:
     """

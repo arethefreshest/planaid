@@ -15,8 +15,14 @@ Features:
 using Microsoft.AspNetCore.Mvc;
 using backend.Services;
 using backend.Models;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using PlanAid.Services;
 
 namespace backend.Controllers
 {
@@ -26,13 +32,16 @@ namespace backend.Controllers
     {
         private readonly ILogger<ConsistencyController> _logger;
         private readonly IPythonIntegrationService _pythonService;
+        private readonly PlanAid.Services.MetricsService _metricsService;
 
         public ConsistencyController(
             ILogger<ConsistencyController> logger,
-            IPythonIntegrationService pythonService)
+            IPythonIntegrationService pythonService,
+            PlanAid.Services.MetricsService metricsService)
         {
             _logger = logger;
             _pythonService = pythonService;
+            _metricsService = metricsService;
         }
 
         /// <summary>
@@ -49,77 +58,90 @@ namespace backend.Controllers
             [FromForm] IFormFile bestemmelser,
             [FromForm] IFormFile? sosi = null)
         {
+            var metrics = _metricsService.CreateMetrics("backend_consistency");
+            
             try
             {
                 _logger.LogInformation($"Received files: {plankart.FileName}, {bestemmelser.FileName}");
                 _logger.LogInformation($"Content types: {plankart.ContentType}, {bestemmelser.ContentType}");
+                if (sosi != null)
+                {
+                    _logger.LogInformation($"SOSI file included: {sosi.FileName}, type: {sosi.ContentType}");
+                }
                 
                 if (plankart == null || bestemmelser == null)
                 {
                     return BadRequest("Missing required files");
                 }
 
-                // Create temp files with original extensions
-                var plankartPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}{Path.GetExtension(plankart.FileName)}");
-                var bestemmelserPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}{Path.GetExtension(bestemmelser.FileName)}");
+                // Add document info
+                _metricsService.AddDocumentInfo(metrics, "plankart", plankart.FileName, plankart.Length);
+                _metricsService.AddDocumentInfo(metrics, "bestemmelser", bestemmelser.FileName, bestemmelser.Length);
+                if (sosi != null)
+                {
+                    _metricsService.AddDocumentInfo(metrics, "sosi", sosi.FileName, sosi.Length);
+                }
+
+                // Save files to temporary location
+                var tempDir = Path.Combine(Path.GetTempPath(), "PlanAid", metrics.RunId);
+                Directory.CreateDirectory(tempDir);
+                
+                var plankartPath = Path.Combine(tempDir, plankart.FileName);
+                var bestemmelserPath = Path.Combine(tempDir, bestemmelser.FileName);
                 string? sosiPath = null;
-
-                try
+                
+                var fileStart = DateTime.UtcNow;
+                using (var stream = new FileStream(plankartPath, FileMode.Create))
                 {
-                    _logger.LogInformation($"Writing files to: {plankartPath}, {bestemmelserPath}");
-                    
-                    using (var stream = new FileStream(plankartPath, FileMode.Create))
+                    await plankart.CopyToAsync(stream);
+                }
+                
+                using (var stream = new FileStream(bestemmelserPath, FileMode.Create))
+                {
+                    await bestemmelser.CopyToAsync(stream);
+                }
+                
+                if (sosi != null)
+                {
+                    sosiPath = Path.Combine(tempDir, sosi.FileName);
+                    using (var stream = new FileStream(sosiPath, FileMode.Create))
                     {
-                        await plankart.CopyToAsync(stream);
-                    }
-
-                    using (var stream = new FileStream(bestemmelserPath, FileMode.Create))
-                    {
-                        await bestemmelser.CopyToAsync(stream);
-                    }
-
-                    if (sosi != null)
-                    {
-                        sosiPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}{Path.GetExtension(sosi.FileName)}");
-                        using (var stream = new FileStream(sosiPath, FileMode.Create))
-                        {
-                            await sosi.CopyToAsync(stream);
-                        }
-                    }
-
-                    var result = await _pythonService.CheckConsistencyAsync(plankartPath, bestemmelserPath, sosiPath);
-                    _logger.LogInformation("Python service response: {Result}", result);
-                    
-                    if (string.IsNullOrEmpty(result))
-                    {
-                        _logger.LogError("Empty response from processing service");
-                        return StatusCode(500, new { detail = "Empty response from processing service" });
-                    }
-
-                    try
-                    {
-                        var pythonResponse = JsonSerializer.Deserialize<PythonResponse<ConsistencyResult>>(result);
-                        if (pythonResponse == null)
-                        {
-                            _logger.LogError("Failed to deserialize response");
-                            return StatusCode(500, new { detail = "Failed to deserialize response" });
-                        }
-
-                        return Ok(pythonResponse);
-                    }
-                    catch (JsonException ex)
-                    {
-                        _logger.LogError(ex, "Error deserializing response: {Result}", result);
-                        return StatusCode(500, new { detail = $"Invalid response format: {ex.Message}" });
+                        await sosi.CopyToAsync(stream);
                     }
                 }
-                finally
+                var fileEnd = DateTime.UtcNow;
+                _metricsService.RecordTiming(metrics, "file_saving", (fileEnd - fileStart).TotalSeconds);
+                
+                // Call Python service with timing
+                var pythonCallStart = DateTime.UtcNow;
+                var result = await _pythonService.CheckConsistencyAsync(plankartPath, bestemmelserPath, sosiPath);
+                var pythonCallEnd = DateTime.UtcNow;
+                
+                _metricsService.RecordTiming(metrics, "python_service_call", (pythonCallEnd - pythonCallStart).TotalSeconds);
+                
+                // Parse result
+                var parseStart = DateTime.UtcNow;
+                var consistencyResult = JsonSerializer.Deserialize<ConsistencyResult>(result);
+                var parseEnd = DateTime.UtcNow;
+                
+                _metricsService.RecordTiming(metrics, "result_parsing", (parseEnd - parseStart).TotalSeconds);
+                
+                // Record field counts
+                if (consistencyResult != null)
                 {
-                    // Cleanup temp files
-                    if (System.IO.File.Exists(plankartPath)) System.IO.File.Delete(plankartPath);
-                    if (System.IO.File.Exists(bestemmelserPath)) System.IO.File.Delete(bestemmelserPath);
-                    if (sosiPath != null && System.IO.File.Exists(sosiPath)) System.IO.File.Delete(sosiPath);
+                    _metricsService.RecordFieldCounts(metrics, consistencyResult);
                 }
+                
+                // Record total processing time
+                _metricsService.RecordTiming(metrics, "total_processing", (DateTime.UtcNow - DateTime.Parse(metrics.Timestamp)).TotalSeconds);
+                
+                // Save metrics
+                await _metricsService.SaveMetricsAsync("backend_consistency", metrics);
+                
+                // Clean up temporary files
+                Directory.Delete(tempDir, true);
+                
+                return Ok(consistencyResult);
             }
             catch (HttpRequestException ex)
             {
@@ -128,8 +150,10 @@ namespace backend.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error processing consistency check");
-                return StatusCode(500, new { detail = ex.Message });
+                metrics.Error = ex.ToString();
+                await _metricsService.SaveMetricsAsync("backend_consistency_error", metrics);
+                _logger.LogError(ex, "Error checking consistency");
+                return StatusCode(500, new { error = "Error checking consistency" });
             }
         }
     }

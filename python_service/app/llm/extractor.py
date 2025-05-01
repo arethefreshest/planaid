@@ -12,16 +12,12 @@ Key Components:
 
 from extract_thinker import Extractor, DocumentLoaderPyPdf, Contract, LLM
 from typing import Set, Tuple
-import logging
-import io
+import io # Not accessed
 import csv
 import os
 import re
 import tempfile
-
-# Set up debug logging
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
+from app.utils.logger import logger
 
 class FieldExtractContract(Contract):
     """
@@ -120,17 +116,26 @@ class FieldExtractor:
         self.fields = set()
     
     def _load_codes(self) -> Tuple[Set[str], Set[str]]:
-        csv_path = '/app/app/data/Reguleringsplan.csv'
-        fallback_path = os.path.join(os.path.dirname(__file__), 'data/Reguleringsplan.csv')
+        # Try multiple possible paths for the CSV file
+        possible_paths = [
+            '/app/app/data/Reguleringsplan.csv',  # Docker path
+            os.path.join(os.path.dirname(__file__), 'data/Reguleringsplan.csv'),  # Relative to extractor.py
+            os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'app/data/Reguleringsplan.csv')  # Relative to project root
+        ]
+        
+        path_to_use = None
+        for path in possible_paths:
+            if os.path.exists(path):
+                path_to_use = path
+                break
+                
+        if not path_to_use:
+            logger.error(f"Could not find Reguleringsplan.csv in any of: {possible_paths}")
+            raise FileNotFoundError(f"Could not find Reguleringsplan.csv in any of: {possible_paths}")
+            
+        logger.debug(f"Loading codes from: {path_to_use}")
         
         try:
-            path_to_use = csv_path if os.path.exists(csv_path) else fallback_path
-            logger.debug(f"Attempting to load codes from: {path_to_use}")
-            
-            if not os.path.exists(path_to_use):
-                logger.error(f"Neither {csv_path} nor {fallback_path} exist")
-                raise FileNotFoundError(f"Neither {csv_path} nor {fallback_path} exist")
-            
             with open(path_to_use, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f, delimiter=';')
                 sosi_codes = {row['SOSI-kode'].strip() for row in reader if row.get('SOSI-kode')}

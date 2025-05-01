@@ -11,11 +11,10 @@ The module supports:
 - Comparison of fields between different document types
 """
 
-from typing import Dict, List, Set
+from typing import Dict, List, Set # Set is not accessed
 import pandas as pd
-import logging
-
-logger = logging.getLogger(__name__)
+from app.utils.logger import logger
+import os
 
 class FieldReference:
     """
@@ -36,12 +35,34 @@ class FieldReference:
         Loads reference data from CSV and builds field variations dictionary.
         """
         try:
-            self.df = pd.read_csv('../../Reguleringsplan.csv', sep=';', encoding='utf-8')
+            # Try multiple possible locations for the CSV file
+            possible_paths = [
+                'app/data/Reguleringsplan.csv',  # Local development path
+                'data/Reguleringsplan.csv',      # Alternative local path
+                '../../Reguleringsplan.csv',     # Docker path
+            ]
+            
+            csv_path = None
+            for path in possible_paths:
+                if os.path.exists(path):
+                    csv_path = path
+                    break
+            
+            if not csv_path:
+                logger.debug("Could not find Reguleringsplan.csv, using pattern matching")
+                self.df = pd.DataFrame()
+                self.field_variations = {}
+                return
+                
+            logger.info(f"Loading Reguleringsplan.csv from: {csv_path}")
+            self.df = pd.read_csv(csv_path, sep=';', encoding='utf-8')
             self.field_variations = self._build_variations()
             logger.info(f"Loaded {len(self.field_variations)} reference codes")
         except Exception as e:
             logger.error(f"Error loading reference data: {str(e)}")
-            raise
+            # Don't raise the error, just log it and continue with empty variations
+            self.df = pd.DataFrame()
+            self.field_variations = {}
     
     def _build_variations(self) -> Dict[str, Dict]:
         """
