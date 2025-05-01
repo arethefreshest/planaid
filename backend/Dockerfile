@@ -1,9 +1,9 @@
 # Build stage
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0.406 AS build
 WORKDIR /src
 
-# Copy csproj and restore dependencies
-COPY ["PlanAid.csproj", "./"]
+# Copy csproj and global.json (important!)
+COPY ["PlanAid.csproj", "global.json", "./"]
 RUN dotnet restore
 
 # Copy everything else and build
@@ -11,7 +11,7 @@ COPY . .
 
 # Development stage
 FROM build AS development
-ENTRYPOINT ["dotnet", "watch", "run", "--urls", "http://+:5251"]
+ENTRYPOINT ["dotnet", "run", "--urls", "http://+:5251"]
 
 # Production stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS production

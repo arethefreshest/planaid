@@ -25,7 +25,12 @@ const Start = () => {
         {/* Right side: Button */}
         <div style={styles.buttonContainer}>
         <Link to="/page2" style={styles.button}>
-          Start analyse
+        Konsistenssjekk
+        </Link>
+        </div>
+        <div style={styles.buttonContainer}>
+        <Link to="/page3" style={styles.button}>
+        Versjonskontroll
         </Link>
         </div>
       </div>
