@@ -1,0 +1,3 @@
+case,matching_fields,only_in_bestemmelser,only_in_plankart,only_in_sosi,is_consistent,processing_time,error
+case1,23,3,2,5,False,41.36,
+case2,10,2,4,56,False,28.13,

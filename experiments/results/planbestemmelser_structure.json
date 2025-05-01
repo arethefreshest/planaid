@@ -1,0 +1,1116 @@
+{
+  "metadata": {
+    "name": "planbestemmelser_1",
+    "id": "",
+    "text_count": 98
+  },
+  "sections": [
+    {
+      "id": 4776908976,
+      "text": "1 Planens hensikt",
+      "level": 1,
+      "parent_id": 4776908896
+    },
+    {
+      "id": 4776910416,
+      "text": "2 Bestemmelser til arealformål",
+      "level": 1,
+      "parent_id": 4776910336
+    },
+    {
+      "id": 4776910656,
+      "text": "2.1 Bebyggelse og anlegg (§ 12-5 nr. 1)",
+      "level": 1,
+      "parent_id": 4776910576
+    },
+    {
+      "id": 4776910896,
+      "text": "2.1.1 Annen offentlig eller privat tjenesteyting (BAT1-2)",
+      "level": 1,
+      "parent_id": 4776910816
+    },
+    {
+      "id": 4776918576,
+      "text": "BYA.",
+      "level": 1,
+      "parent_id": 4776918496
+    },
+    {
+      "id": 4777116208,
+      "text": "2.2 Samferdselsanlegg og teknisk infrastruktur (§ 12-5 nr. 2)",
+      "level": 1,
+      "parent_id": 4777116128
+    },
+    {
+      "id": 4777116448,
+      "text": "2.2.1 Fellesbestemmelser for samferdselsanlegg og teknisk infrastruktur",
+      "level": 1,
+      "parent_id": 4777116368
+    },
+    {
+      "id": 4777117168,
+      "text": "2.2.2 Bruk av veigrunn",
+      "level": 1,
+      "parent_id": 4777117088
+    },
+    {
+      "id": 4777117888,
+      "text": "2.2.3 Annen veggrunn – offentlig grøntareal (o_AVG1-4)",
+      "level": 1,
+      "parent_id": 4777117808
+    },
+    {
+      "id": 4777118368,
+      "text": "2.3 Grønnstruktur (§ 12-5 nr. 3)",
+      "level": 1,
+      "parent_id": 4777118288
+    },
+    {
+      "id": 4777118608,
+      "text": "2.3.1 Turveg (f_TV1-4)",
+      "level": 1,
+      "parent_id": 4777118528
+    },
+    {
+      "id": 4777119168,
+      "text": "2.3.2 Friområde (FRI1-3)",
+      "level": 1,
+      "parent_id": 4777119088
+    },
+    {
+      "id": 4777121408,
+      "text": "2.3.3 Badeplass/-område (f_BAD)",
+      "level": 1,
+      "parent_id": 4777121328
+    },
+    {
+      "id": 4777121968,
+      "text": "2.3.4 Naturområde (GN1-GN4)",
+      "level": 1,
+      "parent_id": 4777121888
+    },
+    {
+      "id": 4777122848,
+      "text": "2.4 Bruk og vern av sjø og vassdrag med tilhørende strandsone (§ 12-5 nr. 6)",
+      "level": 1,
+      "parent_id": 4777122768
+    },
+    {
+      "id": 4777123088,
+      "text": "2.4.1 Fellesbestemmelse",
+      "level": 1,
+      "parent_id": 4777123008
+    },
+    {
+      "id": 4777123888,
+      "text": "2.4.2 Friluftsområde (o_FV)",
+      "level": 1,
+      "parent_id": 4777123808
+    },
+    {
+      "id": 4775353296,
+      "text": "2.4.3 Badeområde (f_VBAD)",
+      "level": 1,
+      "parent_id": 4775550944
+    },
+    {
+      "id": 4775413872,
+      "text": "3 Bestemmelser til hensynssoner",
+      "level": 1,
+      "parent_id": 4775414112
+    },
+    {
+      "id": 4775415392,
+      "text": "3.1 Støysoner (H220)",
+      "level": 1,
+      "parent_id": 4775415632 
+    },
+    {
+      "id": 4775416912,
+      "text": "3.2 Flomsone (H320)",
+      "level": 1,
+      "parent_id": 4775416832
+    },
+    {
+      "id": 4775427632,
+      "text": "3.3 Båndleggingssone (H740)",
+      "level": 1,
+      "parent_id": 4775417232
+    },
+    {
+      "id": 4775414512,
+      "text": "3.4 Frisikt (H140)",
+      "level": 1,
+      "parent_id": 4775414912
+    },
+    {
+      "id": 4775412912,
+      "text": "4 Bestemmelser til bestemmelsesområder",
+      "level": 1,
+      "parent_id": 4775412992
+    },
+    {
+      "id": 4775413472,
+      "text": "4.1 Bestemmelser til bestemmelsesområde (område #1, #gangbro/undergrunn)",
+      "level": 1,
+      "parent_id": 4775412752
+    }
+  ],
+  "paragraphs": [
+    {
+      "id": 4733478112,
+      "text": "PlanID 202202",
+      "parent_id": 4775646448
+    },
+    {
+      "id": 4776814512,
+      "text": "Evje og Hornnes kommune",
+      "parent_id": 4776815152
+    },
+    {
+      "id": 4776817392,
+      "text": "Vedtatt dato: 13.06.2024",
+      "parent_id": 4776817232
+    },
+    {
+      "id": 4776817552,
+      "text": "Reguleringsbestemmelser for Evjetun Leirsted",
+      "parent_id": 4776818912
+    },
+    {
+      "id": 4776819392,
+      "text": "Detaljregulering, planID 202202",
+      "parent_id": 4776819152
+    },
+    {
+      "id": 4776819232,
+      "text": "Datert: 08.04.2024",
+      "parent_id": 4776818992
+    },
+    {
+      "id": 4776908656,
+      "text": "Vedtatt av kommunestyret PS 51/24, 13.06.2024",
+      "parent_id": 4776904016
+    },
+    {
+      "id": 4776909216,
+      "text": "Hensikten og formålet med planarbeider er å lage en helhetlig plan for å sikre forutsigbarhet for fremtidig utvikling av området. Området er avsatt til offentlig eller privat tjenesteyting i Kommunedelplanen for",
+      "parent_id": 4776909136
+    },
+    {
+      "id": 4776909456,
+      "text": "Evje og Hornnes kommune",
+      "parent_id": 4776909376
+    },
+    {
+      "id": 4776909696,
+      "text": "Det er ønske om å tilrettelegge aktiviteter og tilbud for alle aldersgrupper og med størst mulig tilpassing.",
+      "parent_id": 4776909616
+    },
+    {
+      "id": 4776909936,
+      "text": "Noen av planlagte tiltak som vil omfattes av planen er: Utvidelse av bobiloppstillingsplasser og teltplasser,",
+      "parent_id": 4776909856
+    },
+    {
+      "id": 4776910176,
+      "text": "Oppgradering sanitærbygg, areal for frisbeegolf /aktivitetsløype, nye utleiehytter, utvidelse påbygg hovedhus, etablering av støyskjerming / voll etc.",
+      "parent_id": 4776910096
+    },
+    {
+      "id": 4776911136,
+      "text": "Bebyggelsestype (pbl §12-7)",
+      "parent_id": 4776911056
+    },
+    {
+      "id": 4776911296,
+      "text": "Innenfor BAT1-2 tillates det bobiloppstillingsplasser, parkering, sanitærbygg og annen teknisk infrastruktur, utleiehytter, servicebygg og andre bygg og aktivitetsanlegg som naturlig hører til driften av",
+      "parent_id": 4776911216
+    },
+    {
+      "id": 4776911536,
+      "text": "Evjetun leirsted. Det arkitektoniske uttrykket på nye tiltak skal tilpasses eksisterende bebyggelse og omgivelser.",
+      "parent_id": 4776911376
+    },
+    {
+      "id": 4776911776,
+      "text": "Situasjonsplan",
+      "parent_id": 4776911696
+    },
+    {
+      "id": 4776912016,
+      "text": "Situasjonsplan: Ved søknad om tillatelse til tiltak skal situasjonsplan vedlegges i tilpasset målestokk som viser plassering av bebyggelse og høyde på bebyggelse og planert terreng. Situasjonsplan skal også vise plassering av parkering, snu og manøvreringsareal, snølagring, renovasjonsareal, avkjørsel, støyvoll og evt. støttemurer. Overganger til tilgrensende arealer med terrenghøyder og snitt må vises.",
+      "parent_id": 4776911936
+    },
+    {
+      "id": 4776912256,
+      "text": "Tilgjengelighet (pbl §12-7)",
+      "parent_id": 4776912176
+    },
+    {
+      "id": 4776912496,
+      "text": "For nye overnattingshytter så skal 70 % av boenhetene som ligger på bakkeplan tilfredsstille krav til tilgjengelig boenhet, ved at alle hovedfunksjoner skal ligge på inngangsplan. Med hovedfunksjoner menes stue, kjøkken, soverom, bad og toalett.",
+      "parent_id": 4776912416
+    },
+    {
+      "id": 4776912736,
+      "text": "Minst 20 % av boenhetene som tilfredsstiller tilgjengelighetskravet skal også oppfylle krav om universell utforming.",
+      "parent_id": 4776912656
+    },
+    {
+      "id": 4776912976,
+      "text": "Ved søknad om tillatelse til tiltak skal det beskrives og vises på kart hvordan universell utforming er ivaretatt i planen.",
+      "parent_id": 4776912896
+    },
+    {
+      "id": 4776913216,
+      "text": "PlanID 202202",
+      "parent_id": 4776913136
+    },
+    {
+      "id": 4776913456,
+      "text": "Plassering av bebyggelse (pbl §12-7)",
+      "parent_id": 4776913376
+    },
+    {
+      "id": 4776913696,
+      "text": "All bebyggelse skal plasseres innenfor byggegrenser vist på plankartet. Parkeringsplasser, støyskjerm eller støyvoll tillates innenfor byggegrense mot rv. 9 i området BAT1 og BAT2.",
+      "parent_id": 4776913616
+    },
+    {
+      "id": 4776914016,
+      "text": "Utnyttelse (pbl §12-7)",
+      "parent_id": 4776913936
+    },
+    {
+      "id": 4776914336,
+      "text": "Prosent bebygd areal (%-BYA) = 30",
+      "parent_id": 4776914256
+    },
+    {
+      "id": 4776914656,
+      "text": "Høyder (pbl §12-7)",
+      "parent_id": 4776914576
+    },
+    {
+      "id": 4776914896,
+      "text": "Tillatt mønehøyde for bygning er maksimum 10 m over gjennomsnittlig planert terreng.",
+      "parent_id": 4776914816
+    },
+    {
+      "id": 4776915136,
+      "text": "Nye tiltak skal plasseres på minimun kote +184,6.",
+      "parent_id": 4776915056
+    },
+    {
+      "id": 4776915376,
+      "text": "Terrengtilpasninger (pbl §12-7)",
+      "parent_id": 4776915296
+    },
+    {
+      "id": 4776915616,
+      "text": "Ved søknad om byggetillatelse skal det legges frem snitt som viser forhold til nabotomt/ nabobebyggelse og tilstøtende vei.",
+      "parent_id": 4776915536
+    },
+    {
+      "id": 4776915936,
+      "text": "Støy (pbl §12-7 nr 4)",
+      "parent_id": 4776915856
+    },
+    {
+      "id": 4776916176,
+      "text": "Det kan anlegges støyvoll/ støyskjerm innenfor områdene BAT1 og BAT2.",
+      "parent_id": 4776916096
+    },
+    {
+      "id": 4776916416,
+      "text": "Krav til avfallshåndtering",
+      "parent_id": 4776916336
+    },
+    {
+      "id": 4776916656,
+      "text": "Avfallshåndtering skal løses i henhold til enhver tids gjeldende avfallsteknisk norm.",
+      "parent_id": 4776916576
+    },
+    {
+      "id": 4776916896,
+      "text": "Overvannshåndtering",
+      "parent_id": 4776916816
+    },
+    {
+      "id": 4776917136,
+      "text": "Ved søknad om tillatelse til tiltak i planområdet, så skal det legges ved en plan for overvannshåndtering.",
+      "parent_id": 4776917056
+    },
+    {
+      "id": 4776917376,
+      "text": "Overvann skal fortrinnsvis håndteres ved bruk av åpne, naturbaserte løsninger med tilstrekkelig kapasitet.",
+      "parent_id": 4776917296
+    },
+    {
+      "id": 4776917616,
+      "text": "Løsningene skal dimensjoneres for et klimajustert nedbør med 100 års gjentaksintervall.",
+      "parent_id": 4776917536
+    },
+    {
+      "id": 4776917856,
+      "text": "Parkering (pbl §12-7 nr 7)",
+      "parent_id": 4776917776
+    },
+    {
+      "id": 4776918096,
+      "text": "Parkeringsplasser og bobilparkering skal vises på situasjonsplan.",
+      "parent_id": 4776918016
+    },
+    {
+      "id": 4776918336,
+      "text": "Det skal avsetter 1 parkeringsplass (18 m2 pr. p-plass) per utleieenhet.",
+      "parent_id": 4776918256
+    },
+    {
+      "id": 4776918816,
+      "text": "Minimumskravet for parkeringsplasser for forsamlingslokaler og lignende er 1 parkeringsplass per 50 m²",
+      "parent_id": 4776918736
+    },
+    {
+      "id": 4777115728,
+      "text": "Det skal avsettes minimum en bilplass for el-billading.",
+      "parent_id": 4776918976
+    },
+    {
+      "id": 4777115968,
+      "text": "HC-plasser skal plasseres nærmest hovedbygg.",
+      "parent_id": 4777115888
+    },
+    {
+      "id": 4777116688,
+      "text": "Ved behov for oppgradering av teknisk infrastruktur skal det utarbeides teknisk plan for området som skal inneholde løsning av VA anlegg, overflatevann og hvordan byggeområdet skal forsynes med strøm.",
+      "parent_id": 4777116608
+    },
+    {
+      "id": 4777116928,
+      "text": "Tekniske planer for vann og avløp skal omfatte hele planområdet med nødvendige tilknytninger til og omlegginger av eksisterende nett. Teknisk infrastruktur kan kun etableres innenfor områder regulert til utbyggingsformål.",
+      "parent_id": 4777116848
+    },
+    {
+      "id": 4777117408,
+      "text": "o_V1 er avkjørsel til området fra riksveg 9.",
+      "parent_id": 4777117328
+    },
+    {
+      "id": 4777117648,
+      "text": "PlanID 202202",
+      "parent_id": 4777117568
+    },
+    {
+      "id": 4777118128,
+      "text": "Arealene skal benyttes til overvannshåndtering, skjæring, fylling, frisiktsoner, snøopplag m.v.",
+      "parent_id": 4777118048
+    },
+    {
+      "id": 4777118928,
+      "text": "Det skal etableres turveger som gir tilgang til friluftsområdene i planområdet. Turvegene skal tilrettelegges for både gående og syklende. f_TV2 skal ha god tilgjengelighet for personer med nedsatt funksjonsevne. f_TV1-4 skal opparbeides med bredde 2,5 m. Turvegene skal ha fast dekke. Turvegen skal skiltes som offentlig tilgjengelig tursti.",
+      "parent_id": 4777118848
+    },
+    {
+      "id": 4777119328,
+      "text": "Områdene FRI1 -FRI3 skal benyttes som friområder. Det tillates etablering av gangveier/stier innenfor disse områdene. Større friluftsaktivitetsanlegg, slik som frisbeegolf, kan kun etableres innenfor FRI2. Det stilles krav om at inngrepet i naturen skal minimeres.",
+      "parent_id": 4777118768
+    },
+    {
+      "id": 4777119568,
+      "text": "Ved søknad om tillatelse til tiltak skal det utarbeides en utomhusplan.",
+      "parent_id": 4777119488
+    },
+    {
+      "id": 4777119968,
+      "text": "Utomhusplanen skal vise: -",
+      "parent_id": 4777119888
+    },
+    {
+      "id": 4777120208,
+      "text": "Vegetasjon/enkelttrær, terreng og andre elementer som skal bevares -",
+      "parent_id": 4777120128
+    },
+    {
+      "id": 4777120448,
+      "text": "Terrengbearbeiding og overganger mot tilstøtende områder. -",
+      "parent_id": 4777120368
+    },
+    {
+      "id": 4777120848,
+      "text": "Utforming av aktiviteter. -",
+      "parent_id": 4777120768
+    },
+    {
+      "id": 4777121168,
+      "text": "Utforming av turveier/stier.",
+      "parent_id": 4777121088
+    },
+    {
+      "id": 4777121728,
+      "text": "Innenfor område avsatt til badeplass, f_BAD, tillates det lagt til rette for bading og annen naturlig aktivitet i tilknytning til badeplassen. Det tillates fjernet vegetasjon og lagt til rette med enkle tiltak som badestige, platting/sitteplasser og lignende. Det er også tillatt å etablere enkel infrastruktur som toaletter, søppelkasser og benker for å øke tilgjengeligheten og trivselen i området.",
+      "parent_id": 4777121648
+    },
+    {
+      "id": 4777122128,
+      "text": "Område er avsatt til grønnstruktur med underformål naturområde. Området skal ha en funksjon som friluftsområde for allmennheten, med særlig vekt på natur- og friluftsopplevelser og rekreasjon. Det er viktig å vise hensyn og respekt for miljø- og naturverdiene i området.",
+      "parent_id": 4777121568
+    },
+    {
+      "id": 4777122368,
+      "text": "I perioden mellom 1. april og 15. juli oppfordres det til å unngå unødig ferdsel innenfor områdene GN1 og",
+      "parent_id": 4777122288
+    },
+    {
+      "id": 4777122608,
+      "text": "GN4 for å beskytte hekkeområder og annet viktig biologisk mangfold. Det er ikke tillatt med hogst eller tilrettelegging innenfor GN1 og GN4.",
+      "parent_id": 4777122528
+    },
+    {
+      "id": 4777123328,
+      "text": "Langs bredden av vassdrag med årssikker vannføring skal det opprettholdes et begrenset naturlig vegetasjonsbelte som motvirker avrenning og gir levested for planter og dyr. Denne regelen gjelder likevel",
+      "parent_id": 4777123248
+    },
+    {
+      "id": 4777123648,
+      "text": "PlanID 202202 ikke for byggverk som står i nødvendig sammenheng med vassdraget, eller hvor det trengs åpning for å sikre tilgang til vassdraget. Ved etablering av badeplass må det sikres at tiltaket ikke medfører økt erosjonsrisiko.",
+      "parent_id": 4777123568
+    },
+    {
+      "id": 4775548464,
+      "text": "Formålsområdet o_FV omfatter vassdragsarealer for ordinær vassdragsrelatert friluftsaktivitet og ferdsel.",
+      "parent_id": 4777124048
+    },
+    {
+      "id": 4775412272,
+      "text": "Formålsområdet f_VBAD tillates benyttet til felles badeplass i tilknytning til tilgrensende badeplass/- område på land. Det tillates etablert sesongbaserte aktiviteter i elva som vannpark, og lignende. Det tillates aktiviteter i badeområdet som er forenlig med formålet om å tilrettelegge for bading og friluftsliv, og som ikke påvirker naturmiljøet negativt. Slike aktiviteter kan inkludere lek og ballspill på sandstranden, piknik og grilling på anviste områder, og bruk av ikke-motoriserte vannfartøy som kanoer, sup og kajakker.",
+      "parent_id": 4775411952
+    },
+    {
+      "id": 4775412592,
+      "text": "All annen aktivitet som kan skade naturmiljøet, herunder fiske og bruk av motoriserte vannfartøy, er ikke tillatt.",
+      "parent_id": 4775412352
+    },
+    {
+      "id": 4775415232,
+      "text": "Virksomheten skal følge grenseverdier satt i retningslinje for behandling av støy i arealplanlegging (T-",
+      "parent_id": 4775414592
+    },
+    {
+      "id": 4775416672,
+      "text": "1442/2021)",
+      "parent_id": 4775416752
+    },
+    {
+      "id": 4775417552,
+      "text": "Bygninger og konstruksjoner som er planlagt å ligge innenfor flomsone, må dimensjoneres og plasseres slik at det ikke medfører fare for liv og helse, skader på eiendom eller økonomisk tap ved flom. Dette kan blant annet gjøres ved å plassere bygninger og konstruksjoner på tilstrekkelig høyde over kotehøyden for flom, K+184,6 eller ved å utforme bygninger og konstruksjoner slik at de tåler flomvann.",
+      "parent_id": 4775417472
+    },
+    {
+      "id": 4775415712,
+      "text": "Innenfor faresone for høyspent tillates det ikke oppført bygninger for varig opphold.",
+      "parent_id": 4775417392
+    },
+    {
+      "id": 4775414672,
+      "text": "Innenfor frisiktarealet tillates ikke murer, gjerder eller vegetasjon høyere enn 0,5 m over tilstøtende veiers nivå. Terreng skal tilpasses tilstøtende veiers nivå.",
+      "parent_id": 4775415072
+    },
+    {
+      "id": 4775412512,
+      "text": "Innenfor området tillates det etablert gangbro eller undergrunn for kryssing av riksveg 9.",
+      "parent_id": 4775413152
+    }
+  ],
+  "relationships": [
+    {
+      "child_id": 4733478112,
+      "parent_id": 4775646448,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776814512,
+      "parent_id": 4776815152,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776817392,
+      "parent_id": 4776817232,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776817552,
+      "parent_id": 4776818912,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776819392,
+      "parent_id": 4776819152,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776819232,
+      "parent_id": 4776818992,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776908656,
+      "parent_id": 4776904016,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776908976,
+      "parent_id": 4776908896,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776909216,
+      "parent_id": 4776909136,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776909456,
+      "parent_id": 4776909376,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776909696,
+      "parent_id": 4776909616,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776909936,
+      "parent_id": 4776909856,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776910176,
+      "parent_id": 4776910096,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776910416,
+      "parent_id": 4776910336,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776910656,
+      "parent_id": 4776910576,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776910896,
+      "parent_id": 4776910816,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776911136,
+      "parent_id": 4776911056,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776911296,
+      "parent_id": 4776911216,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776911536,
+      "parent_id": 4776911376,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776911776,
+      "parent_id": 4776911696,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776912016,
+      "parent_id": 4776911936,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776912256,
+      "parent_id": 4776912176,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776912496,
+      "parent_id": 4776912416,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776912736,
+      "parent_id": 4776912656,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776912976,
+      "parent_id": 4776912896,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776913216,
+      "parent_id": 4776913136,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776913456,
+      "parent_id": 4776913376,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776913696,
+      "parent_id": 4776913616,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776914016,
+      "parent_id": 4776913936,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776914336,
+      "parent_id": 4776914256,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776914656,
+      "parent_id": 4776914576,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776914896,
+      "parent_id": 4776914816,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776915136,
+      "parent_id": 4776915056,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776915376,
+      "parent_id": 4776915296,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776915616,
+      "parent_id": 4776915536,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776915936,
+      "parent_id": 4776915856,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776916176,
+      "parent_id": 4776916096,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776916416,
+      "parent_id": 4776916336,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776916656,
+      "parent_id": 4776916576,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776916896,
+      "parent_id": 4776916816,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776917136,
+      "parent_id": 4776917056,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776917376,
+      "parent_id": 4776917296,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776917616,
+      "parent_id": 4776917536,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776917856,
+      "parent_id": 4776917776,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776918096,
+      "parent_id": 4776918016,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776918336,
+      "parent_id": 4776918256,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776918576,
+      "parent_id": 4776918496,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4776918816,
+      "parent_id": 4776918736,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777115728,
+      "parent_id": 4776918976,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777115968,
+      "parent_id": 4777115888,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777116208,
+      "parent_id": 4777116128,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777116448,
+      "parent_id": 4777116368,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777116688,
+      "parent_id": 4777116608,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777116928,
+      "parent_id": 4777116848,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777117168,
+      "parent_id": 4777117088,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777117408,
+      "parent_id": 4777117328,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777117648,
+      "parent_id": 4777117568,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777117888,
+      "parent_id": 4777117808,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777118128,
+      "parent_id": 4777118048,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777118368,
+      "parent_id": 4777118288,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777118608,
+      "parent_id": 4777118528,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777118928,
+      "parent_id": 4777118848,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777119168,
+      "parent_id": 4777119088,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777119328,
+      "parent_id": 4777118768,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777119568,
+      "parent_id": 4777119488,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777119968,
+      "parent_id": 4777119888,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777120208,
+      "parent_id": 4777120128,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777120448,
+      "parent_id": 4777120368,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777120848,
+      "parent_id": 4777120768,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777121168,
+      "parent_id": 4777121088,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777121408,
+      "parent_id": 4777121328,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777121728,
+      "parent_id": 4777121648,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777121968,
+      "parent_id": 4777121888,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777122128,
+      "parent_id": 4777121568,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777122368,
+      "parent_id": 4777122288,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777122608,
+      "parent_id": 4777122528,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777122848,
+      "parent_id": 4777122768,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777123088,
+      "parent_id": 4777123008,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777123328,
+      "parent_id": 4777123248,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777123648,
+      "parent_id": 4777123568,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4777123888,
+      "parent_id": 4777123808,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775548464,
+      "parent_id": 4777124048,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775353296,
+      "parent_id": 4775550944,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775412272,
+      "parent_id": 4775411952,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775412592,
+      "parent_id": 4775412352,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775413872,
+      "parent_id": 4775414112,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775415392,
+      "parent_id": 4775415632,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775415232,
+      "parent_id": 4775414592,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775416672,
+      "parent_id": 4775416752,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775416912,
+      "parent_id": 4775416832,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775417552,
+      "parent_id": 4775417472,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775427632,
+      "parent_id": 4775417232,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775415712,
+      "parent_id": 4775417392,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775414512,
+      "parent_id": 4775414912,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775414672,
+      "parent_id": 4775415072,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775412912,
+      "parent_id": 4775412992,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775413472,
+      "parent_id": 4775412752,
+      "child_type": "section_header",
+      "parent_type": "unknown"
+    },
+    {
+      "child_id": 4775412512,
+      "parent_id": 4775413152,
+      "child_type": "paragraph",
+      "parent_type": "unknown"
+    }
+  ]
+}

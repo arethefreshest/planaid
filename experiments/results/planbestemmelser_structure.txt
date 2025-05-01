@@ -1,0 +1,38 @@
+Document Structure
+=================
+
+Name: planbestemmelser_1
+Total text items: 98
+
+SECTION STRUCTURE:
+=================
+
+# 1 Planens hensikt
+# 2 Bestemmelser til arealformål
+# 2.1 Bebyggelse og anlegg (§ 12-5 nr. 1)
+# 2.1.1 Annen offentlig eller privat tjenesteyting (BAT1-2)
+# BYA.
+# 2.2 Samferdselsanlegg og teknisk infrastruktur (§ 12-5 nr. 2)
+# 2.2.1 Fellesbestemmelser for samferdselsanlegg og teknisk infrastruktur
+# 2.2.2 Bruk av veigrunn
+# 2.2.3 Annen veggrunn – offentlig grøntareal (o_AVG1-4)
+# 2.3 Grønnstruktur (§ 12-5 nr. 3)
+# 2.3.1 Turveg (f_TV1-4)
+# 2.3.2 Friområde (FRI1-3)
+# 2.3.3 Badeplass/-område (f_BAD)
+# 2.3.4 Naturområde (GN1-GN4)
+# 2.4 Bruk og vern av sjø og vassdrag med tilhørende strandsone (§ 12-5 nr. 6)
+# 2.4.1 Fellesbestemmelse
+# 2.4.2 Friluftsområde (o_FV)
+# 2.4.3 Badeområde (f_VBAD)
+# 3 Bestemmelser til hensynssoner
+# 3.1 Støysoner (H220)
+# 3.2 Flomsone (H320)
+# 3.3 Båndleggingssone (H740)
+# 3.4 Frisikt (H140)
+# 4 Bestemmelser til bestemmelsesområder
+# 4.1 Bestemmelser til bestemmelsesområde (område #1, #gangbro/undergrunn)
+
+FULL CONTENT:
+=============
+
