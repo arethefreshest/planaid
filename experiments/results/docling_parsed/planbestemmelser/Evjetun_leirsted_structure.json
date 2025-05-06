@@ -1,0 +1,2148 @@
+{
+  "schema_name": "DoclingDocument",
+  "version": "1.3.0",
+  "name": "Evjetun_leirsted",
+  "furniture": {
+    "self_ref": "#/furniture",
+    "children": [
+      {
+        "$ref": "#/texts/0"
+      },
+      {
+        "$ref": "#/texts/2"
+      },
+      {
+        "$ref": "#/texts/4"
+      },
+      {
+        "$ref": "#/texts/12"
+      },
+      {
+        "$ref": "#/texts/14"
+      },
+      {
+        "$ref": "#/texts/21"
+      },
+      {
+        "$ref": "#/texts/23"
+      },
+      {
+        "$ref": "#/texts/38"
+      },
+      {
+        "$ref": "#/texts/40"
+      }
+    ],
+    "content_layer": "furniture",
+    "name": "_root_",
+    "label": "unspecified"
+  },
+  "body": {
+    "self_ref": "#/body",
+    "children": [
+      {
+        "$ref": "#/texts/1"
+      },
+      {
+        "$ref": "#/texts/3"
+      },
+      {
+        "$ref": "#/texts/5"
+      },
+      {
+        "$ref": "#/groups/0"
+      },
+      {
+        "$ref": "#/texts/7"
+      },
+      {
+        "$ref": "#/groups/1"
+      },
+      {
+        "$ref": "#/groups/2"
+      },
+      {
+        "$ref": "#/groups/4"
+      },
+      {
+        "$ref": "#/groups/8"
+      },
+      {
+        "$ref": "#/groups/13"
+      },
+      {
+        "$ref": "#/groups/18"
+      },
+      {
+        "$ref": "#/groups/19"
+      },
+      {
+        "$ref": "#/groups/20"
+      },
+      {
+        "$ref": "#/groups/21"
+      },
+      {
+        "$ref": "#/groups/23"
+      }
+    ],
+    "content_layer": "body",
+    "name": "_root_",
+    "label": "unspecified"
+  },
+  "groups": [
+    {
+      "self_ref": "#/groups/0",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/6"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/1",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/8"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/2",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/9"
+        },
+        {
+          "$ref": "#/groups/3"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/3",
+      "parent": {
+        "$ref": "#/groups/2"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/10"
+        },
+        {
+          "$ref": "#/texts/11"
+        },
+        {
+          "$ref": "#/texts/13"
+        },
+        {
+          "$ref": "#/texts/15"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/4",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/16"
+        },
+        {
+          "$ref": "#/groups/5"
+        },
+        {
+          "$ref": "#/groups/6"
+        },
+        {
+          "$ref": "#/groups/7"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/5",
+      "parent": {
+        "$ref": "#/groups/4"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/17"
+        },
+        {
+          "$ref": "#/texts/18"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/6",
+      "parent": {
+        "$ref": "#/groups/4"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/19"
+        },
+        {
+          "$ref": "#/texts/20"
+        },
+        {
+          "$ref": "#/texts/22"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/7",
+      "parent": {
+        "$ref": "#/groups/4"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/24"
+        },
+        {
+          "$ref": "#/texts/25"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/8",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/26"
+        },
+        {
+          "$ref": "#/groups/9"
+        },
+        {
+          "$ref": "#/groups/10"
+        },
+        {
+          "$ref": "#/groups/11"
+        },
+        {
+          "$ref": "#/groups/12"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/9",
+      "parent": {
+        "$ref": "#/groups/8"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/27"
+        },
+        {
+          "$ref": "#/texts/28"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/10",
+      "parent": {
+        "$ref": "#/groups/8"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/29"
+        },
+        {
+          "$ref": "#/texts/30"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/11",
+      "parent": {
+        "$ref": "#/groups/8"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/31"
+        },
+        {
+          "$ref": "#/texts/32"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/12",
+      "parent": {
+        "$ref": "#/groups/8"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/33"
+        },
+        {
+          "$ref": "#/texts/34"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/13",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/35"
+        },
+        {
+          "$ref": "#/groups/14"
+        },
+        {
+          "$ref": "#/groups/15"
+        },
+        {
+          "$ref": "#/groups/16"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/14",
+      "parent": {
+        "$ref": "#/groups/13"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/36"
+        },
+        {
+          "$ref": "#/texts/37"
+        },
+        {
+          "$ref": "#/texts/39"
+        },
+        {
+          "$ref": "#/texts/41"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/15",
+      "parent": {
+        "$ref": "#/groups/13"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/42"
+        },
+        {
+          "$ref": "#/texts/43"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/16",
+      "parent": {
+        "$ref": "#/groups/13"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/44"
+        },
+        {
+          "$ref": "#/texts/45"
+        },
+        {
+          "$ref": "#/groups/17"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/17",
+      "parent": {
+        "$ref": "#/groups/16"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/46"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/18",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/47"
+        },
+        {
+          "$ref": "#/texts/48"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/19",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/49"
+        },
+        {
+          "$ref": "#/texts/50"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/20",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/51"
+        },
+        {
+          "$ref": "#/texts/52"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/21",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/53"
+        },
+        {
+          "$ref": "#/texts/54"
+        },
+        {
+          "$ref": "#/groups/22"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    },
+    {
+      "self_ref": "#/groups/22",
+      "parent": {
+        "$ref": "#/groups/21"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/55"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/23",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/56"
+        },
+        {
+          "$ref": "#/texts/57"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "section"
+    }
+  ],
+  "texts": [
+    {
+      "self_ref": "#/texts/0",
+      "parent": {
+        "$ref": "#/furniture"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 795.9359741210938,
+            "r": 118.68656158447266,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            0,
+            12
+          ]
+        }
+      ],
+      "orig": "Side 1 av 4 ",
+      "text": "Side 1 av 4"
+    },
+    {
+      "self_ref": "#/texts/1",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 462.6700134277344,
+            "t": 795.9359741210938,
+            "r": 526.8865356445312,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            43,
+            57
+          ]
+        }
+      ],
+      "orig": "Detaljregulering for Evjetun ",
+      "text": "Detaljregulering for Evjetun"
+    },
+    {
+      "self_ref": "#/texts/2",
+      "parent": {
+        "$ref": "#/furniture"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 462.6700134277344,
+            "t": 795.9359741210938,
+            "r": 526.8865356445312,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            43,
+            57
+          ]
+        }
+      ],
+      "orig": "PlanID 202202 ",
+      "text": "PlanID 202202"
+    },
+    {
+      "self_ref": "#/texts/3",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 389.4700012207031,
+            "t": 74.73001098632812,
+            "r": 493.9909362792969,
+            "b": 84.69001007080078,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            84,
+            109
+          ]
+        }
+      ],
+      "orig": "Evje og Hornnes kommune  ",
+      "text": "Evje og Hornnes kommune"
+    },
+    {
+      "self_ref": "#/texts/4",
+      "parent": {
+        "$ref": "#/furniture"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_header",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 389.4700012207031,
+            "t": 74.73001098632812,
+            "r": 493.9909362792969,
+            "b": 84.69001007080078,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            84,
+            109
+          ]
+        }
+      ],
+      "orig": "Vedtatt dato: 13.06.2024 ",
+      "text": "Vedtatt dato: 13.06.2024"
+    },
+    {
+      "self_ref": "#/texts/5",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 210.04995727539062,
+            "r": 194.78695678710938,
+            "b": 226.0099639892578,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            257,
+            276
+          ]
+        }
+      ],
+      "orig": "Reguleringsbestemmelser for Evjetun Leirsted  Detaljregulering, planID 202202   Datert: 08.04.2024  Vedtatt av kommunestyret PS 51/24, 13.06.2024 ",
+      "text": "Reguleringsbestemmelser for Evjetun Leirsted Detaljregulering, planID 202202 Datert: 08.04.2024 Vedtatt av kommunestyret PS 51/24, 13.06.2024"
+    },
+    {
+      "self_ref": "#/texts/6",
+      "parent": {
+        "$ref": "#/groups/0"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 210.04995727539062,
+            "r": 194.78695678710938,
+            "b": 226.0099639892578,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            257,
+            276
+          ]
+        }
+      ],
+      "orig": "1. Planens hensikt ",
+      "text": "Planens hensikt",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/7",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 357.79998779296875,
+            "r": 283.9769592285156,
+            "b": 373.7599792480469,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            892,
+            924
+          ]
+        }
+      ],
+      "orig": "Hensikten og form\u00e5let med planarbeider er \u00e5 lage en helhetlig plan for \u00e5 sikre forutsigbarhet for fremtidig  utvikling av omr\u00e5det. Omr\u00e5det er avsatt til offentlig eller privat tjenesteyting i Kommunedelplanen for  Evje og Hornnes kommune   Det er \u00f8nske om \u00e5 tilrettelegge aktiviteter og tilbud for alle aldersgrupper og med st\u00f8rst mulig tilpassing.  Noen av planlagte tiltak som vil omfattes av planen er: Utvidelse av bobiloppstillingsplasser og teltplasser,  Oppgradering sanit\u00e6rbygg, areal for frisbeegolf /aktivitetsl\u00f8ype, nye utleiehytter, utvidelse p\u00e5bygg  hovedhus, etablering av st\u00f8yskjerming / voll etc.  ",
+      "text": "Hensikten og form\u00e5let med planarbeider er \u00e5 lage en helhetlig plan for \u00e5 sikre forutsigbarhet for fremtidig utvikling av omr\u00e5det. Omr\u00e5det er avsatt til offentlig eller privat tjenesteyting i Kommunedelplanen for Evje og Hornnes kommune Det er \u00f8nske om \u00e5 tilrettelegge aktiviteter og tilbud for alle aldersgrupper og med st\u00f8rst mulig tilpassing. Noen av planlagte tiltak som vil omfattes av planen er: Utvidelse av bobiloppstillingsplasser og teltplasser, Oppgradering sanit\u00e6rbygg, areal for frisbeegolf /aktivitetsl\u00f8ype, nye utleiehytter, utvidelse p\u00e5bygg hovedhus, etablering av st\u00f8yskjerming / voll etc."
+    },
+    {
+      "self_ref": "#/texts/8",
+      "parent": {
+        "$ref": "#/groups/1"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 357.79998779296875,
+            "r": 283.9769592285156,
+            "b": 373.7599792480469,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            892,
+            924
+          ]
+        }
+      ],
+      "orig": "2. Bestemmelser til arealform\u00e5l ",
+      "text": "Bestemmelser til arealform\u00e5l",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/9",
+      "parent": {
+        "$ref": "#/groups/2"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 385.969970703125,
+            "r": 264.24200439453125,
+            "b": 397.969970703125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            925,
+            965
+          ]
+        }
+      ],
+      "orig": "2.1 Bebyggelse og anlegg (\u00a7 12-5 nr. 1) ",
+      "text": "2.1 Bebyggelse og anlegg (\u00a7 12-5 nr. 1)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/10",
+      "parent": {
+        "$ref": "#/groups/3"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 422.6899719238281,
+            "r": 343.5820007324219,
+            "b": 434.6899719238281,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            966,
+            1024
+          ]
+        }
+      ],
+      "orig": "2.1.1 Annen offentlig eller privat tjenesteyting (BAT1-2) ",
+      "text": "2.1.1 Annen offentlig eller privat tjenesteyting (BAT1-2)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/11",
+      "parent": {
+        "$ref": "#/groups/3"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 795.9359741210938,
+            "r": 118.68656158447266,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            2329,
+            2341
+          ]
+        }
+      ],
+      "orig": "Bebyggelsestype (pbl \u00a712-7)  Innenfor BAT1-2 tillates det bobiloppstillingsplasser, parkering, sanit\u00e6rbygg og annen teknisk  infrastruktur, utleiehytter, servicebygg og andre bygg og aktivitetsanlegg som naturlig h\u00f8rer til driften av  Evjetun leirsted. Det arkitektoniske uttrykket p\u00e5 nye tiltak skal tilpasses eksisterende bebyggelse og  omgivelser.  Situasjonsplan  Situasjonsplan: Ved s\u00f8knad om tillatelse til tiltak skal situasjonsplan vedlegges i tilpasset m\u00e5lestokk som  viser plassering av bebyggelse og h\u00f8yde p\u00e5 bebyggelse og planert terreng. Situasjonsplan skal ogs\u00e5 vise  plassering av parkering, snu og man\u00f8vreringsareal, sn\u00f8lagring, renovasjonsareal, avkj\u00f8rsel, st\u00f8yvoll og evt.  st\u00f8ttemurer. Overganger til tilgrensende arealer med terrengh\u00f8yder og snitt m\u00e5 vises.  Tilgjengelighet (pbl \u00a712-7)  For nye overnattingshytter s\u00e5 skal 70 % av boenhetene som ligger p\u00e5 bakkeplan tilfredsstille krav til  tilgjengelig boenhet, ved at alle hovedfunksjoner skal ligge p\u00e5 inngangsplan. Med hovedfunksjoner menes  stue, kj\u00f8kken, soverom, bad og toalett.  Minst 20 % av boenhetene som tilfredsstiller tilgjengelighetskravet skal ogs\u00e5 oppfylle krav om universell  utforming.   Ved s\u00f8knad om tillatelse til tiltak skal det beskrives og vises p\u00e5 kart hvordan universell utforming er  ivaretatt i planen.  ",
+      "text": "Bebyggelsestype (pbl \u00a712-7) Innenfor BAT1-2 tillates det bobiloppstillingsplasser, parkering, sanit\u00e6rbygg og annen teknisk infrastruktur, utleiehytter, servicebygg og andre bygg og aktivitetsanlegg som naturlig h\u00f8rer til driften av Evjetun leirsted. Det arkitektoniske uttrykket p\u00e5 nye tiltak skal tilpasses eksisterende bebyggelse og omgivelser. Situasjonsplan Situasjonsplan: Ved s\u00f8knad om tillatelse til tiltak skal situasjonsplan vedlegges i tilpasset m\u00e5lestokk som viser plassering av bebyggelse og h\u00f8yde p\u00e5 bebyggelse og planert terreng. Situasjonsplan skal ogs\u00e5 vise plassering av parkering, snu og man\u00f8vreringsareal, sn\u00f8lagring, renovasjonsareal, avkj\u00f8rsel, st\u00f8yvoll og evt. st\u00f8ttemurer. Overganger til tilgrensende arealer med terrengh\u00f8yder og snitt m\u00e5 vises. Tilgjengelighet (pbl \u00a712-7) For nye overnattingshytter s\u00e5 skal 70 % av boenhetene som ligger p\u00e5 bakkeplan tilfredsstille krav til tilgjengelig boenhet, ved at alle hovedfunksjoner skal ligge p\u00e5 inngangsplan. Med hovedfunksjoner menes stue, kj\u00f8kken, soverom, bad og toalett. Minst 20 % av boenhetene som tilfredsstiller tilgjengelighetskravet skal ogs\u00e5 oppfylle krav om universell utforming. Ved s\u00f8knad om tillatelse til tiltak skal det beskrives og vises p\u00e5 kart hvordan universell utforming er ivaretatt i planen."
+    },
+    {
+      "self_ref": "#/texts/12",
+      "parent": {
+        "$ref": "#/furniture"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 795.9359741210938,
+            "r": 118.68656158447266,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            2329,
+            2341
+          ]
+        }
+      ],
+      "orig": "Side 2 av 4 ",
+      "text": "Side 2 av 4"
+    },
+    {
+      "self_ref": "#/texts/13",
+      "parent": {
+        "$ref": "#/groups/3"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 462.6700134277344,
+            "t": 795.9359741210938,
+            "r": 526.8865356445312,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            2372,
+            2386
+          ]
+        }
+      ],
+      "orig": "Detaljregulering for Evjetun ",
+      "text": "Detaljregulering for Evjetun"
+    },
+    {
+      "self_ref": "#/texts/14",
+      "parent": {
+        "$ref": "#/furniture"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 462.6700134277344,
+            "t": 795.9359741210938,
+            "r": 526.8865356445312,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            2372,
+            2386
+          ]
+        }
+      ],
+      "orig": "PlanID 202202 ",
+      "text": "PlanID 202202"
+    },
+    {
+      "self_ref": "#/texts/15",
+      "parent": {
+        "$ref": "#/groups/3"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 560.949951171875,
+            "r": 370.9420166015625,
+            "b": 572.949951171875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            3907,
+            3969
+          ]
+        }
+      ],
+      "orig": "Plassering av bebyggelse (pbl \u00a712-7)  All bebyggelse skal plasseres innenfor byggegrenser vist p\u00e5 plankartet. Parkeringsplasser, st\u00f8yskjerm eller  st\u00f8yvoll tillates innenfor byggegrense mot rv. 9 i omr\u00e5det BAT1 og BAT2.   Utnyttelse (pbl \u00a712-7)  Prosent bebygd areal (%-BYA) = 30   H\u00f8yder (pbl \u00a712-7)  Tillatt m\u00f8neh\u00f8yde for bygning er maksimum 10 m over gjennomsnittlig planert terreng.  Nye tiltak skal plasseres p\u00e5 minimun kote +184,6.  Terrengtilpasninger (pbl \u00a712-7)  Ved s\u00f8knad om byggetillatelse skal det legges frem snitt som viser forhold til nabotomt/ nabobebyggelse  og tilst\u00f8tende vei.  St\u00f8y (pbl \u00a712-7 nr 4)  Det kan anlegges st\u00f8yvoll/ st\u00f8yskjerm innenfor omr\u00e5dene BAT1 og BAT2.   Krav til avfallsh\u00e5ndtering  Avfallsh\u00e5ndtering skal l\u00f8ses i henhold til enhver tids gjeldende avfallsteknisk norm.  Overvannsh\u00e5ndtering  Ved s\u00f8knad om tillatelse til tiltak i planomr\u00e5det, s\u00e5 skal det legges ved en plan for overvannsh\u00e5ndtering.  Overvann skal fortrinnsvis h\u00e5ndteres ved bruk av \u00e5pne, naturbaserte l\u00f8sninger med tilstrekkelig kapasitet.  L\u00f8sningene skal dimensjoneres for et klimajustert nedb\u00f8r med 100 \u00e5rs gjentaksintervall.  Parkering (pbl \u00a712-7 nr 7)  Parkeringsplasser og bobilparkering skal vises p\u00e5 situasjonsplan.   Det skal avsetter 1 parkeringsplass (18 m2 pr. p-plass) per utleieenhet.  Minimumskravet for parkeringsplasser for forsamlingslokaler og lignende er 1 parkeringsplass per 50 m\u00b2  BYA.   Det skal avsettes minimum en bilplass for el-billading.   HC-plasser skal plasseres n\u00e6rmest hovedbygg.  ",
+      "text": "Plassering av bebyggelse (pbl \u00a712-7) All bebyggelse skal plasseres innenfor byggegrenser vist p\u00e5 plankartet. Parkeringsplasser, st\u00f8yskjerm eller st\u00f8yvoll tillates innenfor byggegrense mot rv. 9 i omr\u00e5det BAT1 og BAT2. Utnyttelse (pbl \u00a712-7) Prosent bebygd areal (%-BYA) = 30 H\u00f8yder (pbl \u00a712-7) Tillatt m\u00f8neh\u00f8yde for bygning er maksimum 10 m over gjennomsnittlig planert terreng. Nye tiltak skal plasseres p\u00e5 minimun kote +184,6. Terrengtilpasninger (pbl \u00a712-7) Ved s\u00f8knad om byggetillatelse skal det legges frem snitt som viser forhold til nabotomt/ nabobebyggelse og tilst\u00f8tende vei. St\u00f8y (pbl \u00a712-7 nr 4) Det kan anlegges st\u00f8yvoll/ st\u00f8yskjerm innenfor omr\u00e5dene BAT1 og BAT2. Krav til avfallsh\u00e5ndtering Avfallsh\u00e5ndtering skal l\u00f8ses i henhold til enhver tids gjeldende avfallsteknisk norm. Overvannsh\u00e5ndtering Ved s\u00f8knad om tillatelse til tiltak i planomr\u00e5det, s\u00e5 skal det legges ved en plan for overvannsh\u00e5ndtering. Overvann skal fortrinnsvis h\u00e5ndteres ved bruk av \u00e5pne, naturbaserte l\u00f8sninger med tilstrekkelig kapasitet. L\u00f8sningene skal dimensjoneres for et klimajustert nedb\u00f8r med 100 \u00e5rs gjentaksintervall. Parkering (pbl \u00a712-7 nr 7) Parkeringsplasser og bobilparkering skal vises p\u00e5 situasjonsplan. Det skal avsetter 1 parkeringsplass (18 m2 pr. p-plass) per utleieenhet. Minimumskravet for parkeringsplasser for forsamlingslokaler og lignende er 1 parkeringsplass per 50 m\u00b2 BYA. Det skal avsettes minimum en bilplass for el-billading. HC-plasser skal plasseres n\u00e6rmest hovedbygg."
+    },
+    {
+      "self_ref": "#/texts/16",
+      "parent": {
+        "$ref": "#/groups/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 560.949951171875,
+            "r": 370.9420166015625,
+            "b": 572.949951171875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            3907,
+            3969
+          ]
+        }
+      ],
+      "orig": "2.2 Samferdselsanlegg og teknisk infrastruktur (\u00a7 12-5 nr. 2) ",
+      "text": "2.2 Samferdselsanlegg og teknisk infrastruktur (\u00a7 12-5 nr. 2)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/17",
+      "parent": {
+        "$ref": "#/groups/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 583.6300048828125,
+            "r": 424.5820007324219,
+            "b": 595.6300048828125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            3970,
+            4042
+          ]
+        }
+      ],
+      "orig": "2.2.1 Fellesbestemmelser for samferdselsanlegg og teknisk infrastruktur ",
+      "text": "2.2.1 Fellesbestemmelser for samferdselsanlegg og teknisk infrastruktur",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/18",
+      "parent": {
+        "$ref": "#/groups/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 690.8199462890625,
+            "r": 182.16656494140625,
+            "b": 702.8199462890625,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4471,
+            4494
+          ]
+        }
+      ],
+      "orig": "Ved behov for oppgradering av teknisk infrastruktur skal det utarbeides teknisk plan for omr\u00e5det som skal  inneholde l\u00f8sning av VA anlegg, overflatevann og hvordan byggeomr\u00e5det skal forsynes med str\u00f8m.  Tekniske planer for vann og avl\u00f8p skal omfatte hele planomr\u00e5det med n\u00f8dvendige tilknytninger til og  omlegginger av eksisterende nett. Teknisk infrastruktur kan kun etableres innenfor omr\u00e5der regulert til  utbyggingsform\u00e5l. ",
+      "text": "Ved behov for oppgradering av teknisk infrastruktur skal det utarbeides teknisk plan for omr\u00e5det som skal inneholde l\u00f8sning av VA anlegg, overflatevann og hvordan byggeomr\u00e5det skal forsynes med str\u00f8m. Tekniske planer for vann og avl\u00f8p skal omfatte hele planomr\u00e5det med n\u00f8dvendige tilknytninger til og omlegginger av eksisterende nett. Teknisk infrastruktur kan kun etableres innenfor omr\u00e5der regulert til utbyggingsform\u00e5l."
+    },
+    {
+      "self_ref": "#/texts/19",
+      "parent": {
+        "$ref": "#/groups/6"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 690.8199462890625,
+            "r": 182.16656494140625,
+            "b": 702.8199462890625,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4471,
+            4494
+          ]
+        }
+      ],
+      "orig": "2.2.2 Bruk av veigrunn ",
+      "text": "2.2.2 Bruk av veigrunn",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/20",
+      "parent": {
+        "$ref": "#/groups/6"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 795.9359741210938,
+            "r": 118.68656158447266,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4541,
+            4553
+          ]
+        }
+      ],
+      "orig": "o_V1 er avkj\u00f8rsel til omr\u00e5det fra riksveg 9. ",
+      "text": "o_V1 er avkj\u00f8rsel til omr\u00e5det fra riksveg 9."
+    },
+    {
+      "self_ref": "#/texts/21",
+      "parent": {
+        "$ref": "#/furniture"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 795.9359741210938,
+            "r": 118.68656158447266,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4541,
+            4553
+          ]
+        }
+      ],
+      "orig": "Side 3 av 4 ",
+      "text": "Side 3 av 4"
+    },
+    {
+      "self_ref": "#/texts/22",
+      "parent": {
+        "$ref": "#/groups/6"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 462.6700134277344,
+            "t": 795.9359741210938,
+            "r": 526.8865356445312,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4584,
+            4598
+          ]
+        }
+      ],
+      "orig": "Detaljregulering for Evjetun ",
+      "text": "Detaljregulering for Evjetun"
+    },
+    {
+      "self_ref": "#/texts/23",
+      "parent": {
+        "$ref": "#/furniture"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 462.6700134277344,
+            "t": 795.9359741210938,
+            "r": 526.8865356445312,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4584,
+            4598
+          ]
+        }
+      ],
+      "orig": "PlanID 202202 ",
+      "text": "PlanID 202202"
+    },
+    {
+      "self_ref": "#/texts/24",
+      "parent": {
+        "$ref": "#/groups/7"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 73.20001220703125,
+            "r": 346.5820007324219,
+            "b": 85.20001220703125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4599,
+            4654
+          ]
+        }
+      ],
+      "orig": "2.2.3 Annen veggrunn \u2013 offentlig gr\u00f8ntareal (o_AVG1-4) ",
+      "text": "2.2.3 Annen veggrunn \u2013 offentlig gr\u00f8ntareal (o_AVG1-4)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/25",
+      "parent": {
+        "$ref": "#/groups/7"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 137.17999267578125,
+            "r": 229.56201171875,
+            "b": 149.17999267578125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4752,
+            4785
+          ]
+        }
+      ],
+      "orig": "Arealene skal benyttes til overvannsh\u00e5ndtering, skj\u00e6ring, fylling, frisiktsoner, sn\u00f8opplag m.v. ",
+      "text": "Arealene skal benyttes til overvannsh\u00e5ndtering, skj\u00e6ring, fylling, frisiktsoner, sn\u00f8opplag m.v."
+    },
+    {
+      "self_ref": "#/texts/26",
+      "parent": {
+        "$ref": "#/groups/8"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 137.17999267578125,
+            "r": 229.56201171875,
+            "b": 149.17999267578125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4752,
+            4785
+          ]
+        }
+      ],
+      "orig": "2.3 Gr\u00f8nnstruktur (\u00a7 12-5 nr. 3) ",
+      "text": "2.3 Gr\u00f8nnstruktur (\u00a7 12-5 nr. 3)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/27",
+      "parent": {
+        "$ref": "#/groups/9"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 158.73019409179688,
+            "r": 189.9320068359375,
+            "b": 171.739990234375,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4786,
+            4810
+          ]
+        }
+      ],
+      "orig": "2.3.1 Turveg (f_TV1-4)  ",
+      "text": "2.3.1 Turveg (f_TV1-4)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/28",
+      "parent": {
+        "$ref": "#/groups/9"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 259.6501770019531,
+            "r": 203.8820037841797,
+            "b": 272.65997314453125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            5158,
+            5184
+          ]
+        }
+      ],
+      "orig": "Det skal etableres turveger som gir tilgang til friluftsomr\u00e5dene i planomr\u00e5det. Turvegene skal  tilrettelegges for b\u00e5de g\u00e5ende og syklende. f_TV2 skal ha god tilgjengelighet for personer med nedsatt  funksjonsevne. f_TV1-4 skal opparbeides med bredde 2,5 m. Turvegene skal ha fast dekke. Turvegen skal  skiltes som offentlig tilgjengelig tursti. ",
+      "text": "Det skal etableres turveger som gir tilgang til friluftsomr\u00e5dene i planomr\u00e5det. Turvegene skal tilrettelegges for b\u00e5de g\u00e5ende og syklende. f_TV2 skal ha god tilgjengelighet for personer med nedsatt funksjonsevne. f_TV1-4 skal opparbeides med bredde 2,5 m. Turvegene skal ha fast dekke. Turvegen skal skiltes som offentlig tilgjengelig tursti."
+    },
+    {
+      "self_ref": "#/texts/29",
+      "parent": {
+        "$ref": "#/groups/10"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 259.6501770019531,
+            "r": 203.8820037841797,
+            "b": 272.65997314453125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            5158,
+            5184
+          ]
+        }
+      ],
+      "orig": "2.3.2 Friomr\u00e5de (FRI1-3)  ",
+      "text": "2.3.2 Friomr\u00e5de (FRI1-3)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/30",
+      "parent": {
+        "$ref": "#/groups/10"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 460.8499755859375,
+            "r": 236.16200256347656,
+            "b": 472.8499755859375,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            5751,
+            5783
+          ]
+        }
+      ],
+      "orig": "Omr\u00e5dene FRI1 -FRI3 skal benyttes som friomr\u00e5der.  Det tillates etablering av gangveier/stier innenfor  disse omr\u00e5dene. St\u00f8rre friluftsaktivitetsanlegg, slik som frisbeegolf, kan kun etableres innenfor FRI2. Det  stilles krav om at inngrepet i naturen skal minimeres.   Ved s\u00f8knad om tillatelse til tiltak skal det utarbeides en utomhusplan.  Utomhusplanen skal vise:   -  Vegetasjon/enkelttr\u00e6r, terreng og andre elementer som skal bevares  -  Terrengbearbeiding og overganger mot tilst\u00f8tende omr\u00e5der.  -  Utforming av aktiviteter.  -  Utforming av turveier/stier. ",
+      "text": "Omr\u00e5dene FRI1 -FRI3 skal benyttes som friomr\u00e5der. Det tillates etablering av gangveier/stier innenfor disse omr\u00e5dene. St\u00f8rre friluftsaktivitetsanlegg, slik som frisbeegolf, kan kun etableres innenfor FRI2. Det stilles krav om at inngrepet i naturen skal minimeres. Ved s\u00f8knad om tillatelse til tiltak skal det utarbeides en utomhusplan. Utomhusplanen skal vise: - Vegetasjon/enkelttr\u00e6r, terreng og andre elementer som skal bevares - Terrengbearbeiding og overganger mot tilst\u00f8tende omr\u00e5der. - Utforming av aktiviteter. - Utforming av turveier/stier."
+    },
+    {
+      "self_ref": "#/texts/31",
+      "parent": {
+        "$ref": "#/groups/11"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 460.8499755859375,
+            "r": 236.16200256347656,
+            "b": 472.8499755859375,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            5751,
+            5783
+          ]
+        }
+      ],
+      "orig": "2.3.3 Badeplass/-omr\u00e5de (f_BAD) ",
+      "text": "2.3.3 Badeplass/-omr\u00e5de (f_BAD)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/32",
+      "parent": {
+        "$ref": "#/groups/11"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 559.989990234375,
+            "r": 223.20201110839844,
+            "b": 571.989990234375,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            6189,
+            6217
+          ]
+        }
+      ],
+      "orig": "Innenfor omr\u00e5de avsatt til badeplass, f_BAD, tillates det lagt til rette for bading og annen naturlig aktivitet  i tilknytning til badeplassen. Det tillates fjernet vegetasjon og lagt til rette med enkle tiltak som badestige,  platting/sitteplasser og lignende. Det er ogs\u00e5 tillatt \u00e5 etablere enkel infrastruktur som toaletter,  s\u00f8ppelkasser og benker for \u00e5 \u00f8ke tilgjengeligheten og trivselen i omr\u00e5det. ",
+      "text": "Innenfor omr\u00e5de avsatt til badeplass, f_BAD, tillates det lagt til rette for bading og annen naturlig aktivitet i tilknytning til badeplassen. Det tillates fjernet vegetasjon og lagt til rette med enkle tiltak som badestige, platting/sitteplasser og lignende. Det er ogs\u00e5 tillatt \u00e5 etablere enkel infrastruktur som toaletter, s\u00f8ppelkasser og benker for \u00e5 \u00f8ke tilgjengeligheten og trivselen i omr\u00e5det."
+    },
+    {
+      "self_ref": "#/texts/33",
+      "parent": {
+        "$ref": "#/groups/12"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 559.989990234375,
+            "r": 223.20201110839844,
+            "b": 571.989990234375,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            6189,
+            6217
+          ]
+        }
+      ],
+      "orig": "2.3.4 Naturomr\u00e5de (GN1-GN4) ",
+      "text": "2.3.4 Naturomr\u00e5de (GN1-GN4)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/34",
+      "parent": {
+        "$ref": "#/groups/12"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 705.0999755859375,
+            "r": 451.9420166015625,
+            "b": 717.0999755859375,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            6743,
+            6820
+          ]
+        }
+      ],
+      "orig": "Omr\u00e5de er avsatt til gr\u00f8nnstruktur med underform\u00e5l naturomr\u00e5de. Omr\u00e5det skal ha en funksjon som  friluftsomr\u00e5de for allmennheten, med s\u00e6rlig vekt p\u00e5 natur- og friluftsopplevelser og rekreasjon. Det er  viktig \u00e5 vise hensyn og respekt for milj\u00f8- og naturverdiene i omr\u00e5det.  I perioden mellom 1. april og 15. juli oppfordres det til \u00e5 unng\u00e5 un\u00f8dig ferdsel innenfor omr\u00e5dene GN1 og  GN4 for \u00e5 beskytte hekkeomr\u00e5der og annet viktig biologisk mangfold. Det er ikke tillatt med hogst eller  tilrettelegging innenfor GN1 og GN4.  ",
+      "text": "Omr\u00e5de er avsatt til gr\u00f8nnstruktur med underform\u00e5l naturomr\u00e5de. Omr\u00e5det skal ha en funksjon som friluftsomr\u00e5de for allmennheten, med s\u00e6rlig vekt p\u00e5 natur- og friluftsopplevelser og rekreasjon. Det er viktig \u00e5 vise hensyn og respekt for milj\u00f8- og naturverdiene i omr\u00e5det. I perioden mellom 1. april og 15. juli oppfordres det til \u00e5 unng\u00e5 un\u00f8dig ferdsel innenfor omr\u00e5dene GN1 og GN4 for \u00e5 beskytte hekkeomr\u00e5der og annet viktig biologisk mangfold. Det er ikke tillatt med hogst eller tilrettelegging innenfor GN1 og GN4."
+    },
+    {
+      "self_ref": "#/texts/35",
+      "parent": {
+        "$ref": "#/groups/13"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 705.0999755859375,
+            "r": 451.9420166015625,
+            "b": 717.0999755859375,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            6743,
+            6820
+          ]
+        }
+      ],
+      "orig": "2.4 Bruk og vern av sj\u00f8 og vassdrag med tilh\u00f8rende strandsone (\u00a7 12-5 nr. 6) ",
+      "text": "2.4 Bruk og vern av sj\u00f8 og vassdrag med tilh\u00f8rende strandsone (\u00a7 12-5 nr. 6)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/36",
+      "parent": {
+        "$ref": "#/groups/14"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 729.3399658203125,
+            "r": 196.53201293945312,
+            "b": 741.3399658203125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            6821,
+            6846
+          ]
+        }
+      ],
+      "orig": "2.4.1 Fellesbestemmelse  ",
+      "text": "2.4.1 Fellesbestemmelse",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/37",
+      "parent": {
+        "$ref": "#/groups/14"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 795.9359741210938,
+            "r": 118.68656158447266,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            7052,
+            7064
+          ]
+        }
+      ],
+      "orig": "Langs bredden av vassdrag med \u00e5rssikker vannf\u00f8ring skal det opprettholdes et begrenset naturlig  vegetasjonsbelte som motvirker avrenning og gir levested for planter og dyr. Denne regelen gjelder likevel ",
+      "text": "Langs bredden av vassdrag med \u00e5rssikker vannf\u00f8ring skal det opprettholdes et begrenset naturlig vegetasjonsbelte som motvirker avrenning og gir levested for planter og dyr. Denne regelen gjelder likevel"
+    },
+    {
+      "self_ref": "#/texts/38",
+      "parent": {
+        "$ref": "#/furniture"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 795.9359741210938,
+            "r": 118.68656158447266,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            7052,
+            7064
+          ]
+        }
+      ],
+      "orig": "Side 4 av 4 ",
+      "text": "Side 4 av 4"
+    },
+    {
+      "self_ref": "#/texts/39",
+      "parent": {
+        "$ref": "#/groups/14"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 462.6700134277344,
+            "t": 795.9359741210938,
+            "r": 526.8865356445312,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            7095,
+            7109
+          ]
+        }
+      ],
+      "orig": "Detaljregulering for Evjetun ",
+      "text": "Detaljregulering for Evjetun"
+    },
+    {
+      "self_ref": "#/texts/40",
+      "parent": {
+        "$ref": "#/furniture"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 462.6700134277344,
+            "t": 795.9359741210938,
+            "r": 526.8865356445312,
+            "b": 806.4959716796875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            7095,
+            7109
+          ]
+        }
+      ],
+      "orig": "PlanID 202202 ",
+      "text": "PlanID 202202"
+    },
+    {
+      "self_ref": "#/texts/41",
+      "parent": {
+        "$ref": "#/groups/14"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 123.6199951171875,
+            "r": 207.24200439453125,
+            "b": 135.6199951171875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            7332,
+            7360
+          ]
+        }
+      ],
+      "orig": "ikke for byggverk som st\u00e5r i n\u00f8dvendig sammenheng med vassdraget, eller hvor det trengs \u00e5pning for \u00e5  sikre tilgang til vassdraget. Ved etablering av badeplass m\u00e5 det sikres at tiltaket ikke medf\u00f8rer \u00f8kt  erosjonsrisiko. ",
+      "text": "ikke for byggverk som st\u00e5r i n\u00f8dvendig sammenheng med vassdraget, eller hvor det trengs \u00e5pning for \u00e5 sikre tilgang til vassdraget. Ved etablering av badeplass m\u00e5 det sikres at tiltaket ikke medf\u00f8rer \u00f8kt erosjonsrisiko."
+    },
+    {
+      "self_ref": "#/texts/42",
+      "parent": {
+        "$ref": "#/groups/15"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 123.6199951171875,
+            "r": 207.24200439453125,
+            "b": 135.6199951171875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            7332,
+            7360
+          ]
+        }
+      ],
+      "orig": "2.4.2 Friluftsomr\u00e5de (o_FV) ",
+      "text": "2.4.2 Friluftsomr\u00e5de (o_FV)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/43",
+      "parent": {
+        "$ref": "#/groups/15"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 160.3399658203125,
+            "r": 210.6020050048828,
+            "b": 172.3399658203125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            7468,
+            7494
+          ]
+        }
+      ],
+      "orig": "Form\u00e5lsomr\u00e5det o_FV omfatter vassdragsarealer for ordin\u00e6r vassdragsrelatert friluftsaktivitet og ferdsel. ",
+      "text": "Form\u00e5lsomr\u00e5det o_FV omfatter vassdragsarealer for ordin\u00e6r vassdragsrelatert friluftsaktivitet og ferdsel."
+    },
+    {
+      "self_ref": "#/texts/44",
+      "parent": {
+        "$ref": "#/groups/16"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 160.3399658203125,
+            "r": 210.6020050048828,
+            "b": 172.3399658203125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            7468,
+            7494
+          ]
+        }
+      ],
+      "orig": "2.4.3 Badeomr\u00e5de (f_VBAD) ",
+      "text": "2.4.3 Badeomr\u00e5de (f_VBAD)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/45",
+      "parent": {
+        "$ref": "#/groups/16"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 294.5599670410156,
+            "r": 297.7769775390625,
+            "b": 310.51995849609375,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            8150,
+            8183
+          ]
+        }
+      ],
+      "orig": "Form\u00e5lsomr\u00e5det f_VBAD tillates benyttet til felles badeplass i tilknytning til tilgrensende badeplass/- omr\u00e5de p\u00e5 land. Det tillates etablert sesongbaserte aktiviteter i elva som vannpark, og lignende. Det  tillates aktiviteter i badeomr\u00e5det som er forenlig med form\u00e5let om \u00e5 tilrettelegge for bading og friluftsliv,  og som ikke p\u00e5virker naturmilj\u00f8et negativt. Slike aktiviteter kan inkludere lek og ballspill p\u00e5 sandstranden,  piknik og grilling p\u00e5 anviste omr\u00e5der, og bruk av ikke-motoriserte vannfart\u00f8y som kanoer, sup og kajakker.  All annen aktivitet som kan skade naturmilj\u00f8et, herunder fiske og bruk av motoriserte vannfart\u00f8y, er ikke  tillatt.  ",
+      "text": "Form\u00e5lsomr\u00e5det f_VBAD tillates benyttet til felles badeplass i tilknytning til tilgrensende badeplass/- omr\u00e5de p\u00e5 land. Det tillates etablert sesongbaserte aktiviteter i elva som vannpark, og lignende. Det tillates aktiviteter i badeomr\u00e5det som er forenlig med form\u00e5let om \u00e5 tilrettelegge for bading og friluftsliv, og som ikke p\u00e5virker naturmilj\u00f8et negativt. Slike aktiviteter kan inkludere lek og ballspill p\u00e5 sandstranden, piknik og grilling p\u00e5 anviste omr\u00e5der, og bruk av ikke-motoriserte vannfart\u00f8y som kanoer, sup og kajakker. All annen aktivitet som kan skade naturmilj\u00f8et, herunder fiske og bruk av motoriserte vannfart\u00f8y, er ikke tillatt."
+    },
+    {
+      "self_ref": "#/texts/46",
+      "parent": {
+        "$ref": "#/groups/17"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 294.5599670410156,
+            "r": 297.7769775390625,
+            "b": 310.51995849609375,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            8150,
+            8183
+          ]
+        }
+      ],
+      "orig": "3. Bestemmelser til hensynssoner ",
+      "text": "Bestemmelser til hensynssoner",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/47",
+      "parent": {
+        "$ref": "#/groups/18"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 322.72998046875,
+            "r": 177.69200134277344,
+            "b": 334.72998046875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            8184,
+            8205
+          ]
+        }
+      ],
+      "orig": "3.1 St\u00f8ysoner (H220) ",
+      "text": "3.1 St\u00f8ysoner (H220)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/48",
+      "parent": {
+        "$ref": "#/groups/18"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 373.6099853515625,
+            "r": 176.0120086669922,
+            "b": 385.6099853515625,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            8323,
+            8343
+          ]
+        }
+      ],
+      "orig": "Virksomheten skal f\u00f8lge grenseverdier satt i retningslinje for behandling av st\u00f8y i arealplanlegging (T- 1442/2021) ",
+      "text": "Virksomheten skal f\u00f8lge grenseverdier satt i retningslinje for behandling av st\u00f8y i arealplanlegging (T- 1442/2021)"
+    },
+    {
+      "self_ref": "#/texts/49",
+      "parent": {
+        "$ref": "#/groups/19"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 373.6099853515625,
+            "r": 176.0120086669922,
+            "b": 385.6099853515625,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            8323,
+            8343
+          ]
+        }
+      ],
+      "orig": "3.2 Flomsone (H320) ",
+      "text": "3.2 Flomsone (H320)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/50",
+      "parent": {
+        "$ref": "#/groups/19"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 452.5699768066406,
+            "r": 217.08200073242188,
+            "b": 464.5699768066406,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            8750,
+            8778
+          ]
+        }
+      ],
+      "orig": "Bygninger og konstruksjoner som er planlagt \u00e5 ligge innenfor flomsone, m\u00e5 dimensjoneres og plasseres  slik at det ikke medf\u00f8rer fare for liv og helse, skader p\u00e5 eiendom eller \u00f8konomisk tap ved flom. Dette kan  blant annet gj\u00f8res ved \u00e5 plassere bygninger og konstruksjoner p\u00e5 tilstrekkelig h\u00f8yde over koteh\u00f8yden for  flom, K+184,6 eller ved \u00e5 utforme bygninger og konstruksjoner slik at de t\u00e5ler flomvann. ",
+      "text": "Bygninger og konstruksjoner som er planlagt \u00e5 ligge innenfor flomsone, m\u00e5 dimensjoneres og plasseres slik at det ikke medf\u00f8rer fare for liv og helse, skader p\u00e5 eiendom eller \u00f8konomisk tap ved flom. Dette kan blant annet gj\u00f8res ved \u00e5 plassere bygninger og konstruksjoner p\u00e5 tilstrekkelig h\u00f8yde over koteh\u00f8yden for flom, K+184,6 eller ved \u00e5 utforme bygninger og konstruksjoner slik at de t\u00e5ler flomvann."
+    },
+    {
+      "self_ref": "#/texts/51",
+      "parent": {
+        "$ref": "#/groups/20"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 452.5699768066406,
+            "r": 217.08200073242188,
+            "b": 464.5699768066406,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            8750,
+            8778
+          ]
+        }
+      ],
+      "orig": "3.3 B\u00e5ndleggingssone (H740) ",
+      "text": "3.3 B\u00e5ndleggingssone (H740)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/52",
+      "parent": {
+        "$ref": "#/groups/20"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 489.42999267578125,
+            "r": 158.0120086669922,
+            "b": 501.42999267578125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            8866,
+            8885
+          ]
+        }
+      ],
+      "orig": "Innenfor faresone for h\u00f8yspent tillates det ikke oppf\u00f8rt bygninger for varig opphold. ",
+      "text": "Innenfor faresone for h\u00f8yspent tillates det ikke oppf\u00f8rt bygninger for varig opphold."
+    },
+    {
+      "self_ref": "#/texts/53",
+      "parent": {
+        "$ref": "#/groups/21"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 489.42999267578125,
+            "r": 158.0120086669922,
+            "b": 501.42999267578125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            8866,
+            8885
+          ]
+        }
+      ],
+      "orig": "3.4 Frisikt (H140) ",
+      "text": "3.4 Frisikt (H140)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/54",
+      "parent": {
+        "$ref": "#/groups/21"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 553.1800537109375,
+            "r": 362.95697021484375,
+            "b": 569.1400146484375,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            9053,
+            9094
+          ]
+        }
+      ],
+      "orig": "Innenfor frisiktarealet tillates ikke murer, gjerder eller vegetasjon h\u00f8yere enn 0,5 m over tilst\u00f8tende  veiers niv\u00e5. Terreng skal tilpasses tilst\u00f8tende veiers niv\u00e5. ",
+      "text": "Innenfor frisiktarealet tillates ikke murer, gjerder eller vegetasjon h\u00f8yere enn 0,5 m over tilst\u00f8tende veiers niv\u00e5. Terreng skal tilpasses tilst\u00f8tende veiers niv\u00e5."
+    },
+    {
+      "self_ref": "#/texts/55",
+      "parent": {
+        "$ref": "#/groups/22"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 553.1800537109375,
+            "r": 362.95697021484375,
+            "b": 569.1400146484375,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            9053,
+            9094
+          ]
+        }
+      ],
+      "orig": "4. Bestemmelser til bestemmelsesomr\u00e5der  ",
+      "text": "Bestemmelser til bestemmelsesomr\u00e5der",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/56",
+      "parent": {
+        "$ref": "#/groups/23"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "section_header",
+      "prov": [
+        {
+          "page_no": 3,
+          "bbox": {
+            "l": 70.8239974975586,
+            "t": 581.22998046875,
+            "r": 469.4620056152344,
+            "b": 593.22998046875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            9095,
+            9168
+          ]
+        }
+      ],
+      "orig": "4.1 Bestemmelser til bestemmelsesomr\u00e5de (omr\u00e5de #1, #gangbro/undergrunn) ",
+      "text": "4.1 Bestemmelser til bestemmelsesomr\u00e5de (omr\u00e5de #1, #gangbro/undergrunn)",
+      "level": 1
+    },
+    {
+      "self_ref": "#/texts/57",
+      "parent": {
+        "$ref": "#/groups/23"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Innenfor omr\u00e5det tillates det etablert gangbro eller undergrunn for kryssing av riksveg 9.  ",
+      "text": "Innenfor omr\u00e5det tillates det etablert gangbro eller undergrunn for kryssing av riksveg 9."
+    }
+  ],
+  "pictures": [],
+  "tables": [],
+  "key_value_items": [],
+  "form_items": [],
+  "pages": {
+    "0": {
+      "size": {
+        "width": 595.3200073242188,
+        "height": 841.9199829101562
+      },
+      "page_no": 0
+    },
+    "1": {
+      "size": {
+        "width": 595.3200073242188,
+        "height": 841.9199829101562
+      },
+      "page_no": 1
+    },
+    "2": {
+      "size": {
+        "width": 595.3200073242188,
+        "height": 841.9199829101562
+      },
+      "page_no": 2
+    },
+    "3": {
+      "size": {
+        "width": 595.3200073242188,
+        "height": 841.9199829101562
+      },
+      "page_no": 3
+    }
+  }
+}

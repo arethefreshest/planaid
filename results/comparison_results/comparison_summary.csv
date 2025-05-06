@@ -1,0 +1,3 @@
+Case,Time Legacy (s),Time Docling (s),Error Legacy,Error Docling,Fields Legacy (P/B/S),Fields Docling (P/B/S),Consistency Legacy,Consistency Docling,Matching Legacy,Matching Docling,Plankart Jaccard Sim,Bestemm. Jaccard Sim,SOSI Jaccard Sim
+case1,45.85,1.41,False,False,28/17/25,23/17/0,False,False,8,10,0.594,0.619,0.000
+case2,36.21,2.34,False,False,14/7/62,24/6/0,False,False,4,6,0.267,0.444,0.000

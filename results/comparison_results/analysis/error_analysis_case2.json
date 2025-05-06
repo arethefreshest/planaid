@@ -1,0 +1,192 @@
+{
+  "case_id": "case2",
+  "false_positives": {
+    "plankart": [
+      "AD",
+      "APM",
+      "DATOSIGN",
+      "GV",
+      "SAKSBEHANDLINGETTERPLANOGBYGNINGSLOVEN",
+      "VAA"
+    ],
+    "bestemmelser": [
+      "FV42",
+      "GV",
+      "VAA"
+    ],
+    "sosi": [
+      "BSM1",
+      "BSM2",
+      "GV",
+      "LL1",
+      "LL10",
+      "LL11",
+      "LL12",
+      "LL13",
+      "LL14",
+      "LL15",
+      "LL16",
+      "LL17",
+      "LL18",
+      "LL19",
+      "LL2",
+      "LL20",
+      "LL21",
+      "LL22",
+      "LL23",
+      "LL3",
+      "LL4",
+      "LL5",
+      "LL6",
+      "LL7",
+      "LL8",
+      "LL9",
+      "SKV1",
+      "SKV2",
+      "SVG1",
+      "SVG10",
+      "SVG11",
+      "SVG2",
+      "SVG3",
+      "SVG4",
+      "SVG5",
+      "SVG6",
+      "SVG7",
+      "SVG8",
+      "SVG9",
+      "SVT1",
+      "SVT2",
+      "VAA",
+      "VFS1",
+      "VFS10",
+      "VFS11",
+      "VFS12",
+      "VFS13",
+      "VFS14",
+      "VFS15",
+      "VFS16",
+      "VFS17",
+      "VFS2",
+      "VFS3",
+      "VFS4",
+      "VFS5",
+      "VFS6",
+      "VFS7",
+      "VFS8",
+      "VFS9",
+      "VNV1",
+      "VNV2",
+      "VNV3"
+    ]
+  },
+  "false_negatives": {
+    "plankart": [
+      "F42",
+      "H140",
+      "H320",
+      "N6489400",
+      "N6489600",
+      "N6489800",
+      "N6490000",
+      "N6490200",
+      "N6490400",
+      "\u00d8424400",
+      "\u00d8424600",
+      "\u00d8424800",
+      "\u00d8425000",
+      "\u00d8425200",
+      "\u00d8425400",
+      "\u00d8425600"
+    ],
+    "bestemmelser": [
+      "BSM1",
+      "BSM2"
+    ],
+    "sosi": []
+  },
+  "field_type_analysis": {
+    "plankart": {
+      "BSM": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "SKV": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "SVG": {
+        "legacy": 3,
+        "docling": 3
+      },
+      "\u00d8": {
+        "legacy": 0,
+        "docling": 7
+      },
+      "N": {
+        "legacy": 0,
+        "docling": 6
+      },
+      "H": {
+        "legacy": 0,
+        "docling": 2
+      },
+      "VNV": {
+        "legacy": 1,
+        "docling": 1
+      },
+      "F": {
+        "legacy": 0,
+        "docling": 1
+      }
+    },
+    "bestemmelser": {
+      "FV": {
+        "legacy": 1,
+        "docling": 0
+      },
+      "BSM": {
+        "legacy": 0,
+        "docling": 2
+      },
+      "SKV": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "H": {
+        "legacy": 2,
+        "docling": 2
+      }
+    },
+    "sosi": {
+      "BSM": {
+        "legacy": 2,
+        "docling": 0
+      },
+      "LL": {
+        "legacy": 23,
+        "docling": 0
+      },
+      "SVT": {
+        "legacy": 2,
+        "docling": 0
+      },
+      "SKV": {
+        "legacy": 2,
+        "docling": 0
+      },
+      "VFS": {
+        "legacy": 17,
+        "docling": 0
+      },
+      "SVG": {
+        "legacy": 11,
+        "docling": 0
+      },
+      "VNV": {
+        "legacy": 3,
+        "docling": 0
+      }
+    }
+  },
+  "error_patterns": []
+}

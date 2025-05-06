@@ -1,0 +1,1623 @@
+{
+  "schema_name": "DoclingDocument",
+  "version": "1.3.0",
+  "name": "Kjets\u00e5_massetak",
+  "furniture": {
+    "self_ref": "#/furniture",
+    "children": [
+      {
+        "$ref": "#/texts/0"
+      },
+      {
+        "$ref": "#/texts/10"
+      },
+      {
+        "$ref": "#/texts/24"
+      }
+    ],
+    "content_layer": "furniture",
+    "name": "_root_",
+    "label": "unspecified"
+  },
+  "body": {
+    "self_ref": "#/body",
+    "children": [
+      {
+        "$ref": "#/groups/0"
+      },
+      {
+        "$ref": "#/texts/2"
+      },
+      {
+        "$ref": "#/groups/1"
+      },
+      {
+        "$ref": "#/texts/5"
+      },
+      {
+        "$ref": "#/groups/2"
+      },
+      {
+        "$ref": "#/texts/7"
+      },
+      {
+        "$ref": "#/groups/3"
+      },
+      {
+        "$ref": "#/texts/9"
+      },
+      {
+        "$ref": "#/groups/4"
+      },
+      {
+        "$ref": "#/texts/12"
+      },
+      {
+        "$ref": "#/groups/5"
+      },
+      {
+        "$ref": "#/texts/14"
+      },
+      {
+        "$ref": "#/groups/6"
+      },
+      {
+        "$ref": "#/texts/16"
+      },
+      {
+        "$ref": "#/groups/7"
+      },
+      {
+        "$ref": "#/texts/19"
+      },
+      {
+        "$ref": "#/groups/8"
+      },
+      {
+        "$ref": "#/texts/21"
+      },
+      {
+        "$ref": "#/groups/9"
+      },
+      {
+        "$ref": "#/texts/23"
+      },
+      {
+        "$ref": "#/groups/10"
+      },
+      {
+        "$ref": "#/texts/26"
+      },
+      {
+        "$ref": "#/groups/11"
+      },
+      {
+        "$ref": "#/texts/29"
+      },
+      {
+        "$ref": "#/groups/12"
+      },
+      {
+        "$ref": "#/texts/31"
+      },
+      {
+        "$ref": "#/groups/13"
+      },
+      {
+        "$ref": "#/texts/34"
+      },
+      {
+        "$ref": "#/groups/14"
+      },
+      {
+        "$ref": "#/texts/36"
+      },
+      {
+        "$ref": "#/groups/15"
+      },
+      {
+        "$ref": "#/texts/38"
+      },
+      {
+        "$ref": "#/groups/16"
+      },
+      {
+        "$ref": "#/texts/40"
+      },
+      {
+        "$ref": "#/groups/17"
+      },
+      {
+        "$ref": "#/texts/42"
+      }
+    ],
+    "content_layer": "body",
+    "name": "_root_",
+    "label": "unspecified"
+  },
+  "groups": [
+    {
+      "self_ref": "#/groups/0",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/1"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/1",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/3"
+        },
+        {
+          "$ref": "#/texts/4"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/2",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/6"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/3",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/8"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/4",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/11"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/5",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/13"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/6",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/15"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/7",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/17"
+        },
+        {
+          "$ref": "#/texts/18"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/8",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/20"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/9",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/22"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/10",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/25"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/11",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/27"
+        },
+        {
+          "$ref": "#/texts/28"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/12",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/30"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/13",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/32"
+        },
+        {
+          "$ref": "#/texts/33"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/14",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/35"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/15",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/37"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/16",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/39"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    },
+    {
+      "self_ref": "#/groups/17",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [
+        {
+          "$ref": "#/texts/41"
+        }
+      ],
+      "content_layer": "body",
+      "name": "group",
+      "label": "list"
+    }
+  ],
+  "texts": [
+    {
+      "self_ref": "#/texts/0",
+      "parent": {
+        "$ref": "#/furniture"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 90.02400207519531,
+            "t": 786.4421997070312,
+            "r": 130.348876953125,
+            "b": 797.7059936523438,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            0,
+            12
+          ]
+        }
+      ],
+      "orig": "Side 1 | 3  ",
+      "text": "Side 1 | 3"
+    },
+    {
+      "self_ref": "#/texts/1",
+      "parent": {
+        "$ref": "#/groups/0"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 90.02400207519531,
+            "t": 370.07000732421875,
+            "r": 244.92201232910156,
+            "b": 383.92999267578125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            13,
+            36
+          ]
+        }
+      ],
+      "orig": "1. FORM\u00c5LET MED PLANEN ",
+      "text": "FORM\u00c5LET MED PLANEN",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/2",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 90.02400207519531,
+            "t": 440.7699890136719,
+            "r": 232.6820068359375,
+            "b": 454.6299743652344,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            188,
+            210
+          ]
+        }
+      ],
+      "orig": "Form\u00e5let med planen er \u00e5 legge til rette for videre drift av eksisterende masseuttak og sikre god  tilbakef\u00f8ring av landskapet etter avsluttet drift. ",
+      "text": "Form\u00e5let med planen er \u00e5 legge til rette for videre drift av eksisterende masseuttak og sikre god tilbakef\u00f8ring av landskapet etter avsluttet drift."
+    },
+    {
+      "self_ref": "#/texts/3",
+      "parent": {
+        "$ref": "#/groups/1"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 90.02400207519531,
+            "t": 440.7699890136719,
+            "r": 232.6820068359375,
+            "b": 454.6299743652344,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            188,
+            210
+          ]
+        }
+      ],
+      "orig": "2. FELLESBESTEMMELSER ",
+      "text": "FELLESBESTEMMELSER",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/4",
+      "parent": {
+        "$ref": "#/groups/1"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 461.3187561035156,
+            "r": 193.3450469970703,
+            "b": 474.0699768066406,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            211,
+            229
+          ]
+        }
+      ],
+      "orig": "2.1. Kulturminner ",
+      "text": "1. Kulturminner",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/5",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 554.0787353515625,
+            "r": 302.905029296875,
+            "b": 566.8299560546875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            649,
+            693
+          ]
+        }
+      ],
+      "orig": "Dersom det ved arbeider i marken blir p\u00e5truffet automatisk fredete kulturminner, jf.  Kulturminneloven \u00a73, m\u00e5 arbeidende straks stanse i den utstrekning de kan ber\u00f8re kulturminnene.  Tiltakshaver st\u00e5r ansvarlig for at Kulturminnemyndighetene i fylkeskommunen varsles umiddelbart, jf.  Lov om kulturminner \u00a7 8, 2. ledd. Kulturminnemyndighetene avgj\u00f8r snarest mulig- og senest innen 3  uker \u2013 om arbeidet kan fortsette. ",
+      "text": "Dersom det ved arbeider i marken blir p\u00e5truffet automatisk fredete kulturminner, jf. Kulturminneloven \u00a73, m\u00e5 arbeidende straks stanse i den utstrekning de kan ber\u00f8re kulturminnene. Tiltakshaver st\u00e5r ansvarlig for at Kulturminnemyndighetene i fylkeskommunen varsles umiddelbart, jf. Lov om kulturminner \u00a7 8, 2. ledd. Kulturminnemyndighetene avgj\u00f8r snarest mulig- og senest innen 3 uker - om arbeidet kan fortsette."
+    },
+    {
+      "self_ref": "#/texts/6",
+      "parent": {
+        "$ref": "#/groups/2"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 554.0787353515625,
+            "r": 302.905029296875,
+            "b": 566.8299560546875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            649,
+            693
+          ]
+        }
+      ],
+      "orig": "2.2. Hensyn til milj\u00f8, st\u00f8y og forurensning ",
+      "text": "2. Hensyn til milj\u00f8, st\u00f8y og forurensning",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/7",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 722.1087646484375,
+            "r": 163.07504272460938,
+            "b": 734.8599853515625,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            1541,
+            1554
+          ]
+        }
+      ],
+      "orig": "-  Drift av masseuttaket skal til enhver tid skje iht. Forurensningsforskriftens kapittel 30  \u00abForurensninger fra produksjon av pukk, grus, sand og singel\u00bb.  -  Krav til st\u00f8y nedfelt i forurensningsforskriften \u00a7 30-7 skal overholdes. Omr\u00e5det skal  tilfredsstille st\u00f8ykrav i Retningslinjer for behandling av st\u00f8y i arealplanlegging (T1442/2016).  -  Det tillates etablering av st\u00f8yvoll med overskuddsmasser og/eller lager ferdigvare mot  bebyggelse.  -  Det skal brukes st\u00f8ysvakt utstyr der dette er n\u00f8dvendig.  -  Utslipp av st\u00f8v skal ikke overskride grenseverdiene fastsatt i forurensningsforskriften \u00a7 30-5.  St\u00f8vm\u00e5ling skal gjennomf\u00f8res ved bebyggelse n\u00e6rmere uttaket enn 500 m.  -  N\u00e5r det gjelder utslipp i vann, skal krav i forurensningsforskriften \u00a7 30-6 overholdes.  -  Det skal legges til rette for at sandsvaler kan hekke i massetaket. ",
+      "text": "- Drift av masseuttaket skal til enhver tid skje iht. Forurensningsforskriftens kapittel 30 \u00abForurensninger fra produksjon av pukk, grus, sand og singel\u00bb. - Krav til st\u00f8y nedfelt i forurensningsforskriften \u00a7 30-7 skal overholdes. Omr\u00e5det skal tilfredsstille st\u00f8ykrav i Retningslinjer for behandling av st\u00f8y i arealplanlegging (T1442/2016). - Det tillates etablering av st\u00f8yvoll med overskuddsmasser og/eller lager ferdigvare mot bebyggelse. - Det skal brukes st\u00f8ysvakt utstyr der dette er n\u00f8dvendig. - Utslipp av st\u00f8v skal ikke overskride grenseverdiene fastsatt i forurensningsforskriften \u00a7 30-5. St\u00f8vm\u00e5ling skal gjennomf\u00f8res ved bebyggelse n\u00e6rmere uttaket enn 500 m. - N\u00e5r det gjelder utslipp i vann, skal krav i forurensningsforskriften \u00a7 30-6 overholdes. - Det skal legges til rette for at sandsvaler kan hekke i massetaket."
+    },
+    {
+      "self_ref": "#/texts/8",
+      "parent": {
+        "$ref": "#/groups/3"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 0,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 722.1087646484375,
+            "r": 163.07504272460938,
+            "b": 734.8599853515625,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            1541,
+            1554
+          ]
+        }
+      ],
+      "orig": "2.3. Sikring ",
+      "text": "3. Sikring",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/9",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 90.02400207519531,
+            "t": 786.4421997070312,
+            "r": 130.348876953125,
+            "b": 797.7059936523438,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            1772,
+            1784
+          ]
+        }
+      ],
+      "orig": "Uttaket skal til enhver tid v\u00e6re forsvarlig sikret.  Plan ID: 202103  Vedtatt PS 50/24, 13.06.2024 Dato: 13.02.2023,   rev 15.05.2024  PLANBESTEMMELSER  Detaljregulering for Kjets\u00e5 massetak,  Evje og Hornnes kommune ",
+      "text": "Uttaket skal til enhver tid v\u00e6re forsvarlig sikret. Plan ID: 202103 Vedtatt PS 50/24, 13.06.2024 Dato: 13.02.2023, rev 15.05.2024 PLANBESTEMMELSER Detaljregulering for Kjets\u00e5 massetak, Evje og Hornnes kommune"
+    },
+    {
+      "self_ref": "#/texts/10",
+      "parent": {
+        "$ref": "#/furniture"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 90.02400207519531,
+            "t": 786.4421997070312,
+            "r": 130.348876953125,
+            "b": 797.7059936523438,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            1772,
+            1784
+          ]
+        }
+      ],
+      "orig": "Side 2 | 3  ",
+      "text": "Side 2 | 3"
+    },
+    {
+      "self_ref": "#/texts/11",
+      "parent": {
+        "$ref": "#/groups/4"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 85.90876770019531,
+            "r": 194.90504455566406,
+            "b": 98.65996551513672,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            1785,
+            1806
+          ]
+        }
+      ],
+      "orig": "2.4. Ferdigstillelse ",
+      "text": "4. Ferdigstillelse",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/12",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 178.5487823486328,
+            "r": 253.70504760742188,
+            "b": 191.2999725341797,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            2303,
+            2333
+          ]
+        }
+      ],
+      "orig": "Etter hvert som deler av uttaket ferdigstilles iht. godkjent driftsplan, skal avdekningsmasser  tilbakef\u00f8res i pallene og det skal tilplantes vegetasjon (tr\u00e6r, busker) som har naturlig tilh\u00f8righet i  omr\u00e5det. Det skal foreg\u00e5 etappevis uttak i bruddet, der hver etappe skal istandsettes og tilplantes f\u00f8r  neste etappe p\u00e5begynnes. Tykkelsen p\u00e5 avdekkingsmassene som skal tilbakef\u00f8res settes til minimum  0,5 m og skal v\u00e6re tilstrekkelig til at det er mulig \u00e5 reetablere produktiv skog i omr\u00e5det. ",
+      "text": "Etter hvert som deler av uttaket ferdigstilles iht. godkjent driftsplan, skal avdekningsmasser tilbakef\u00f8res i pallene og det skal tilplantes vegetasjon (tr\u00e6r, busker) som har naturlig tilh\u00f8righet i omr\u00e5det. Det skal foreg\u00e5 etappevis uttak i bruddet, der hver etappe skal istandsettes og tilplantes f\u00f8r neste etappe p\u00e5begynnes. Tykkelsen p\u00e5 avdekkingsmassene som skal tilbakef\u00f8res settes til minimum 0,5 m og skal v\u00e6re tilstrekkelig til at det er mulig \u00e5 reetablere produktiv skog i omr\u00e5det."
+    },
+    {
+      "self_ref": "#/texts/13",
+      "parent": {
+        "$ref": "#/groups/5"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 178.5487823486328,
+            "r": 253.70504760742188,
+            "b": 191.2999725341797,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            2303,
+            2333
+          ]
+        }
+      ],
+      "orig": "2.5. Fremmede arter i omr\u00e5det ",
+      "text": "5. Fremmede arter i omr\u00e5det",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/14",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 234.58876037597656,
+            "r": 256.8250427246094,
+            "b": 247.33995056152344,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            2462,
+            2496
+          ]
+        }
+      ],
+      "orig": "Fremmede arter i omr\u00e5det (jfr. Artsdatabankens gjeldende fremmedartliste) skal bekjempes og ikke  spres som f\u00f8lge av tiltaket. ",
+      "text": "Fremmede arter i omr\u00e5det (jfr. Artsdatabankens gjeldende fremmedartliste) skal bekjempes og ikke spres som f\u00f8lge av tiltaket."
+    },
+    {
+      "self_ref": "#/texts/15",
+      "parent": {
+        "$ref": "#/groups/6"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 234.58876037597656,
+            "r": 256.8250427246094,
+            "b": 247.33995056152344,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            2462,
+            2496
+          ]
+        }
+      ],
+      "orig": "2.6. Driftstider for steinbruddet ",
+      "text": "6. Driftstider for steinbruddet",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/16",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 90.02400207519531,
+            "t": 290.75,
+            "r": 299.6419982910156,
+            "b": 304.6099853515625,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            2625,
+            2657
+          ]
+        }
+      ],
+      "orig": "Driftstider skal f\u00f8lge gjeldende regelverk satt av Direktoratet for mineralforvaltning og til enhver tid  gjeldene driftsplan. ",
+      "text": "Driftstider skal f\u00f8lge gjeldende regelverk satt av Direktoratet for mineralforvaltning og til enhver tid gjeldene driftsplan."
+    },
+    {
+      "self_ref": "#/texts/17",
+      "parent": {
+        "$ref": "#/groups/7"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 90.02400207519531,
+            "t": 290.75,
+            "r": 299.6419982910156,
+            "b": 304.6099853515625,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            2625,
+            2657
+          ]
+        }
+      ],
+      "orig": "3. BESTEMMELSER TIL AREALFORM\u00c5L ",
+      "text": "BESTEMMELSER TIL AREALFORM\u00c5L",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/18",
+      "parent": {
+        "$ref": "#/groups/7"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 326.29876708984375,
+            "r": 229.70504760742188,
+            "b": 339.04998779296875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            2658,
+            2684
+          ]
+        }
+      ],
+      "orig": "3.1. Bebyggelse og anlegg ",
+      "text": "1. Bebyggelse og anlegg",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/19",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 467.79876708984375,
+            "r": 197.7850341796875,
+            "b": 480.54998779296875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            3311,
+            3330
+          ]
+        }
+      ],
+      "orig": "Steinbrudd og masseuttak BSM1 og BSM2  I omr\u00e5det kan det drives uttak, evt. knusing og sikting av fjellmasser, lagring av ferdigvare, samt  mottak av rene masser til istandsetting av omr\u00e5det. Mottak av rene masser tillates for etablering av  landbruksareal/skog etter hvert som driften gir rom for det og det er tatt ut masser til \u00f8nsket niv\u00e5.  S\u00f8knad om mottak av rene masser skal leveres og godkjennes av Statsforvalteren.  Drift skal skje i henhold til bestemmelser i mineralloven med gjeldende forskrifter, samt vilk\u00e5r i  tillatelse etter loven. Direktoratet for Mineralforvaltning (DMF) er myndighet etter mineralloven. ",
+      "text": "Steinbrudd og masseuttak BSM1 og BSM2 I omr\u00e5det kan det drives uttak, evt. knusing og sikting av fjellmasser, lagring av ferdigvare, samt mottak av rene masser til istandsetting av omr\u00e5det. Mottak av rene masser tillates for etablering av landbruksareal/skog etter hvert som driften gir rom for det og det er tatt ut masser til \u00f8nsket niv\u00e5. S\u00f8knad om mottak av rene masser skal leveres og godkjennes av Statsforvalteren. Drift skal skje i henhold til bestemmelser i mineralloven med gjeldende forskrifter, samt vilk\u00e5r i tillatelse etter loven. Direktoratet for Mineralforvaltning (DMF) er myndighet etter mineralloven."
+    },
+    {
+      "self_ref": "#/texts/20",
+      "parent": {
+        "$ref": "#/groups/8"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 467.79876708984375,
+            "r": 197.7850341796875,
+            "b": 480.54998779296875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            3311,
+            3330
+          ]
+        }
+      ],
+      "orig": "3.2. Gr\u00f8nnstruktur ",
+      "text": "2. Gr\u00f8nnstruktur",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/21",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 599.7987670898438,
+            "r": 327.405029296875,
+            "b": 612.5499877929688,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            3748,
+            3796
+          ]
+        }
+      ],
+      "orig": "Vegetasjonsskjerm GV  -  Gr\u00f8nnstruktur skal fungere som en skjerm mot innsyn og st\u00f8y inn i uttaket.  -  Omr\u00e5dene skal fungere som buffer mellom uttak og omkringliggende omr\u00e5de. Det skal her  oppf\u00f8res permanent sikring i form av gjerder, og/eller annen egnet barriere, kombinert med  arrondering av \u00f8verste bruddkant der det er mulig.  -  Det tillates ikke oppbevaring eller installasjoner innenfor vegetasjonssonen. ",
+      "text": "Vegetasjonsskjerm GV - Gr\u00f8nnstruktur skal fungere som en skjerm mot innsyn og st\u00f8y inn i uttaket. - Omr\u00e5dene skal fungere som buffer mellom uttak og omkringliggende omr\u00e5de. Det skal her oppf\u00f8res permanent sikring i form av gjerder, og/eller annen egnet barriere, kombinert med arrondering av \u00f8verste bruddkant der det er mulig. - Det tillates ikke oppbevaring eller installasjoner innenfor vegetasjonssonen."
+    },
+    {
+      "self_ref": "#/texts/22",
+      "parent": {
+        "$ref": "#/groups/9"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 1,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 599.7987670898438,
+            "r": 327.405029296875,
+            "b": 612.5499877929688,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            3748,
+            3796
+          ]
+        }
+      ],
+      "orig": "3.3. Samferdselsanlegg og teknisk infrastruktur ",
+      "text": "3. Samferdselsanlegg og teknisk infrastruktur",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/23",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 90.02400207519531,
+            "t": 786.4421997070312,
+            "r": 130.348876953125,
+            "b": 797.7059936523438,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4083,
+            4095
+          ]
+        }
+      ],
+      "orig": "Kj\u00f8reveg o_SKV1  Funksjons- og kvalitetskrav:  -  Avkj\u00f8rsel skal utformes i samsvar med gjeldende vegnormaler og tilfredsstille Statens  vegvesens krav.  Vegen SKV2 er privat:   -  Bruksomr\u00e5det: Kombinert anleggs-, avlings- og skogsveg. Vegen skal v\u00e6re tilgjengelig for  allmennheten. ",
+      "text": "Kj\u00f8reveg o_SKV1 Funksjons- og kvalitetskrav: - Avkj\u00f8rsel skal utformes i samsvar med gjeldende vegnormaler og tilfredsstille Statens vegvesens krav. Vegen SKV2 er privat: - Bruksomr\u00e5det: Kombinert anleggs-, avlings- og skogsveg. Vegen skal v\u00e6re tilgjengelig for allmennheten."
+    },
+    {
+      "self_ref": "#/texts/24",
+      "parent": {
+        "$ref": "#/furniture"
+      },
+      "children": [],
+      "content_layer": "furniture",
+      "label": "page_footer",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 90.02400207519531,
+            "t": 786.4421997070312,
+            "r": 130.348876953125,
+            "b": 797.7059936523438,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4083,
+            4095
+          ]
+        }
+      ],
+      "orig": "Side 3 | 3  ",
+      "text": "Side 3 | 3"
+    },
+    {
+      "self_ref": "#/texts/25",
+      "parent": {
+        "$ref": "#/groups/10"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 72.44880676269531,
+            "r": 401.6850280761719,
+            "b": 85.20000457763672,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4096,
+            4159
+          ]
+        }
+      ],
+      "orig": "3.4. Bruk og vern av sj\u00f8 og vassdrag med tilh\u00f8rende strandsone ",
+      "text": "4. Bruk og vern av sj\u00f8 og vassdrag med tilh\u00f8rende strandsone",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/26",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 90.02400207519531,
+            "t": 153.0800018310547,
+            "r": 197.64199829101562,
+            "b": 166.94000244140625,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4220,
+            4236
+          ]
+        }
+      ],
+      "orig": "VAA:  Det tillates at VAA kan brukes som reserve kj\u00f8reveg. ",
+      "text": "VAA: Det tillates at VAA kan brukes som reserve kj\u00f8reveg."
+    },
+    {
+      "self_ref": "#/texts/27",
+      "parent": {
+        "$ref": "#/groups/11"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 90.02400207519531,
+            "t": 153.0800018310547,
+            "r": 197.64199829101562,
+            "b": 166.94000244140625,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4220,
+            4236
+          ]
+        }
+      ],
+      "orig": "4. HENSYNSSONER ",
+      "text": "HENSYNSSONER",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/28",
+      "parent": {
+        "$ref": "#/groups/11"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 173.62879943847656,
+            "r": 189.02503967285156,
+            "b": 186.37998962402344,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4237,
+            4256
+          ]
+        }
+      ],
+      "orig": "4.1. Frisikt, H140 ",
+      "text": "1. Frisikt, H140",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/29",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 230.86878967285156,
+            "r": 202.10504150390625,
+            "b": 243.61997985839844,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4443,
+            4463
+          ]
+        }
+      ],
+      "orig": "I frisiktsonene som er vist p\u00e5 plankartet skal det v\u00e6re fri sikt langs vei/kryss/avkj\u00f8rsel 0,5 m over  tilst\u00f8tende veibane. Busker, tr\u00e6r og annet som kan hindre sikten er ikke tillatt. ",
+      "text": "I frisiktsonene som er vist p\u00e5 plankartet skal det v\u00e6re fri sikt langs vei/kryss/avkj\u00f8rsel 0,5 m over tilst\u00f8tende veibane. Busker, tr\u00e6r og annet som kan hindre sikten er ikke tillatt."
+    },
+    {
+      "self_ref": "#/texts/30",
+      "parent": {
+        "$ref": "#/groups/12"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 230.86878967285156,
+            "r": 202.10504150390625,
+            "b": 243.61997985839844,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4443,
+            4463
+          ]
+        }
+      ],
+      "orig": "4.2. Flomfare, H320 ",
+      "text": "2. Flomfare, H320",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/31",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 90.02400207519531,
+            "t": 337.07000732421875,
+            "r": 265.4420166015625,
+            "b": 350.92999267578125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4748,
+            4774
+          ]
+        }
+      ],
+      "orig": "Det er avsatt faresone som vist p\u00e5 plankartet.   Bebyggelse kan ikke oppf\u00f8res innenfor flomsonen f\u00f8r omr\u00e5det er tilstrekkelig sikret ref. TEK 17 \u00a7 7-1.  Det skal ved utvidelse av massetaket gjennomf\u00f8res tiltak som sikrer at n\u00e6rliggende bekker ikke  renner inn i massetaket ved flom. ",
+      "text": "Det er avsatt faresone som vist p\u00e5 plankartet. Bebyggelse kan ikke oppf\u00f8res innenfor flomsonen f\u00f8r omr\u00e5det er tilstrekkelig sikret ref. TEK 17 \u00a7 7-1. Det skal ved utvidelse av massetaket gjennomf\u00f8res tiltak som sikrer at n\u00e6rliggende bekker ikke renner inn i massetaket ved flom."
+    },
+    {
+      "self_ref": "#/texts/32",
+      "parent": {
+        "$ref": "#/groups/13"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 90.02400207519531,
+            "t": 337.07000732421875,
+            "r": 265.4420166015625,
+            "b": 350.92999267578125,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4748,
+            4774
+          ]
+        }
+      ],
+      "orig": "5. REKKEF\u00d8LGEBESTEMMELSER ",
+      "text": "REKKEF\u00d8LGEBESTEMMELSER",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/33",
+      "parent": {
+        "$ref": "#/groups/13"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 357.6187744140625,
+            "r": 202.94503784179688,
+            "b": 370.3699951171875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4775,
+            4797
+          ]
+        }
+      ],
+      "orig": "5.1. Kryss ved fv. 42 ",
+      "text": "1. Kryss ved fv. 42",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/34",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 401.41876220703125,
+            "r": 178.9150390625,
+            "b": 414.16998291015625,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4898,
+            4913
+          ]
+        }
+      ],
+      "orig": "F\u00f8r det gis igangsettingstillatelser i planomr\u00e5det skal siktkravene ved fylkesveg 42 v\u00e6re oppfylt. ",
+      "text": "F\u00f8r det gis igangsettingstillatelser i planomr\u00e5det skal siktkravene ved fylkesveg 42 v\u00e6re oppfylt."
+    },
+    {
+      "self_ref": "#/texts/35",
+      "parent": {
+        "$ref": "#/groups/14"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 401.41876220703125,
+            "r": 178.9150390625,
+            "b": 414.16998291015625,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            4898,
+            4913
+          ]
+        }
+      ],
+      "orig": "5.2. Konsesjon ",
+      "text": "2. Konsesjon",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/36",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 457.478759765625,
+            "r": 173.9950408935547,
+            "b": 470.22998046875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            5049,
+            5062
+          ]
+        }
+      ],
+      "orig": "Det skal foreligge konsesjon etter lov om erverv og utvinning av mineralressurser (2013-06-10 nr. 45)  \u00a7 43 f\u00f8r ny drift igangsettes. ",
+      "text": "Det skal foreligge konsesjon etter lov om erverv og utvinning av mineralressurser (2013-06-10 nr. 45) \u00a7 43 f\u00f8r ny drift igangsettes."
+    },
+    {
+      "self_ref": "#/texts/37",
+      "parent": {
+        "$ref": "#/groups/15"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 457.478759765625,
+            "r": 173.9950408935547,
+            "b": 470.22998046875,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            5049,
+            5062
+          ]
+        }
+      ],
+      "orig": "5.3. Fangdam ",
+      "text": "3. Fangdam",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/38",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 513.6387939453125,
+            "r": 163.07504272460938,
+            "b": 526.3900146484375,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            5170,
+            5183
+          ]
+        }
+      ],
+      "orig": "Fangdam for sedimentering av finstoff skal v\u00e6re etablert f\u00f8r ny drift igangsettes for  utvidelsesomr\u00e5det. ",
+      "text": "Fangdam for sedimentering av finstoff skal v\u00e6re etablert f\u00f8r ny drift igangsettes for utvidelsesomr\u00e5det."
+    },
+    {
+      "self_ref": "#/texts/39",
+      "parent": {
+        "$ref": "#/groups/16"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 513.6387939453125,
+            "r": 163.07504272460938,
+            "b": 526.3900146484375,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            5170,
+            5183
+          ]
+        }
+      ],
+      "orig": "5.4. Sikring ",
+      "text": "4. Sikring",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/40",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 557.4387817382812,
+            "r": 229.82504272460938,
+            "b": 570.1900024414062,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            5255,
+            5284
+          ]
+        }
+      ],
+      "orig": "Vegetasjonsskjermen skal sikres gjennomf\u00f8rt f\u00f8r ny drift igangsettes. ",
+      "text": "Vegetasjonsskjermen skal sikres gjennomf\u00f8rt f\u00f8r ny drift igangsettes."
+    },
+    {
+      "self_ref": "#/texts/41",
+      "parent": {
+        "$ref": "#/groups/17"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "list_item",
+      "prov": [
+        {
+          "page_no": 2,
+          "bbox": {
+            "l": 108.0199966430664,
+            "t": 557.4387817382812,
+            "r": 229.82504272460938,
+            "b": 570.1900024414062,
+            "coord_origin": "TOPLEFT"
+          },
+          "charspan": [
+            5255,
+            5284
+          ]
+        }
+      ],
+      "orig": "5.5. Frist for istandsetting ",
+      "text": "5. Frist for istandsetting",
+      "enumerated": false,
+      "marker": "-"
+    },
+    {
+      "self_ref": "#/texts/42",
+      "parent": {
+        "$ref": "#/body"
+      },
+      "children": [],
+      "content_layer": "body",
+      "label": "paragraph",
+      "prov": [],
+      "orig": "Omr\u00e5det skal v\u00e6re istandsatt til LNFR inntil 2 \u00e5r etter siste uttak.  ",
+      "text": "Omr\u00e5det skal v\u00e6re istandsatt til LNFR inntil 2 \u00e5r etter siste uttak."
+    }
+  ],
+  "pictures": [],
+  "tables": [],
+  "key_value_items": [],
+  "form_items": [],
+  "pages": {
+    "0": {
+      "size": {
+        "width": 594.9600219726562,
+        "height": 842.0399780273438
+      },
+      "page_no": 0
+    },
+    "1": {
+      "size": {
+        "width": 594.9600219726562,
+        "height": 842.0399780273438
+      },
+      "page_no": 1
+    },
+    "2": {
+      "size": {
+        "width": 594.9600219726562,
+        "height": 842.0399780273438
+      },
+      "page_no": 2
+    }
+  }
+}

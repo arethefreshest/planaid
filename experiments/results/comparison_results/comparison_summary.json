@@ -1,0 +1,452 @@
+[
+  {
+    "case_id": "case1",
+    "times": {
+      "legacy": 37.072011947631836,
+      "docling": 1.8130772113800049
+    },
+    "errors": {
+      "legacy": null,
+      "docling": null
+    },
+    "field_counts": {
+      "legacy_plankart": 23,
+      "docling_plankart": 23,
+      "legacy_bestemmelser": 17,
+      "docling_bestemmelser": 17,
+      "legacy_sosi": 25,
+      "docling_sosi": 0
+    },
+    "set_comparisons": {
+      "plankart": {
+        "only_in_legacy": [
+          "BAD",
+          "FV",
+          "PLANKONSULENT",
+          "VBAD"
+        ],
+        "only_in_docling": [
+          "#1",
+          "R9",
+          "V1",
+          "V2"
+        ],
+        "common": [
+          "AVG1",
+          "AVG2",
+          "AVG3",
+          "AVG4",
+          "BAT1",
+          "BAT2",
+          "FRI1",
+          "FRI2",
+          "FRI3",
+          "GN1",
+          "GN2",
+          "GN3",
+          "GN4",
+          "H210",
+          "H740",
+          "TV1",
+          "TV2",
+          "TV3",
+          "TV4"
+        ],
+        "jaccard_similarity": 0.7037037037037037
+      },
+      "bestemmelser": {
+        "only_in_legacy": [
+          "#1",
+          "BAD",
+          "FV",
+          "VBAD"
+        ],
+        "only_in_docling": [
+          "BAT1",
+          "BAT2",
+          "GN1",
+          "GN4"
+        ],
+        "common": [
+          "AVG14",
+          "BAT12",
+          "FRI1",
+          "FRI13",
+          "FRI2",
+          "FRI3",
+          "H140",
+          "H220",
+          "H320",
+          "H740",
+          "TV14",
+          "TV2",
+          "V1"
+        ],
+        "jaccard_similarity": 0.6190476190476191
+      },
+      "sosi": {
+        "only_in_legacy": [
+          "AVG1",
+          "AVG2",
+          "AVG3",
+          "AVG4",
+          "BAD",
+          "BAT1",
+          "BAT2",
+          "FRI1",
+          "FRI2",
+          "FRI3",
+          "FV",
+          "GN1",
+          "GN2",
+          "GN3",
+          "GN4",
+          "H210",
+          "H740",
+          "SKV3",
+          "TV1",
+          "TV2",
+          "TV3",
+          "TV4",
+          "V1",
+          "V2",
+          "VBAD"
+        ],
+        "only_in_docling": [],
+        "common": [],
+        "jaccard_similarity": 0.0
+      }
+    },
+    "consistency": {
+      "legacy": {
+        "matching": [
+          "BAD",
+          "FRI1",
+          "FRI2",
+          "FRI3",
+          "FV",
+          "H740",
+          "TV2",
+          "VBAD"
+        ],
+        "only_plankart": [
+          "PLANKONSULENT"
+        ],
+        "only_bestemmelser": [
+          "#1",
+          "AVG14",
+          "BAT12",
+          "FRI13",
+          "H140",
+          "H220",
+          "H320",
+          "TV14"
+        ],
+        "only_sosi": [
+          "SKV3",
+          "V2"
+        ],
+        "is_consistent": false
+      },
+      "docling": {
+        "matching": [
+          "BAT1",
+          "BAT2",
+          "FRI1",
+          "FRI2",
+          "FRI3",
+          "GN1",
+          "GN4",
+          "H740",
+          "TV2",
+          "V1"
+        ],
+        "only_plankart": [
+          "#1",
+          "AVG1",
+          "AVG2",
+          "AVG3",
+          "AVG4",
+          "GN2",
+          "GN3",
+          "H210",
+          "R9",
+          "TV1",
+          "TV3",
+          "TV4",
+          "V2"
+        ],
+        "only_bestemmelser": [
+          "AVG14",
+          "BAT12",
+          "FRI13",
+          "H140",
+          "H220",
+          "H320",
+          "TV14"
+        ],
+        "only_sosi": [],
+        "is_consistent": false
+      }
+    }
+  },
+  {
+    "case_id": "case2",
+    "times": {
+      "legacy": 33.05641222000122,
+      "docling": 2.801241397857666
+    },
+    "errors": {
+      "legacy": null,
+      "docling": null
+    },
+    "field_counts": {
+      "legacy_plankart": 14,
+      "docling_plankart": 24,
+      "legacy_bestemmelser": 7,
+      "docling_bestemmelser": 7,
+      "legacy_sosi": 62,
+      "docling_sosi": 0
+    },
+    "set_comparisons": {
+      "plankart": {
+        "only_in_legacy": [
+          "AD",
+          "APM",
+          "DATOSIGN",
+          "GV",
+          "SAKSBEHANDLINGETTERPLANOGBYGNINGSLOVEN",
+          "VAA"
+        ],
+        "only_in_docling": [
+          "F42",
+          "H140",
+          "H320",
+          "N6489400",
+          "N6489600",
+          "N6489800",
+          "N6490000",
+          "N6490200",
+          "N6490400",
+          "Ø424400",
+          "Ø424600",
+          "Ø424800",
+          "Ø425000",
+          "Ø425200",
+          "Ø425400",
+          "Ø425600"
+        ],
+        "common": [
+          "BSM1",
+          "BSM2",
+          "SKV1",
+          "SKV2",
+          "SVG1",
+          "SVG2",
+          "SVG3",
+          "VNV1"
+        ],
+        "jaccard_similarity": 0.26666666666666666
+      },
+      "bestemmelser": {
+        "only_in_legacy": [
+          "FV42",
+          "GV",
+          "VAA"
+        ],
+        "only_in_docling": [
+          "BSM1",
+          "BSM2",
+          "T1442"
+        ],
+        "common": [
+          "H140",
+          "H320",
+          "SKV1",
+          "SKV2"
+        ],
+        "jaccard_similarity": 0.4
+      },
+      "sosi": {
+        "only_in_legacy": [
+          "BSM1",
+          "BSM2",
+          "GV",
+          "LL1",
+          "LL10",
+          "LL11",
+          "LL12",
+          "LL13",
+          "LL14",
+          "LL15",
+          "LL16",
+          "LL17",
+          "LL18",
+          "LL19",
+          "LL2",
+          "LL20",
+          "LL21",
+          "LL22",
+          "LL23",
+          "LL3",
+          "LL4",
+          "LL5",
+          "LL6",
+          "LL7",
+          "LL8",
+          "LL9",
+          "SKV1",
+          "SKV2",
+          "SVG1",
+          "SVG10",
+          "SVG11",
+          "SVG2",
+          "SVG3",
+          "SVG4",
+          "SVG5",
+          "SVG6",
+          "SVG7",
+          "SVG8",
+          "SVG9",
+          "SVT1",
+          "SVT2",
+          "VAA",
+          "VFS1",
+          "VFS10",
+          "VFS11",
+          "VFS12",
+          "VFS13",
+          "VFS14",
+          "VFS15",
+          "VFS16",
+          "VFS17",
+          "VFS2",
+          "VFS3",
+          "VFS4",
+          "VFS5",
+          "VFS6",
+          "VFS7",
+          "VFS8",
+          "VFS9",
+          "VNV1",
+          "VNV2",
+          "VNV3"
+        ],
+        "only_in_docling": [],
+        "common": [],
+        "jaccard_similarity": 0.0
+      }
+    },
+    "consistency": {
+      "legacy": {
+        "matching": [
+          "GV",
+          "SKV1",
+          "SKV2",
+          "VAA"
+        ],
+        "only_plankart": [
+          "AD",
+          "APM",
+          "DATOSIGN",
+          "SAKSBEHANDLINGETTERPLANOGBYGNINGSLOVEN"
+        ],
+        "only_bestemmelser": [
+          "FV42",
+          "H140",
+          "H320"
+        ],
+        "only_sosi": [
+          "LL1",
+          "LL10",
+          "LL11",
+          "LL12",
+          "LL13",
+          "LL14",
+          "LL15",
+          "LL16",
+          "LL17",
+          "LL18",
+          "LL19",
+          "LL2",
+          "LL20",
+          "LL21",
+          "LL22",
+          "LL23",
+          "LL3",
+          "LL4",
+          "LL5",
+          "LL6",
+          "LL7",
+          "LL8",
+          "LL9",
+          "SVG10",
+          "SVG11",
+          "SVG4",
+          "SVG5",
+          "SVG6",
+          "SVG7",
+          "SVG8",
+          "SVG9",
+          "SVT1",
+          "SVT2",
+          "VFS1",
+          "VFS10",
+          "VFS11",
+          "VFS12",
+          "VFS13",
+          "VFS14",
+          "VFS15",
+          "VFS16",
+          "VFS17",
+          "VFS2",
+          "VFS3",
+          "VFS4",
+          "VFS5",
+          "VFS6",
+          "VFS7",
+          "VFS8",
+          "VFS9",
+          "VNV2",
+          "VNV3"
+        ],
+        "is_consistent": false
+      },
+      "docling": {
+        "matching": [
+          "BSM1",
+          "BSM2",
+          "H140",
+          "H320",
+          "SKV1",
+          "SKV2"
+        ],
+        "only_plankart": [
+          "F42",
+          "N6489400",
+          "N6489600",
+          "N6489800",
+          "N6490000",
+          "N6490200",
+          "N6490400",
+          "SVG1",
+          "SVG2",
+          "SVG3",
+          "VNV1",
+          "Ø424400",
+          "Ø424600",
+          "Ø424800",
+          "Ø425000",
+          "Ø425200",
+          "Ø425400",
+          "Ø425600"
+        ],
+        "only_bestemmelser": [
+          "T1442"
+        ],
+        "only_sosi": [],
+        "is_consistent": false
+      }
+    }
+  }
+]
