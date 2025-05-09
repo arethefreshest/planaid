@@ -98,3 +98,8 @@ python_service/app/__pycache__/*
 python_service/app/document/__pycache__/*
 python_service/app/llm/__pycache__/*
 python_service/app/utils/__pycache__/*all_code_text.txt
+
+all_code_text.txt
+
+experiments/__pycache__/*
+python_service/app/utils/__pycache__/*

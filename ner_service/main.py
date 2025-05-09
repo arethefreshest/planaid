@@ -17,6 +17,9 @@ from datetime import datetime
 from src.utils.logger import setup_logger
 from pydantic_settings import BaseSettings
 import logging
+import gc
+from typing import Dict
+import torch
 
 # Configure root logger first
 root_logger = logging.getLogger()
@@ -102,9 +105,53 @@ async def shutdown_event():
     except Exception as e:
         logger.error(f"Error during NER service shutdown: {str(e)}")
 
+def get_memory_usage() -> Dict:
+    """Get current memory usage statistics"""
+    process = psutil.Process()
+    memory = process.memory_info()
+    return {
+        "rss_mb": memory.rss / 1024 / 1024,  # Resident Set Size
+        "vms_mb": memory.vms / 1024 / 1024,  # Virtual Memory Size
+        "gpu_mb": torch.cuda.memory_allocated() / 1024 / 1024 if torch.cuda.is_available() else 0
+    }
+
+def cleanup_memory():
+    """Force garbage collection and clear CUDA cache"""
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+
+@app.get("/health")
+async def health_check():
+    """Enhanced health check endpoint"""
+    try:
+        memory_stats = get_memory_usage()
+        
+        # Check if models are initialized
+        models_ok = model_manager.is_initialized()
+        
+        # Check memory thresholds (adjust these values as needed)
+        memory_ok = memory_stats["rss_mb"] < 8000  # 8GB threshold
+        
+        # Get available disk space
+        disk_stats = psutil.disk_usage('/')
+        disk_ok = disk_stats.percent < 90  # Less than 90% used
+        
+        status = "healthy" if all([models_ok, memory_ok, disk_ok]) else "unhealthy"
+        
+        return {
+            "status": status,
+            "models_initialized": models_ok,
+            "memory_usage": memory_stats,
+            "disk_usage_percent": disk_stats.percent
+        }
+    except Exception as e:
+        logger.error(f"Health check failed: {str(e)}")
+        return {"status": "unhealthy", "error": str(e)}
+
 @app.post("/api/extract-fields")
 async def extract_fields(file: UploadFile):
-    """Extract fields from a PDF document"""
+    """Extract fields from a PDF document with memory management"""
     print(f"RECEIVED FILE: {file.filename}", flush=True)
     logger.info(f"=== RECEIVED REQUEST: extract-fields for file {file.filename} ===")
     
@@ -116,6 +163,11 @@ async def extract_fields(file: UploadFile):
                 status_code=500, 
                 detail="Service not properly initialized. Please check if model files exist and are accessible."
             )
+        
+        # Check memory before processing
+        pre_memory = get_memory_usage()
+        if pre_memory["rss_mb"] > 7000:  # 7GB threshold
+            cleanup_memory()
         
         # Start metrics collection
         start_time = time.time()
@@ -235,8 +287,19 @@ async def extract_fields(file: UploadFile):
             logger.info(f"=== COMPLETED REQUEST: extract-fields for file {file.filename}, found {len(fields)} fields ===")
             print(f"COMPLETED PROCESSING: {file.filename} with {len(fields)} fields", flush=True)
             
+            # Cleanup after processing
+            cleanup_memory()
+            
+            # Check memory after cleanup
+            post_memory = get_memory_usage()
+            metrics["resource_usage"].update({
+                "pre_memory_mb": pre_memory,
+                "post_memory_mb": post_memory
+            })
+            
             return {"fields": fields}
         except Exception as e:
+            cleanup_memory()  # Ensure cleanup on error
             logger.error(f"Error processing file {file.filename}: {str(e)}", exc_info=True)
             # Record error in metrics
             metrics["error"] = str(e)
@@ -253,10 +316,13 @@ async def extract_fields(file: UploadFile):
             )
         finally:
             # Clean up temporary file
-            if os.path.exists(tmp_path):
-                os.remove(tmp_path)
-            logger.info("Field extraction completed successfully")
+            if 'tmp_path' in locals():
+                try:
+                    os.unlink(tmp_path)
+                except Exception as e:
+                    logger.error(f"Error removing temporary file: {str(e)}")
     except Exception as e:
+        cleanup_memory()  # Ensure cleanup on error
         logger.error(f"Error processing file {file.filename}: {str(e)}", exc_info=True)
         raise
 

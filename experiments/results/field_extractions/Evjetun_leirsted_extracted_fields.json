@@ -1,0 +1,274 @@
+{
+  "zones": [
+    "BAT1",
+    "BAT2",
+    "FRI1",
+    "FRI2",
+    "FRI3",
+    "F_BAD",
+    "F_TV1",
+    "F_TV2",
+    "F_TV3",
+    "F_TV4",
+    "F_VBAD",
+    "GN1",
+    "GN2",
+    "GN3",
+    "GN4",
+    "O_AVG1",
+    "O_AVG2",
+    "O_AVG3",
+    "O_AVG4",
+    "O_FV",
+    "O_SKV3",
+    "O_V1",
+    "O_V2"
+  ],
+  "text_fields": [],
+  "streng_values": [
+    "#1",
+    "A=28894 M²",
+    "A=28894 m²",
+    "A=6629 M²",
+    "A=6629 m²",
+    "BAT1",
+    "BAT2",
+    "FRI1",
+    "FRI2",
+    "FRI3",
+    "F_BAD",
+    "F_TV1",
+    "F_TV2",
+    "F_TV3",
+    "F_TV4",
+    "F_VBAD",
+    "GN1",
+    "GN2",
+    "GN3",
+    "GN4",
+    "H210",
+    "H220_1",
+    "H740",
+    "O_AVG1",
+    "O_AVG2",
+    "O_AVG3",
+    "O_AVG4",
+    "O_FV",
+    "O_V1",
+    "O_V2",
+    "f_BAD",
+    "f_TV1",
+    "f_TV2",
+    "f_TV3",
+    "f_TV4",
+    "f_VBAD",
+    "o_AVG1",
+    "o_AVG2",
+    "o_AVG3",
+    "o_AVG4",
+    "o_FV",
+    "o_V1",
+    "o_V2"
+  ],
+  "visible_annotations": {
+    "zones": [
+      "BAT1",
+      "BAT2",
+      "FRI1",
+      "FRI2",
+      "FRI3",
+      "F_BAD",
+      "F_TV1",
+      "F_TV2",
+      "F_TV3",
+      "F_TV4",
+      "F_VBAD",
+      "GN1",
+      "GN2",
+      "GN3",
+      "GN4",
+      "O_AVG1",
+      "O_AVG2",
+      "O_AVG3",
+      "O_AVG4",
+      "O_FV",
+      "O_V1",
+      "O_V2",
+      "f_BAD",
+      "f_TV1",
+      "f_TV2",
+      "f_TV3",
+      "f_TV4",
+      "f_VBAD",
+      "o_AVG1",
+      "o_AVG2",
+      "o_AVG3",
+      "o_AVG4",
+      "o_FV",
+      "o_V1",
+      "o_V2"
+    ],
+    "hensynssoner": [
+      "H210",
+      "H220_1",
+      "H740"
+    ],
+    "measurements": [
+      "#1",
+      "A=28894 M²",
+      "A=28894 m²",
+      "A=6629 M²",
+      "A=6629 m²"
+    ],
+    "other": []
+  },
+  "arealformål": [
+    {
+      "feltnavn": "F_VBAD",
+      "code": "6770",
+      "purpose": "Badeområde"
+    },
+    {
+      "feltnavn": "F_TV3",
+      "code": "3031",
+      "purpose": "Turveg"
+    },
+    {
+      "feltnavn": "F_TV4",
+      "code": "3031",
+      "purpose": "Turveg"
+    },
+    {
+      "feltnavn": "F_TV2",
+      "code": "3031",
+      "purpose": "Turveg"
+    },
+    {
+      "feltnavn": "F_TV1",
+      "code": "3031",
+      "purpose": "Turveg"
+    },
+    {
+      "feltnavn": "FRI2",
+      "code": "3040",
+      "purpose": "Friområde"
+    },
+    {
+      "feltnavn": "BAT1",
+      "code": "1169",
+      "purpose": "Annen offentlig eller privat tjenesteyting"
+    },
+    {
+      "feltnavn": "FRI1",
+      "code": "3040",
+      "purpose": "Friområde"
+    },
+    {
+      "feltnavn": "BAT2",
+      "code": "1169",
+      "purpose": "Annen offentlig eller privat tjenesteyting"
+    },
+    {
+      "feltnavn": "O_FV",
+      "code": "6700",
+      "purpose": "Friluftsområde"
+    },
+    {
+      "feltnavn": "O_AVG3",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "O_AVG1",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "O_AVG2",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "O_V1",
+      "code": "2010",
+      "purpose": "Veg"
+    },
+    {
+      "feltnavn": "GN2",
+      "code": "3020",
+      "purpose": "Naturområde"
+    },
+    {
+      "feltnavn": "GN1",
+      "code": "3020",
+      "purpose": "Naturområde"
+    },
+    {
+      "feltnavn": "F_BAD",
+      "code": "3041",
+      "purpose": "Badeplass/-område"
+    },
+    {
+      "feltnavn": "O_V2",
+      "code": "2010",
+      "purpose": "Veg"
+    },
+    {
+      "feltnavn": "GN3",
+      "code": "3020",
+      "purpose": "Naturområde"
+    },
+    {
+      "feltnavn": "O_SKV3",
+      "code": "2011",
+      "purpose": "Kjøreveg"
+    },
+    {
+      "feltnavn": "GN4",
+      "code": "3020",
+      "purpose": "Naturområde"
+    },
+    {
+      "feltnavn": "O_AVG4",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "FRI3",
+      "code": "3040",
+      "purpose": "Friområde"
+    }
+  ],
+  "field_names": [
+    "BAT1",
+    "BAT2",
+    "FRI1",
+    "FRI2",
+    "FRI3",
+    "F_BAD",
+    "F_TV1",
+    "F_TV2",
+    "F_TV3",
+    "F_TV4",
+    "F_VBAD",
+    "GN1",
+    "GN2",
+    "GN3",
+    "GN4",
+    "O_AVG1",
+    "O_AVG2",
+    "O_AVG3",
+    "O_AVG4",
+    "O_FV",
+    "O_SKV3",
+    "O_V1",
+    "O_V2"
+  ],
+  "hensynssoner": [
+    "H140_1",
+    "H210",
+    "H220_1",
+    "H320_1",
+    "H740"
+  ]
+}

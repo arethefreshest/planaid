@@ -1,0 +1,56 @@
+\section{Summary Report}
+
+\subsection{Executive Summary}
+\begin{itemize}
+\item Average Processing Time Improvement: 16.00x faster
+\item Average Field Extraction Accuracy: 65.83%
+\end{itemize}
+
+\subsection{Performance Metrics}
+\begin{table}[h]
+\centering
+\begin{tabular}{l|cc}
+\hline
+Metric & Legacy & Docling \\
+\hline
+Average Processing Time (s) & 39.61 & 2.48 \\
+Speed Improvement & 16.00x & - \\
+\hline
+\end{tabular}
+\caption{Performance Comparison}
+\end{table}
+
+\subsection{Accuracy Metrics}
+\begin{table}[h]
+\centering
+\begin{tabular}{l|c}
+\hline
+Document Type & Jaccard Similarity \\
+\hline
+Plankart & 46.50% \\
+Bestemmelser & 53.00% \\
+Sosi & 98.00% \\
+\hline
+\end{tabular}
+\caption{Field Extraction Accuracy}
+\end{table}
+
+\subsection{Detailed Results}
+\begin{table}[h]
+\centering
+\begin{tabular}{l|cc|cc|ccc}
+\hline
+Case & Legacy Time & Docling Time & Legacy Fields & Docling Fields & Plankart Sim & Bestemm Sim & SOSI Sim \\
+\hline
+case1 & 47.98 & 1.76 & 70 & 66 & 0.59 & 0.62 & 0.96 \\
+case2 & 31.25 & 3.19 & 84 & 92 & 0.34 & 0.44 & 1.00 \\
+\hline
+\end{tabular}
+\caption{Detailed Results by Case}
+\end{table}
+
+\subsection{Conclusions}
+\begin{itemize}
+\item The Docling method is 16.00x faster than the legacy method
+\item Field extraction accuracy is highest for SOSI (98.00%) and lowest for Bestemmelser (53.00%)
+\end{itemize}

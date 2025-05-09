@@ -1,0 +1,495 @@
+{
+  "zones": [
+    "BSM1",
+    "BSM2",
+    "GV",
+    "LL1",
+    "LL10",
+    "LL11",
+    "LL12",
+    "LL13",
+    "LL14",
+    "LL15",
+    "LL16",
+    "LL17",
+    "LL18",
+    "LL19",
+    "LL2",
+    "LL20",
+    "LL21",
+    "LL22",
+    "LL23",
+    "LL3",
+    "LL4",
+    "LL5",
+    "LL6",
+    "LL7",
+    "LL8",
+    "LL9",
+    "O_SKV1",
+    "O_SVG1",
+    "O_SVG2",
+    "O_SVG3",
+    "SKV2",
+    "SVG10",
+    "SVG11",
+    "SVG4",
+    "SVG5",
+    "SVG6",
+    "SVG7",
+    "SVG8",
+    "SVG9",
+    "SVT1",
+    "SVT2",
+    "VAA",
+    "VFS1",
+    "VFS10",
+    "VFS11",
+    "VFS12",
+    "VFS13",
+    "VFS14",
+    "VFS15",
+    "VFS16",
+    "VFS17",
+    "VFS2",
+    "VFS3",
+    "VFS4",
+    "VFS5",
+    "VFS6",
+    "VFS7",
+    "VFS8",
+    "VFS9",
+    "VNV1",
+    "VNV2",
+    "VNV3"
+  ],
+  "text_fields": [],
+  "streng_values": [
+    "BSM1",
+    "BSM2",
+    "GV",
+    "H140_1",
+    "H140_2",
+    "H320_1",
+    "H320_2",
+    "O_SKV1",
+    "O_SVG1",
+    "O_SVG2",
+    "O_SVG3",
+    "SKV2",
+    "VAA",
+    "VNV1",
+    "o_SKV1",
+    "o_SVG1",
+    "o_SVG2",
+    "o_SVG3"
+  ],
+  "visible_annotations": {
+    "zones": [
+      "BSM1",
+      "BSM2",
+      "GV",
+      "O_SKV1",
+      "O_SVG1",
+      "O_SVG2",
+      "O_SVG3",
+      "SKV2",
+      "VAA",
+      "VNV1",
+      "o_SKV1",
+      "o_SVG1",
+      "o_SVG2",
+      "o_SVG3"
+    ],
+    "hensynssoner": [
+      "H140_1",
+      "H140_2",
+      "H320_1",
+      "H320_2"
+    ],
+    "measurements": [],
+    "other": []
+  },
+  "arealformål": [
+    {
+      "feltnavn": "VNV1",
+      "code": "6610",
+      "purpose": "Naturområde i sjø og vassdrag"
+    },
+    {
+      "feltnavn": "SKV2",
+      "code": "2011",
+      "purpose": "Kjøreveg"
+    },
+    {
+      "feltnavn": "SVT2",
+      "code": "2018",
+      "purpose": "Annen veggrunn - tekniske anlegg"
+    },
+    {
+      "feltnavn": "SVT1",
+      "code": "2018",
+      "purpose": "Annen veggrunn - tekniske anlegg"
+    },
+    {
+      "feltnavn": "O_SVG3",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "O_SVG2",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "O_SVG1",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "LL1",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL2",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL3",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL4",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "VNV2",
+      "code": "6610",
+      "purpose": "Naturområde i sjø og vassdrag"
+    },
+    {
+      "feltnavn": "O_SKV1",
+      "code": "2011",
+      "purpose": "Kjøreveg"
+    },
+    {
+      "feltnavn": "LL5",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL6",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL7",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "VNV3",
+      "code": "6610",
+      "purpose": "Naturområde i sjø og vassdrag"
+    },
+    {
+      "feltnavn": "LL9",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL10",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL11",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL12",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL13",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL14",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL15",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL17",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL16",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL18",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL19",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL20",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL21",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL23",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "LL22",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "VFS17",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS16",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS15",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS14",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS13",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS12",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS11",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS10",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS9",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS8",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS7",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS6",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS5",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS4",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS3",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS2",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "VFS1",
+      "code": "6720",
+      "purpose": "Friluftsområde i sjø og vassdrag med tilhørende strandsone"
+    },
+    {
+      "feltnavn": "LL8",
+      "code": "5110",
+      "purpose": "Landbruksformål"
+    },
+    {
+      "feltnavn": "SVG4",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "SVG5",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "SVG6",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "SVG7",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "SVG8",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "SVG9",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "SVG10",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "SVG11",
+      "code": "2019",
+      "purpose": "Annen veggrunn - grøntareal"
+    },
+    {
+      "feltnavn": "BSM1",
+      "code": "1201",
+      "purpose": "Steinbrudd og masseuttak"
+    },
+    {
+      "feltnavn": "BSM2",
+      "code": "1201",
+      "purpose": "Steinbrudd og masseuttak"
+    },
+    {
+      "feltnavn": "GV",
+      "code": "3060",
+      "purpose": "Vegetasjonsskjerm"
+    },
+    {
+      "feltnavn": "VAA",
+      "code": "6900",
+      "purpose": "Angitt formål i sjø og vassdrag med eller uten tilhørende strandsone kombinert med andre angitte hovedformål"
+    }
+  ],
+  "field_names": [
+    "BSM1",
+    "BSM2",
+    "GV",
+    "LL1",
+    "LL10",
+    "LL11",
+    "LL12",
+    "LL13",
+    "LL14",
+    "LL15",
+    "LL16",
+    "LL17",
+    "LL18",
+    "LL19",
+    "LL2",
+    "LL20",
+    "LL21",
+    "LL22",
+    "LL23",
+    "LL3",
+    "LL4",
+    "LL5",
+    "LL6",
+    "LL7",
+    "LL8",
+    "LL9",
+    "O_SKV1",
+    "O_SVG1",
+    "O_SVG2",
+    "O_SVG3",
+    "SKV2",
+    "SVG10",
+    "SVG11",
+    "SVG4",
+    "SVG5",
+    "SVG6",
+    "SVG7",
+    "SVG8",
+    "SVG9",
+    "SVT1",
+    "SVT2",
+    "VAA",
+    "VFS1",
+    "VFS10",
+    "VFS11",
+    "VFS12",
+    "VFS13",
+    "VFS14",
+    "VFS15",
+    "VFS16",
+    "VFS17",
+    "VFS2",
+    "VFS3",
+    "VFS4",
+    "VFS5",
+    "VFS6",
+    "VFS7",
+    "VFS8",
+    "VFS9",
+    "VNV1",
+    "VNV2",
+    "VNV3"
+  ],
+  "hensynssoner": [
+    "H140_1",
+    "H140_2",
+    "H320_1",
+    "H320_2"
+  ]
+}

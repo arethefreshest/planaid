@@ -1,0 +1,134 @@
+{
+  "case_id": "case2",
+  "false_positives": {
+    "plankart": [
+      "GV",
+      "LL",
+      "VAA",
+      "VFS",
+      "VNV"
+    ],
+    "bestemmelser": [
+      "FV42",
+      "GV",
+      "VAA"
+    ],
+    "sosi": []
+  },
+  "false_negatives": {
+    "plankart": [
+      "F42",
+      "N6489400",
+      "N6489600",
+      "N6489800",
+      "N6490000",
+      "N6490200",
+      "N6490400",
+      "\u00d8424400",
+      "\u00d8424600",
+      "\u00d8424800",
+      "\u00d8425000",
+      "\u00d8425200",
+      "\u00d8425400",
+      "\u00d8425600"
+    ],
+    "bestemmelser": [
+      "BSM1",
+      "BSM2"
+    ],
+    "sosi": []
+  },
+  "field_type_analysis": {
+    "plankart": {
+      "H": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "BSM": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "\u00d8": {
+        "legacy": 0,
+        "docling": 7
+      },
+      "SVG": {
+        "legacy": 3,
+        "docling": 3
+      },
+      "N": {
+        "legacy": 0,
+        "docling": 6
+      },
+      "SKV": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "VNV": {
+        "legacy": 1,
+        "docling": 1
+      },
+      "F": {
+        "legacy": 0,
+        "docling": 1
+      }
+    },
+    "bestemmelser": {
+      "FV": {
+        "legacy": 1,
+        "docling": 0
+      },
+      "H": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "SKV": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "BSM": {
+        "legacy": 0,
+        "docling": 2
+      }
+    },
+    "sosi": {
+      "VFS": {
+        "legacy": 17,
+        "docling": 17
+      },
+      "LL": {
+        "legacy": 23,
+        "docling": 23
+      },
+      "SVG": {
+        "legacy": 11,
+        "docling": 11
+      },
+      "SKV": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "BSM": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "VNV": {
+        "legacy": 3,
+        "docling": 3
+      },
+      "SVT": {
+        "legacy": 2,
+        "docling": 2
+      }
+    }
+  },
+  "error_patterns": [
+    {
+      "type": "similar_field",
+      "legacy_field": "VNV",
+      "similar_docling_fields": [
+        "VNV1"
+      ]
+    }
+  ]
+}

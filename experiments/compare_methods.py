@@ -14,10 +14,27 @@ import re
 import asyncio
 import os
 import sys
+import csv
 
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(name)s: %(message)s')
+# Configure logging - set to INFO by default
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+)
 logger = logging.getLogger(__name__)
+
+# Disable debug logging for noisy libraries
+logging.getLogger('httpx').setLevel(logging.WARNING)
+logging.getLogger('httpcore').setLevel(logging.WARNING)
+logging.getLogger('urllib3').setLevel(logging.WARNING)
+logging.getLogger('matplotlib').setLevel(logging.WARNING)
+logging.getLogger('PIL').setLevel(logging.WARNING)
+logging.getLogger('litellm').setLevel(logging.WARNING)
+logging.getLogger('litellm.llms').setLevel(logging.WARNING)
+logging.getLogger('litellm.utils').setLevel(logging.WARNING)
+logging.getLogger('extractthinker').setLevel(logging.WARNING)
+logging.getLogger('extractthinker.core').setLevel(logging.WARNING)
+logging.getLogger('extractthinker.llm').setLevel(logging.WARNING)
 
 # Add project root to Python path
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -27,14 +44,16 @@ sys.path.append(str(PROJECT_ROOT / 'python_service'))
 # Import Docling parsers
 from experiments.parse_planbestemmelser import parse_planbestemmelser
 from experiments.parse_plankart import parse_plankart
-from experiments.parse_sosi import parse_sosi_to_docling, load_sosi_purpose_codes
+from experiments.parse_sosi import load_sosi_purpose_codes, parse_sosi_to_docling
 
 # Import Docling types
 try:
     from docling_core.types.doc import (
         DoclingDocument, TextItem, GroupItem, RefItem, DocItemLabel,
-        BoundingBox, ProvenanceItem, GroupLabel, NodeItem, SectionHeaderItem,
-        PageItem, Size
+        BoundingBox, ProvenanceItem, GroupLabel
+    )
+    from docling_core.types.doc.document import (
+        NodeItem, SectionHeaderItem, PageItem, Size
     )
 except ImportError as e:
     print(f"ERROR: Failed to import docling-core types: {e}")
@@ -52,9 +71,6 @@ except ImportError as e:
     LegacySosiParser = None
     model_name = None
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(name)s: %(message)s')
-logger = logging.getLogger(__name__)
-
 # Add path setup near the top, after imports
 SCRIPT_DIR = Path(__file__).parent
 PROJECT_ROOT = SCRIPT_DIR.parent
@@ -62,22 +78,49 @@ PYTHON_SERVICE_DIR = PROJECT_ROOT / "python_service"
 DATA_DIR = SCRIPT_DIR / "data"
 COMPARISON_OUTPUT_DIR = SCRIPT_DIR / "results/comparison"
 
+# Define test cases
+CASES = {
+    "case1": {
+        "plankart": DATA_DIR / "mock/plankart/case1/Evjetun_leirsted.pdf",
+        "bestemmelser": DATA_DIR / "mock/planbestemmelser/case1/Evjetun_leirsted.pdf",
+        "sosi": DATA_DIR / "mock/sosi/case1/Evjetun_leirsted.sos"
+    },
+    "case2": {
+        "plankart": DATA_DIR / "mock/plankart/case2/Kjetså_massetak.pdf",
+        "bestemmelser": DATA_DIR / "mock/planbestemmelser/case2/Kjetså_massetak.pdf",
+        "sosi": DATA_DIR / "mock/sosi/case2/Kjetså_massetak.sos"
+    }
+}
+
 # Add python_service to path
 sys.path.append(str(PYTHON_SERVICE_DIR))
 
 # --- Configuration ---
 SCRIPT_DIR = Path(__file__).parent
-BASE_DATA_DIR = SCRIPT_DIR / "../data" # Go up one level from experiments
+BASE_DATA_DIR = SCRIPT_DIR / "data"
 MOCK_DATA_DIR = BASE_DATA_DIR / "mock"
-RESULTS_DIR = SCRIPT_DIR / "../results" # Go up one level from experiments
+RESULTS_DIR = SCRIPT_DIR / "results" # Go up one level from experiments
 DOCLING_OUTPUT_DIR = RESULTS_DIR / "docling_parsed"
 COMPARISON_OUTPUT_DIR = RESULTS_DIR / "comparison_results"
-NER_SERVICE_URL = os.getenv('NER_SERVICE_URL', "http://157.230.21.199:8001/api/extract-fields")
-SOSI_CODES_CSV = MOCK_DATA_DIR / "Reguleringsplan.csv"
+NER_SERVICE_URL = os.getenv('NER_SERVICE_URL', "http://157.230.21.199:8001")
+if not NER_SERVICE_URL.endswith('/api/extract-fields'):
+    NER_SERVICE_URL = f"{NER_SERVICE_URL}/api/extract-fields"
+SOSI_CODES_CSV = BASE_DATA_DIR / "Reguleringsplan.csv"  # Updated path to match actual location
 
-DOCLING_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-COMPARISON_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-(COMPARISON_OUTPUT_DIR / "comparison_plots").mkdir(parents=True, exist_ok=True) # Ensure plot dir exists
+# Create organized output directories
+OUTPUT_DIRS = {
+    "comparison": COMPARISON_OUTPUT_DIR,
+    "plots": COMPARISON_OUTPUT_DIR / "plots",
+    "error_analysis": COMPARISON_OUTPUT_DIR / "error_analysis",
+    "statistical": COMPARISON_OUTPUT_DIR / "statistical",
+    "semantic": COMPARISON_OUTPUT_DIR / "semantic",
+    "field_analysis": COMPARISON_OUTPUT_DIR / "field_analysis",
+    "summary": COMPARISON_OUTPUT_DIR / "summary"
+}
+
+# Create all output directories
+for dir_path in OUTPUT_DIRS.values():
+    dir_path.mkdir(parents=True, exist_ok=True)
 
 # --- Helper Functions ---
 def normalize_field_comparison(field: str) -> Optional[str]:
@@ -116,38 +159,111 @@ def extract_zones_from_docling_bestemmelser(doc: DoclingDocument) -> Set[str]:
 
 def extract_zones_from_docling_sosi(doc: DoclingDocument) -> Set[str]:
     """
-    Extracts FELTNAVN, RPAREALFORMÅL and HENSYNSONENAVN values from the structured
-    DoclingDocument generated by parse_sosi_to_docling.
+    Extract all relevant fields from SOSI document using the improved extraction method.
+    Returns a set of normalized field names.
     """
-    zones = set()
-    if not doc.groups:
-        logger.warning(f"No groups found in Docling SOSI document: {doc.name}")
-        return zones
-
-    def process_group(group: GroupItem):
-        # Check if this is a FLATE or KURVE group
-        if isinstance(group, GroupItem):
-            # Process all children of this group
+    class SOSIExtractor:
+        """Class to handle SOSI field extraction"""
+        def __init__(self):
+            self.zones = set()  # Only named zones (FELTNAVN)
+            self.text_fields = []  # List of (TEKST, STRENG) tuples from TEKST groups
+            self.streng_values = []  # All STRENG values found (including from RpPåskrift)
+            self.arealformål_mapping = {}  # Dict mapping FELTNAVN to code
+            self.field_names = set()
+            self.hensynssoner = set()
+            
+        def extract_all_fields(self, doc) -> Set[str]:
+            """Extract all relevant fields and return normalized set of field names."""
+            self._process_group(doc.body)
+            
+            # Combine all relevant fields into a single set
+            all_fields = set()
+            
+            # Add field names (FELTNAVN)
+            all_fields.update(self.field_names)
+            
+            # Add hensynssoner
+            all_fields.update(self.hensynssoner)
+            
+            # Add STRENG values that represent visible annotations
+            for streng in self.streng_values:
+                normalized = normalize_field_comparison(streng)
+                if normalized:
+                    all_fields.add(normalized)
+            
+            return all_fields
+        
+        def _process_group(self, group):
+            """Process a group to find target fields."""
+            logger.debug(f"Processing group: {group.name}")
+            
+            # Track FELTNAVN and RPAREALFORMÅL within the same group
+            current_feltnavn = None
+            current_arealformål = None
+            
+            # First pass to get FELTNAVN and RPAREALFORMÅL
             for child in group.children:
-                if isinstance(child, GroupItem):
-                    # Check for our target fields
-                    if child.name in ["FELTNAVN", "RPAREALFORMÅL", "HENSYNSONENAVN"] and child.value:
-                        normalized = normalize_field_comparison(str(child.value))
-                        if normalized:
-                            zones.add(normalized)
-                    # Recursively process nested groups
-                    process_group(child)
-
-    # Process main categories (FLATE, KURVE, etc.)
-    for category in doc.groups:
-        if isinstance(category, GroupItem) and category.name in ["FLATE", "KURVE"]:
-            # Process each numbered instance under the category
-            for instance in category.children:
-                if isinstance(instance, GroupItem):
-                    process_group(instance)
-
-    logger.debug(f"Extracted Docling SOSI zones: {zones}")
-    return zones
+                if not hasattr(child, 'value'):
+                    continue
+                    
+                value = str(child.value) if child.value is not None else None
+                if not value:
+                    continue
+                    
+                normalized = normalize_field_comparison(value)
+                if not normalized:
+                    continue
+                    
+                if child.name == "FELTNAVN":
+                    current_feltnavn = normalized
+                elif child.name == "RPAREALFORMÅL":
+                    current_arealformål = normalized
+                elif child.name == "STRENG":  # Direct STRENG values
+                    self.streng_values.append(normalized)
+            
+            # If we found both in the same group, add to mapping
+            if current_feltnavn and current_arealformål:
+                self.arealformål_mapping[current_feltnavn] = current_arealformål
+                self.field_names.add(current_feltnavn)
+            elif current_feltnavn:
+                self.field_names.add(current_feltnavn)
+            
+            # Special handling for TEKST groups that contain numbered children
+            if group.name == "TEKST":
+                for numbered_child in group.children:
+                    if hasattr(numbered_child, 'children'):
+                        # Look for STRENG within the numbered child's children
+                        for sub_child in numbered_child.children:
+                            if sub_child.name == "STRENG" and hasattr(sub_child, 'value') and sub_child.value:
+                                streng_value = str(sub_child.value)
+                                normalized = normalize_field_comparison(streng_value)
+                                if normalized:
+                                    self.streng_values.append(normalized)
+            
+            # Handle HENSYNSONENAVN
+            for child in group.children:
+                if not hasattr(child, 'value'):
+                    continue
+                    
+                value = str(child.value) if child.value is not None else None
+                if not value:
+                    continue
+                    
+                normalized = normalize_field_comparison(value)
+                if not normalized:
+                    continue
+                    
+                if child.name == "HENSYNSONENAVN":
+                    self.hensynssoner.add(normalized)
+            
+            # Process children recursively
+            for child in group.children:
+                if hasattr(child, 'children'):
+                    self._process_group(child)
+    
+    # Create extractor and process document
+    extractor = SOSIExtractor()
+    return extractor.extract_all_fields(doc)
 
 # --- Legacy Method ---
 async def run_legacy_method(plankart_path: Path, bestemmelser_path: Path, sosi_path: Optional[Path]) -> Dict:
@@ -300,11 +416,8 @@ def compare_results(legacy_res: Dict, docling_res: Dict, case_id: str) -> Dict:
     }
     return comparison
 
-import matplotlib.pyplot as plt
-import numpy as np
-
 def create_comparison_plots(df_summary: pd.DataFrame, output_dir: Path):
-    """Create visualization plots for the comparison results"""
+    """Create enhanced visualization plots for the comparison results"""
     if df_summary.empty:
         logger.warning("No data available for plotting")
         return
@@ -312,76 +425,122 @@ def create_comparison_plots(df_summary: pd.DataFrame, output_dir: Path):
     # Ensure output directory exists
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    # Set default style parameters
+    # Use default style instead of seaborn
+    plt.style.use('default')
     plt.rcParams.update({
-        'figure.figsize': [10, 6],
+        'figure.figsize': [12, 8],
         'axes.grid': True,
         'grid.alpha': 0.3,
-        'font.size': 10,
-        'axes.labelsize': 12,
-        'axes.titlesize': 14,
-        'xtick.labelsize': 10,
-        'ytick.labelsize': 10,
-        'legend.fontsize': 10,
-        'figure.titlesize': 16
+        'font.size': 12,
+        'axes.labelsize': 14,
+        'axes.titlesize': 16,
+        'xtick.labelsize': 12,
+        'ytick.labelsize': 12,
+        'legend.fontsize': 12,
+        'figure.titlesize': 18
     })
     
     try:
-        # Field counts comparison
+        # 1. Field Counts Comparison (Stacked Bar Chart)
         fig, ax = plt.subplots()
         x = np.arange(len(df_summary))
         width = 0.35
         
-        # Calculate total fields for each method
-        legacy_total = df_summary['Fields Legacy (P/B/S)'].apply(lambda x: sum(map(int, x.split('/'))))
-        docling_total = df_summary['Fields Docling (P/B/S)'].apply(lambda x: sum(map(int, x.split('/'))))
+        # Calculate stacked values
+        legacy_plankart = df_summary['legacy_plankart_fields']
+        legacy_bestemm = df_summary['legacy_bestemm_fields']
+        legacy_sosi = df_summary['legacy_sosi_fields']
+        docling_plankart = df_summary['docling_plankart_fields']
+        docling_bestemm = df_summary['docling_bestemm_fields']
+        docling_sosi = df_summary['docling_sosi_fields']
         
-        ax.bar(x - width/2, legacy_total, width, label='Legacy Method', color='lightcoral')
-        ax.bar(x + width/2, docling_total, width, label='Docling Method', color='lightblue')
+        # Plot stacked bars
+        ax.bar(x - width/2, legacy_plankart, width, label='Plankart (Legacy)', color='lightcoral')
+        ax.bar(x - width/2, legacy_bestemm, width, bottom=legacy_plankart, label='Bestemmelser (Legacy)', color='salmon')
+        ax.bar(x - width/2, legacy_sosi, width, bottom=legacy_plankart+legacy_bestemm, label='SOSI (Legacy)', color='indianred')
+        
+        ax.bar(x + width/2, docling_plankart, width, label='Plankart (Docling)', color='lightblue')
+        ax.bar(x + width/2, docling_bestemm, width, bottom=docling_plankart, label='Bestemmelser (Docling)', color='skyblue')
+        ax.bar(x + width/2, docling_sosi, width, bottom=docling_plankart+docling_bestemm, label='SOSI (Docling)', color='steelblue')
         
         ax.set_xlabel('Cases')
         ax.set_ylabel('Number of Fields')
-        ax.set_title('Field Count Comparison')
+        ax.set_title('Field Count Comparison by Document Type')
         ax.set_xticks(x)
         ax.set_xticklabels(df_summary.index, rotation=45)
-        ax.legend()
+        ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
         
         plt.tight_layout()
-        plt.savefig(output_dir / 'field_counts.png', dpi=300, bbox_inches='tight')
+        plt.savefig(output_dir / 'field_counts_stacked.png', dpi=300, bbox_inches='tight')
         plt.close()
         
-        # Jaccard similarity comparison
-        fig, ax = plt.subplots()
-        jaccard_sims = df_summary[['Plankart Jaccard Sim', 'Bestemm. Jaccard Sim', 'SOSI Jaccard Sim']].apply(
-            lambda x: x.str.replace('N/A', '0').astype(float).mean(), axis=1
-        )
-        ax.bar(df_summary.index, jaccard_sims, color='lightgreen')
-        ax.set_xlabel('Cases')
-        ax.set_ylabel('Average Jaccard Similarity')
-        ax.set_title('Average Jaccard Similarity Between Methods')
-        plt.xticks(rotation=45)
-        
-        plt.tight_layout()
-        plt.savefig(output_dir / 'jaccard_similarity.png', dpi=300, bbox_inches='tight')
-        plt.close()
-        
-        # Consistency scores
+        # 2. Processing Time Comparison (Log Scale)
         fig, ax = plt.subplots()
         x = np.arange(len(df_summary))
         width = 0.35
         
-        ax.bar(x - width/2, df_summary['Consistency Legacy'].astype(int), width, label='Legacy Method', color='lightcoral')
-        ax.bar(x + width/2, df_summary['Consistency Docling'].astype(int), width, label='Docling Method', color='lightblue')
+        ax.bar(x - width/2, df_summary['legacy_time'], width, label='Legacy Method', color='lightcoral')
+        ax.bar(x + width/2, df_summary['docling_time'], width, label='Docling Method', color='lightblue')
         
         ax.set_xlabel('Cases')
-        ax.set_ylabel('Consistency Score')
-        ax.set_title('Consistency Score Comparison')
+        ax.set_ylabel('Processing Time (seconds)')
+        ax.set_title('Processing Time Comparison')
         ax.set_xticks(x)
         ax.set_xticklabels(df_summary.index, rotation=45)
+        ax.set_yscale('log')  # Use log scale for better visualization
         ax.legend()
         
         plt.tight_layout()
-        plt.savefig(output_dir / 'consistency_scores.png', dpi=300, bbox_inches='tight')
+        plt.savefig(output_dir / 'processing_times.png', dpi=300, bbox_inches='tight')
+        plt.close()
+        
+        # 3. Jaccard Similarity Heatmap
+        fig, ax = plt.subplots(figsize=(10, 6))
+        similarity_data = df_summary[['plankart_jaccard', 'bestemm_jaccard', 'sosi_jaccard']].apply(
+            lambda x: x.str.replace('N/A', '0').astype(float)
+        )
+        
+        sns.heatmap(similarity_data, annot=True, cmap='YlOrRd', vmin=0, vmax=1, 
+                   xticklabels=['Plankart', 'Bestemmelser', 'SOSI'],
+                   yticklabels=df_summary.index)
+        
+        plt.title('Jaccard Similarity Heatmap')
+        plt.tight_layout()
+        plt.savefig(output_dir / 'jaccard_heatmap.png', dpi=300, bbox_inches='tight')
+        plt.close()
+        
+        # 4. Performance Improvement Radar Chart
+        fig, ax = plt.subplots(figsize=(10, 10), subplot_kw=dict(projection='polar'))
+        
+        # Calculate performance metrics
+        speed_improvement = df_summary['legacy_time'] / df_summary['docling_time']
+        accuracy_improvement = similarity_data.mean(axis=1)
+        
+        # Prepare radar chart data
+        categories = ['Speed', 'Plankart Accuracy', 'Bestemmelser Accuracy', 'SOSI Accuracy']
+        values = np.array([
+            speed_improvement.mean(),
+            similarity_data['plankart_jaccard'].mean(),
+            similarity_data['bestemm_jaccard'].mean(),
+            similarity_data['sosi_jaccard'].mean()
+        ])
+        
+        # Normalize values for radar chart
+        values = values / values.max()
+        
+        # Plot radar chart
+        angles = np.linspace(0, 2*np.pi, len(categories), endpoint=False)
+        values = np.concatenate((values, [values[0]]))  # Complete the polygon
+        angles = np.concatenate((angles, [angles[0]]))  # Complete the polygon
+        
+        ax.plot(angles, values, 'o-', linewidth=2)
+        ax.fill(angles, values, alpha=0.25)
+        ax.set_xticks(angles[:-1])
+        ax.set_xticklabels(categories)
+        ax.set_title('Performance Improvement Overview')
+        
+        plt.tight_layout()
+        plt.savefig(output_dir / 'performance_radar.png', dpi=300, bbox_inches='tight')
         plt.close()
         
     except Exception as e:
@@ -389,62 +548,66 @@ def create_comparison_plots(df_summary: pd.DataFrame, output_dir: Path):
         logger.error("Available columns: " + ", ".join(df_summary.columns))
 
 def generate_summary_report(df_summary: pd.DataFrame, output_dir: Path) -> Path:
-    """Generate a summary report in LaTeX format."""
+    """Generate an enhanced summary report in LaTeX format."""
     report_path = output_dir / "summary_report.tex"
     
     # Convert time columns to numeric, handling any string values
-    df_summary['Time Legacy (s)'] = pd.to_numeric(df_summary['Time Legacy (s)'], errors='coerce')
-    df_summary['Time Docling (s)'] = pd.to_numeric(df_summary['Time Docling (s)'], errors='coerce')
+    df_summary['legacy_time'] = pd.to_numeric(df_summary['legacy_time'], errors='coerce')
+    df_summary['docling_time'] = pd.to_numeric(df_summary['docling_time'], errors='coerce')
     
-    # Parse the combined field count strings into separate values
-    def extract_field_counts(row, method):
-        counts = row[f'Fields {method} (P/B/S)'].split('/')
-        return [int(x) for x in counts]
+    # Calculate averages and improvements
+    avg_legacy_time = df_summary['legacy_time'].mean()
+    avg_docling_time = df_summary['docling_time'].mean()
+    speed_improvement = avg_legacy_time / avg_docling_time
     
-    # Calculate averages
-    avg_legacy_time = df_summary['Time Legacy (s)'].mean()
-    avg_docling_time = df_summary['Time Docling (s)'].mean()
-    
-    # Calculate field count averages by parsing the combined strings
-    legacy_field_counts = [extract_field_counts(row, 'Legacy') for _, row in df_summary.iterrows()]
-    docling_field_counts = [extract_field_counts(row, 'Docling') for _, row in df_summary.iterrows()]
-    
-    avg_legacy_fields = np.mean([sum(counts) for counts in legacy_field_counts])
-    avg_docling_fields = np.mean([sum(counts) for counts in docling_field_counts])
-    
-    # Calculate similarity averages, handling 'N/A' values
-    avg_plankart_sim = pd.to_numeric(df_summary['Plankart Jaccard Sim'], errors='coerce').mean()
-    avg_bestemm_sim = pd.to_numeric(df_summary['Bestemm. Jaccard Sim'], errors='coerce').mean()
-    avg_sosi_sim = pd.to_numeric(df_summary['SOSI Jaccard Sim'].replace('N/A', np.nan), errors='coerce').mean()
+    # Calculate field extraction accuracy
+    accuracy_metrics = {
+        'plankart': df_summary['plankart_jaccard'].str.replace('N/A', '0').astype(float).mean(),
+        'bestemmelser': df_summary['bestemm_jaccard'].str.replace('N/A', '0').astype(float).mean(),
+        'sosi': df_summary['sosi_jaccard'].str.replace('N/A', '0').astype(float).mean()
+    }
     
     with open(report_path, 'w') as f:
         f.write("\\section{Summary Report}\n\n")
         
+        # Executive Summary
+        f.write("\\subsection{Executive Summary}\n")
+        f.write("\\begin{itemize}\n")
+        f.write(f"\\item Average Processing Time Improvement: {speed_improvement:.2f}x faster\n")
+        f.write(f"\\item Average Field Extraction Accuracy: {sum(accuracy_metrics.values())/3:.2%}\n")
+        f.write("\\end{itemize}\n\n")
+        
         # Performance Metrics
         f.write("\\subsection{Performance Metrics}\n")
-        f.write("\\begin{itemize}\n")
-        f.write(f"\\item Average Legacy Processing Time: {avg_legacy_time:.2f} seconds\n")
-        f.write(f"\\item Average Docling Processing Time: {avg_docling_time:.2f} seconds\n")
-        f.write(f"\\item Speed Improvement: {(avg_legacy_time/avg_docling_time):.2f}x\n")
-        f.write("\\end{itemize}\n\n")
+        f.write("\\begin{table}[h]\n")
+        f.write("\\centering\n")
+        f.write("\\begin{tabular}{l|cc}\n")
+        f.write("\\hline\n")
+        f.write("Metric & Legacy & Docling \\\\\n")
+        f.write("\\hline\n")
+        f.write(f"Average Processing Time (s) & {avg_legacy_time:.2f} & {avg_docling_time:.2f} \\\\\n")
+        f.write(f"Speed Improvement & {speed_improvement:.2f}x & - \\\\\n")
+        f.write("\\hline\n")
+        f.write("\\end{tabular}\n")
+        f.write("\\caption{Performance Comparison}\n")
+        f.write("\\end{table}\n\n")
         
-        # Field Extraction
-        f.write("\\subsection{Field Extraction}\n")
-        f.write("\\begin{itemize}\n")
-        f.write(f"\\item Average Legacy Fields: {avg_legacy_fields:.2f}\n")
-        f.write(f"\\item Average Docling Fields: {avg_docling_fields:.2f}\n")
-        f.write("\\end{itemize}\n\n")
+        # Accuracy Metrics
+        f.write("\\subsection{Accuracy Metrics}\n")
+        f.write("\\begin{table}[h]\n")
+        f.write("\\centering\n")
+        f.write("\\begin{tabular}{l|c}\n")
+        f.write("\\hline\n")
+        f.write("Document Type & Jaccard Similarity \\\\\n")
+        f.write("\\hline\n")
+        for doc_type, accuracy in accuracy_metrics.items():
+            f.write(f"{doc_type.title()} & {accuracy:.2%} \\\\\n")
+        f.write("\\hline\n")
+        f.write("\\end{tabular}\n")
+        f.write("\\caption{Field Extraction Accuracy}\n")
+        f.write("\\end{table}\n\n")
         
-        # Similarity Metrics
-        f.write("\\subsection{Similarity Metrics}\n")
-        f.write("\\begin{itemize}\n")
-        f.write(f"\\item Average Plankart Similarity: {avg_plankart_sim:.2%}\n")
-        f.write(f"\\item Average Bestemmelser Similarity: {avg_bestemm_sim:.2%}\n")
-        if not np.isnan(avg_sosi_sim):
-            f.write(f"\\item Average SOSI Similarity: {avg_sosi_sim:.2%}\n")
-        f.write("\\end{itemize}\n\n")
-        
-        # Detailed Results Table
+        # Detailed Results
         f.write("\\subsection{Detailed Results}\n")
         f.write("\\begin{table}[h]\n")
         f.write("\\centering\n")
@@ -454,40 +617,22 @@ def generate_summary_report(df_summary: pd.DataFrame, output_dir: Path) -> Path:
         f.write("\\hline\n")
         
         for _, row in df_summary.iterrows():
-            legacy_fields = sum(extract_field_counts(row, 'Legacy'))
-            docling_fields = sum(extract_field_counts(row, 'Docling'))
-            
-            # Convert similarity values to float, handling 'N/A'
-            plankart_sim = pd.to_numeric(row['Plankart Jaccard Sim'], errors='coerce')
-            bestemm_sim = pd.to_numeric(row['Bestemm. Jaccard Sim'], errors='coerce')
-            sosi_sim = row['SOSI Jaccard Sim']  # Keep as string if 'N/A'
-            
-            f.write(f"{row['Case']} & {row['Time Legacy (s)']} & {row['Time Docling (s)']} & ")
-            f.write(f"{legacy_fields} & {docling_fields} & ")
-            
-            # Format similarities, handling 'N/A' for SOSI
-            if pd.notna(plankart_sim):
-                f.write(f"{plankart_sim:.2%}")
-            else:
-                f.write("N/A")
-            f.write(" & ")
-            
-            if pd.notna(bestemm_sim):
-                f.write(f"{bestemm_sim:.2%}")
-            else:
-                f.write("N/A")
-            f.write(" & ")
-            
-            if sosi_sim != 'N/A' and pd.notna(pd.to_numeric(sosi_sim, errors='coerce')):
-                f.write(f"{float(sosi_sim):.2%}")
-            else:
-                f.write("N/A")
-            f.write(" \\\\\n")
+            f.write(f"{row.name} & {row['legacy_time']:.2f} & {row['docling_time']:.2f} & ")
+            f.write(f"{row['legacy_plankart_fields'] + row['legacy_bestemm_fields'] + row['legacy_sosi_fields']} & ")
+            f.write(f"{row['docling_plankart_fields'] + row['docling_bestemm_fields'] + row['docling_sosi_fields']} & ")
+            f.write(f"{row['plankart_jaccard']} & {row['bestemm_jaccard']} & {row['sosi_jaccard']} \\\\\n")
         
         f.write("\\hline\n")
         f.write("\\end{tabular}\n")
         f.write("\\caption{Detailed Results by Case}\n")
-        f.write("\\end{table}\n")
+        f.write("\\end{table}\n\n")
+        
+        # Conclusions
+        f.write("\\subsection{Conclusions}\n")
+        f.write("\\begin{itemize}\n")
+        f.write(f"\\item The Docling method is {speed_improvement:.2f}x faster than the legacy method\n")
+        f.write(f"\\item Field extraction accuracy is highest for SOSI ({accuracy_metrics['sosi']:.2%}) and lowest for Bestemmelser ({accuracy_metrics['bestemmelser']:.2%})\n")
+        f.write("\\end{itemize}\n")
     
     return report_path
 
@@ -1129,17 +1274,185 @@ def generate_statistical_report(statistical_analysis: Dict, output_dir: Path):
         f.write(f"T-test results: t = {t_test.statistic:.3f}, p = {t_test.pvalue:.3f}\n\n")
         f.write(f"Effect size (Cohen's d): {statistical_analysis['field_counts']['effect_size']:.3f}\n\n")
 
+async def process_plankart_legacy(plankart_path: Path) -> Set[str]:
+    """Process plankart using legacy method."""
+    if not FieldExtractor or not model_name:
+        logger.warning("Legacy FieldExtractor not available")
+        return set()
+    
+    try:
+        extractor_llm = FieldExtractor(model_name)
+        with open(plankart_path, 'rb') as f:
+            content = f.read()
+        extracted_set = await extractor_llm.extract_fields(content)
+        return {normalize_field_comparison(f) for f in extracted_set if normalize_field_comparison(f)}
+    except Exception as e:
+        logger.error(f"Legacy Plankart processing failed: {e}")
+        return set()
+
+async def process_bestemmelser_legacy(bestemmelser_path: Path) -> Set[str]:
+    """Process bestemmelser using legacy method."""
+    try:
+        async with httpx.AsyncClient(timeout=120.0) as client:
+            with open(bestemmelser_path, 'rb') as f:
+                files = {'file': (bestemmelser_path.name, f, 'application/pdf')}
+                response = await client.post(NER_SERVICE_URL, files=files)
+                response.raise_for_status()
+                ner_fields = response.json().get('fields', [])
+                return {normalize_field_comparison(f) for f in ner_fields if normalize_field_comparison(f)}
+    except Exception as e:
+        logger.error(f"Legacy Bestemmelser processing failed: {e}")
+        return set()
+
+def process_sosi_legacy(sosi_path: Optional[Path]) -> Set[str]:
+    """Process SOSI using legacy method."""
+    if not LegacySosiParser or not sosi_path or not sosi_path.exists():
+        return set()
+    
+    try:
+        sosi_codes_map = load_sosi_purpose_codes(SOSI_CODES_CSV)
+        legacy_sosi_parser = LegacySosiParser(purpose_map=sosi_codes_map)
+        parsed_sosi = legacy_sosi_parser.parse_file(sosi_path)
+        sosi_zones = parsed_sosi.get("fields", {}).get("zone_identifiers", [])
+        sosi_hensyn = parsed_sosi.get("fields", {}).get("hensynssoner", [])
+        return {normalize_field_comparison(f) for f in sosi_zones if normalize_field_comparison(f)} | \
+               {normalize_field_comparison(h) for h in sosi_hensyn if normalize_field_comparison(h)}
+    except Exception as e:
+        logger.error(f"Legacy SOSI processing failed: {e}")
+        return set()
+
+def process_plankart_docling(plankart_path: Path, save_visualization: bool = False) -> Set[str]:
+    """Process plankart using Docling method."""
+    try:
+        doc = parse_plankart(plankart_path, plankart_path.stem)
+        if doc:
+            if save_visualization:
+                doc.save_as_json(DOCLING_OUTPUT_DIR / f"{doc.name}_structure.json", image_mode='placeholder')
+            return extract_zones_from_docling_plankart(doc)
+        return set()
+    except Exception as e:
+        logger.error(f"Docling Plankart processing failed: {e}")
+        return set()
+
+def process_bestemmelser_docling(bestemmelser_path: Path, save_visualization: bool = False) -> Set[str]:
+    """Process bestemmelser using Docling method."""
+    try:
+        doc = parse_planbestemmelser(bestemmelser_path, bestemmelser_path.stem)
+        if doc:
+            if save_visualization:
+                doc.save_as_json(DOCLING_OUTPUT_DIR / f"{doc.name}_structure.json")
+            return extract_zones_from_docling_bestemmelser(doc)
+        return set()
+    except Exception as e:
+        logger.error(f"Docling Bestemmelser processing failed: {e}")
+        return set()
+
+def process_sosi_docling(sosi_path: Optional[Path], sosi_codes_map: Dict[str, str], save_visualization: bool = False) -> Set[str]:
+    """Process SOSI using Docling method."""
+    if not sosi_path or not sosi_path.exists():
+        return set()
+    
+    try:
+        doc = parse_sosi_to_docling(sosi_path, sosi_codes_map, sosi_path.stem)
+        if doc:
+            if save_visualization:
+                doc.save_as_json(DOCLING_OUTPUT_DIR / f"{doc.name}_structure.json")
+            return extract_zones_from_docling_sosi(doc)
+        return set()
+    except Exception as e:
+        logger.error(f"Docling SOSI processing failed: {e}")
+        return set()
+
+def calculate_jaccard_similarity(set1: Set[str], set2: Set[str]) -> str:
+    """Calculate Jaccard similarity between two sets."""
+    if not set1 and not set2:
+        return "N/A"
+    intersection = len(set1 & set2)
+    union = len(set1 | set2)
+    return f"{intersection/union:.2f}" if union > 0 else "0.00"
+
+def save_comparison_results(comparison: Dict, output_path: Path):
+    """Save comparison results to JSON file."""
+    with open(output_path, 'w') as f:
+        json.dump(comparison, f, indent=2)
+
+def save_comparison_summary(results: List[Dict], output_path: Path):
+    """Save comparison summary to JSON file."""
+    with open(output_path, 'w') as f:
+        json.dump(results, f, indent=2)
+
+def save_comparison_csv(results: List[Dict], output_path: Path):
+    """Save comparison results to CSV file."""
+    df = pd.DataFrame(results)
+    df.to_csv(output_path, index=False)
+
+def save_docling_consistency_table(docling_results, cases, output_path):
+    """Save a CSV with intersections and differences of docling field sets for each case."""
+    rows = []
+    for idx, (case_name, case_details) in enumerate(cases.items()):
+        P = docling_results[idx]["plankart"]
+        B = docling_results[idx]["bestemmelser"]
+        S = docling_results[idx]["sosi"]
+        matching_all = len(P & B & S)
+        only_plankart = len(P - B - S)
+        only_bestemmelser = len(B - P - S)
+        only_sosi = len(S - P - B)
+        rows.append({
+            "case": case_name,
+            "matching_all": matching_all,
+            "only_plankart": only_plankart,
+            "only_bestemmelser": only_bestemmelser,
+            "only_sosi": only_sosi
+        })
+    with open(output_path, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=rows[0].keys())
+        writer.writeheader()
+        writer.writerows(rows)
+
+def save_docling_field_sets_json(docling_results, cases, output_dir):
+    """Save, for each case, the actual sets and set operations for docling fields as JSON."""
+    import json
+    for idx, (case_name, case_details) in enumerate(cases.items()):
+        P = docling_results[idx]["plankart"]
+        B = docling_results[idx]["bestemmelser"]
+        S = docling_results[idx]["sosi"]
+        matching_all = P & B & S
+        only_plankart = P - B - S
+        only_bestemmelser = B - P - S
+        only_sosi = S - P - B
+        data = {
+            "case": case_name,
+            "plankart_fields": sorted(P),
+            "bestemmelser_fields": sorted(B),
+            "sosi_fields": sorted(S),
+            "matching_all": sorted(matching_all),
+            "only_plankart": sorted(only_plankart),
+            "only_bestemmelser": sorted(only_bestemmelser),
+            "only_sosi": sorted(only_sosi),
+            "counts": {
+                "matching_all": len(matching_all),
+                "only_plankart": len(only_plankart),
+                "only_bestemmelser": len(only_bestemmelser),
+                "only_sosi": len(only_sosi)
+            }
+        }
+        with open(output_dir / f"docling_field_sets_{case_name}.json", "w") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+
 # --- Main Execution ---
 async def main():
     """Main function to run the comparison."""
-    # Create output directories
-    COMPARISON_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    
     # Load SOSI codes
-    load_sosi_codes()
+    sosi_codes = load_sosi_purpose_codes(SOSI_CODES_CSV)
+    if not sosi_codes:
+        logger.error("Failed to load SOSI purpose codes. Cannot proceed.")
+        return
     
     # Process each case
     case_results = []
+    legacy_results = []
+    docling_results = []
+    
     for case_name, case_details in CASES.items():
         logger.info(f"\n===== Processing Case: {case_name} =====")
         
@@ -1151,13 +1464,29 @@ async def main():
         legacy_sosi = process_sosi_legacy(case_details['sosi'])
         legacy_time = time.time() - legacy_start
         
+        legacy_result = {
+            "plankart": legacy_plankart,
+            "bestemmelser": legacy_bestemm,
+            "sosi": legacy_sosi,
+            "time": legacy_time
+        }
+        legacy_results.append(legacy_result)
+        
         # Run Docling method
         logger.info("Running Docling Method...")
         docling_start = time.time()
         docling_plankart = process_plankart_docling(case_details['plankart'])
         docling_bestemm = process_bestemmelser_docling(case_details['bestemmelser'])
-        docling_sosi = process_sosi_docling(case_details['sosi'])
+        docling_sosi = process_sosi_docling(case_details['sosi'], sosi_codes)
         docling_time = time.time() - docling_start
+        
+        docling_result = {
+            "plankart": docling_plankart,
+            "bestemmelser": docling_bestemm,
+            "sosi": docling_sosi,
+            "time": docling_time
+        }
+        docling_results.append(docling_result)
         
         # Compare results
         logger.info(f"Comparing results for case: {case_name}")
@@ -1178,21 +1507,82 @@ async def main():
         case_results.append(comparison)
         
         # Save individual case results
-        save_comparison_results(comparison, COMPARISON_OUTPUT_DIR / f"{case_name}_comparison.json")
+        save_comparison_results(comparison, OUTPUT_DIRS["comparison"] / f"{case_name}_comparison.json")
         
         # Generate visualizations for the case
         process_plankart_docling(case_details['plankart'], save_visualization=True)
         process_bestemmelser_docling(case_details['bestemmelser'], save_visualization=True)
     
-    # Analyze results
+    # Create DataFrame for analysis
+    df_summary = pd.DataFrame(case_results)
+    df_summary.set_index('case', inplace=True)
+    
+    # Perform all analyses
+    logger.info("Performing comprehensive analysis...")
+    
+    # 1. Basic comparison plots
+    create_comparison_plots(df_summary, OUTPUT_DIRS["plots"])
+    
+    # 2. Error analysis
     error_analysis = analyze_results(case_results)
+    generate_error_analysis_plots(error_analysis, OUTPUT_DIRS["error_analysis"])
+    
+    # 3. Statistical analysis
+    statistical_analysis = perform_statistical_analysis(legacy_results, docling_results)
+    generate_statistical_report(statistical_analysis, OUTPUT_DIRS["statistical"])
+    
+    # 4. Field analysis
+    for idx, (case_name, case_details) in enumerate(CASES.items()):
+        field_analysis = analyze_field_extraction_errors(
+            legacy_results[idx], 
+            docling_results[idx], 
+            case_name
+        )
+        confusion_matrices = generate_confusion_matrices(
+            legacy_results[idx], 
+            docling_results[idx], 
+            case_name
+        )
+        field_comparison = create_field_comparison_table(
+            legacy_results[idx], 
+            docling_results[idx], 
+            case_name
+        )
+        field_consistency = analyze_field_consistency(
+            legacy_results[idx], 
+            docling_results[idx], 
+            case_name
+        )
+        # Save field analysis results
+        save_comparison_results(field_analysis, OUTPUT_DIRS["field_analysis"] / f"{case_name}_field_analysis.json")
+        save_comparison_results(confusion_matrices, OUTPUT_DIRS["field_analysis"] / f"{case_name}_confusion_matrices.json")
+        field_comparison.to_csv(OUTPUT_DIRS["field_analysis"] / f"{case_name}_field_comparison.csv")
+        save_comparison_results(field_consistency, OUTPUT_DIRS["field_analysis"] / f"{case_name}_field_consistency.json")
+    
+    # 5. Semantic analysis
+    for idx, (case_name, case_details) in enumerate(CASES.items()):
+        doc = parse_plankart(case_details['plankart'], case_details['plankart'].stem)
+        semantic_relationships = analyze_semantic_relationships(
+            legacy_results[idx], 
+            docling_results[idx], 
+            doc
+        )
+        generate_semantic_analysis_report(semantic_relationships, OUTPUT_DIRS["semantic"])
+    
+    # 6. Generate summary report
+    generate_summary_report(df_summary, OUTPUT_DIRS["summary"])
+    
+    # 7. Save docling consistency table for LaTeX/Excel
+    save_docling_consistency_table(docling_results, CASES, OUTPUT_DIRS["summary"] / "docling_consistency_table.csv")
+    
+    # 8. Save docling field sets and set operations as JSON for each case
+    save_docling_field_sets_json(docling_results, CASES, OUTPUT_DIRS["summary"])
     
     # Save summary results
-    save_comparison_summary(case_results, COMPARISON_OUTPUT_DIR / "comparison_summary.json")
-    save_comparison_csv(case_results, COMPARISON_OUTPUT_DIR / "comparison_summary.csv")
+    save_comparison_summary(case_results, OUTPUT_DIRS["comparison"] / "comparison_summary.json")
+    save_comparison_csv(case_results, OUTPUT_DIRS["comparison"] / "comparison_summary.csv")
     
-    # Generate error analysis plots
-    generate_error_analysis_plots(error_analysis, COMPARISON_OUTPUT_DIR / "error_analysis")
+    logger.info("Analysis complete. Results saved in organized directory structure.")
 
 
 if __name__ == "__main__":

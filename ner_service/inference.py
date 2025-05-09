@@ -11,6 +11,8 @@ import pdfplumber
 import re
 from typing import List
 import os
+import gc
+import time
 
 # Set up logger for inference module
 logger = setup_logger("inference", log_level="DEBUG")
@@ -26,7 +28,26 @@ class ModelManager:
         self.tokenizer = None
         self.model = None
         self.config = None
+        self._last_cleanup = time.time()
+        self._requests_since_cleanup = 0
         
+    def cleanup(self):
+        """Perform memory cleanup"""
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+        self._last_cleanup = time.time()
+        self._requests_since_cleanup = 0
+        
+    def maybe_cleanup(self):
+        """Check if cleanup is needed based on usage"""
+        self._requests_since_cleanup += 1
+        
+        # Cleanup every 50 requests or if 30 minutes have passed
+        if (self._requests_since_cleanup >= 50 or 
+            time.time() - self._last_cleanup > 1800):  # 30 minutes
+            self.cleanup()
+    
     def initialize(self):
         """Initialize all required models"""
         try:
@@ -99,10 +120,12 @@ class ModelManager:
             self.model.to(device)
             self.model.eval()
             
-            logger.info("Model initialization completed successfully")
+            # Add cleanup after initialization
+            self.cleanup()
             return True
         except Exception as e:
             logger.error(f"Failed to initialize models: {str(e)}")
+            self.cleanup()
             # Reset variables on failure
             self.nlp = None
             self.tokenizer = None
@@ -164,63 +187,87 @@ def process_text_with_spacy(text, nlp):
 def get_predictions(sent_tokens, model, tokenizer):
     logger.info("Starting model predictions")
     final_preds = []
+    batch_size = 32  # Process in smaller batches to manage memory
 
-    for sent in tqdm(sent_tokens):
-        if not sent:
-            continue
+    try:
+        for i in range(0, len(sent_tokens), batch_size):
+            batch = sent_tokens[i:i + batch_size]
+            batch_preds = []
 
-        encoding = tokenizer(
-            sent,
-            is_split_into_words=True,
-            return_offsets_mapping=True,
-            truncation=True,
-            return_tensors='pt',
-            padding='max_length',
-            max_length=model_manager.config['data']['max_seq_len']
-        )
+            for sent in tqdm(batch):
+                if not sent:
+                    continue
 
-        inputs = encoding['input_ids'].to(device)
-        masks = encoding['attention_mask'].to(device)
+                encoding = tokenizer(
+                    sent,
+                    is_split_into_words=True,
+                    return_offsets_mapping=True,
+                    truncation=True,
+                    return_tensors='pt',
+                    padding='max_length',
+                    max_length=model_manager.config['data']['max_seq_len']
+                )
 
-        with torch.no_grad():
-            outputs = model(inputs, masks, labels=None)
-        
-        logits = outputs.logits
-        preds = torch.argmax(logits, dim=-1).squeeze(0).cpu().numpy()
-        tokens = tokenizer.convert_ids_to_tokens(inputs.squeeze(0))
-        pred_labels = [id_to_label.get(pred, 'O') for pred in preds] 
+                inputs = encoding['input_ids'].to(device)
+                masks = encoding['attention_mask'].to(device)
 
-        aligned_preds = []
-        aligned_words = []
-        word_idx = -1
+                with torch.no_grad():
+                    outputs = model(inputs, masks, labels=None)
+                
+                logits = outputs.logits
+                preds = torch.argmax(logits, dim=-1).squeeze(0).cpu().numpy()
+                tokens = tokenizer.convert_ids_to_tokens(inputs.squeeze(0))
+                pred_labels = [id_to_label.get(pred, 'O') for pred in preds]
 
-        offsets = encoding['offset_mapping'].squeeze(0)
+                aligned_preds = []
+                aligned_words = []
+                word_idx = -1
 
-        # Align predictions with words
-        for j, (token, offset) in enumerate(zip(tokens, offsets)):
-            if offset[0] == 0 and offset[1] != 0: # New word
-                word_idx += 1
-                if word_idx < len(sent):
-                    aligned_words.append(sent[word_idx])
-                    aligned_preds.append(pred_labels[j])
+                offsets = encoding['offset_mapping'].squeeze(0)
 
-        # Only keep 'B-FELT' and 'I-FELT'
-        felt_tokens = [word for word, label in zip(aligned_words, aligned_preds) if label in ['B-FELT', 'I-FELT']]
-        
-        # Combine 'B-FELT' and 'I-FELT' tokens
-        combined_tokens = []
-        for i, token in enumerate(felt_tokens):
-            if i == 0 or felt_tokens[i-1] == 'B-FELT':
-                combined_tokens.append(token)
-            else:
-                combined_tokens[-1] += ' ' + token
-        
-        final_preds.extend(combined_tokens)
-        logger.debug(f"Processed sentence: {sent}")
-        logger.debug(f"Found tokens: {combined_tokens}")
+                # Align predictions with words
+                for j, (token, offset) in enumerate(zip(tokens, offsets)):
+                    if offset[0] == 0 and offset[1] != 0: # New word
+                        word_idx += 1
+                        if word_idx < len(sent):
+                            aligned_words.append(sent[word_idx])
+                            aligned_preds.append(pred_labels[j])
 
-    logger.info(f"Found {len(final_preds)} unique predictions")
-    return list(dict.fromkeys(final_preds)) # Only return unique tokens
+                # Only keep 'B-FELT' and 'I-FELT'
+                felt_tokens = [word for word, label in zip(aligned_words, aligned_preds) if label in ['B-FELT', 'I-FELT']]
+                
+                # Combine 'B-FELT' and 'I-FELT' tokens
+                combined_tokens = []
+                for i, token in enumerate(felt_tokens):
+                    if i == 0 or felt_tokens[i-1] == 'B-FELT':
+                        combined_tokens.append(token)
+                    else:
+                        combined_tokens[-1] += ' ' + token
+                
+                batch_preds.extend(combined_tokens)
+                
+                # Clear GPU memory after each prediction
+                if torch.cuda.is_available():
+                    del outputs, logits, inputs, masks
+                    torch.cuda.empty_cache()
+
+            final_preds.extend(batch_preds)
+            
+            # Periodic cleanup
+            if i % (batch_size * 5) == 0:  # Every 5 batches
+                gc.collect()
+                if torch.cuda.is_available():
+                    torch.cuda.empty_cache()
+
+    except Exception as e:
+        logger.error(f"Error during prediction: {str(e)}")
+        # Ensure cleanup on error
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+        raise
+
+    return final_preds
 
 def get_sent_tokens(text: str, nlp) -> List[str]:
     """Get tokens for each sentence using spaCy"""

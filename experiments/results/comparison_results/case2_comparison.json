@@ -1,0 +1,14 @@
+{
+  "case": "case2",
+  "legacy_plankart_fields": 15,
+  "legacy_bestemm_fields": 7,
+  "legacy_sosi_fields": 62,
+  "docling_plankart_fields": 24,
+  "docling_bestemm_fields": 6,
+  "docling_sosi_fields": 62,
+  "legacy_time": 31.245506048202515,
+  "docling_time": 3.187739849090576,
+  "plankart_jaccard": "0.34",
+  "bestemm_jaccard": "0.44",
+  "sosi_jaccard": "1.00"
+}

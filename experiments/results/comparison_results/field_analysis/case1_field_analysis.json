@@ -1,0 +1,159 @@
+{
+  "case_id": "case1",
+  "false_positives": {
+    "plankart": [
+      "AOR",
+      "BAD",
+      "DATOSIGN",
+      "FV",
+      "PLANENERUTARBEIDETAV",
+      "PLANKONSULENT",
+      "SAKSBEHANDLINGETTERPLANOGBYGNINGSLOVEN",
+      "STL",
+      "VBAD"
+    ],
+    "bestemmelser": [
+      "#1",
+      "BAD",
+      "FV",
+      "VBAD"
+    ],
+    "sosi": []
+  },
+  "false_negatives": {
+    "plankart": [
+      "#1",
+      "R9",
+      "V1",
+      "V2"
+    ],
+    "bestemmelser": [
+      "BAT1",
+      "BAT2",
+      "GN1",
+      "GN4"
+    ],
+    "sosi": [
+      "#1"
+    ]
+  },
+  "field_type_analysis": {
+    "plankart": {
+      "GN": {
+        "legacy": 4,
+        "docling": 4
+      },
+      "FRI": {
+        "legacy": 3,
+        "docling": 3
+      },
+      "H": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "TV": {
+        "legacy": 4,
+        "docling": 4
+      },
+      "AVG": {
+        "legacy": 4,
+        "docling": 4
+      },
+      "BAT": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "V": {
+        "legacy": 0,
+        "docling": 2
+      },
+      "R": {
+        "legacy": 0,
+        "docling": 1
+      }
+    },
+    "bestemmelser": {
+      "GN": {
+        "legacy": 0,
+        "docling": 2
+      },
+      "BAT": {
+        "legacy": 1,
+        "docling": 3
+      },
+      "FRI": {
+        "legacy": 4,
+        "docling": 4
+      },
+      "TV": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "H": {
+        "legacy": 4,
+        "docling": 4
+      },
+      "V": {
+        "legacy": 1,
+        "docling": 1
+      },
+      "AVG": {
+        "legacy": 1,
+        "docling": 1
+      }
+    },
+    "sosi": {
+      "GN": {
+        "legacy": 4,
+        "docling": 4
+      },
+      "SKV": {
+        "legacy": 1,
+        "docling": 1
+      },
+      "FRI": {
+        "legacy": 3,
+        "docling": 3
+      },
+      "H": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "TV": {
+        "legacy": 4,
+        "docling": 4
+      },
+      "AVG": {
+        "legacy": 4,
+        "docling": 4
+      },
+      "BAT": {
+        "legacy": 2,
+        "docling": 2
+      },
+      "V": {
+        "legacy": 2,
+        "docling": 2
+      }
+    }
+  },
+  "error_patterns": [
+    {
+      "type": "similar_field",
+      "legacy_field": "BAD",
+      "similar_docling_fields": [
+        "BAT1",
+        "BAT2"
+      ]
+    },
+    {
+      "type": "similar_field",
+      "legacy_field": "BAD",
+      "similar_docling_fields": [
+        "BAT1",
+        "BAT2",
+        "BAT12"
+      ]
+    }
+  ]
+}
