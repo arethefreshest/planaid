@@ -16,12 +16,16 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Development stage
 FROM base AS development
-RUN pip install --no-cache-dir pytest pytest-asyncio
+# Add watchgod reloader and testing tools
+RUN pip install --no-cache-dir pytest pytest-asyncio watchgod
+
 # Copy the entire python_service directory
 COPY python_service/ .
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONPATH=/app
+
+# Use watchgod reloader
 CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
 # Production stage

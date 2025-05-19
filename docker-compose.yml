@@ -8,8 +8,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - /app/node_modules  # Prevents overriding node_modules inside container
-      - ./frontend:/app:delegated  # Syncs frontend files
+      - /app/node_modules
+      - ./frontend:/app:delegated
     environment:
       - REACT_APP_API_URL=http://localhost:5251
       - NODE_ENV=development
@@ -59,11 +59,22 @@ services:
       - ./python_service/requirements.txt:/app/requirements.txt
       - ./.env:/app/.env
       - ./metrics/python_service:/app/metrics
+    env_file:
+      - .env
     environment:
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONPATH=/app
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - OPENAI_API_TYPE=openai
+      - NER_SERVICE_URL=http://ner_service:8001
+      - FRONTEND_URL=http://frontend:3000
+      - BACKEND_URL=http://backend:5251
+      - PYTHON_SERVICE_URL=http://python_service:8000
+      - DOCKER_FRONTEND_URL=http://frontend:3000
+      - DOCKER_BACKEND_URL=http://backend:5251
+      - DOCKER_PYTHON_SERVICE_URL=http://python_service:8000
+      - DOCKER_NER_SERVICE_URL=http://ner_service:8001
     logging:
       driver: "json-file"
       options:
