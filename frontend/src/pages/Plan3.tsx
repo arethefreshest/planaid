@@ -14,7 +14,7 @@ const Plan3 = () => (
 const styles = {
   button: {
     position: 'fixed' as const,
-    bottom: '20px',
+    bottom: '80px',
     right: '20px',
     backgroundColor: '#24BD76',
     color: '#fff',
