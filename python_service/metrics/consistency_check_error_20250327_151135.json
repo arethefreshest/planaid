@@ -1,0 +1,48 @@
+{
+  "run_id": "20250327_151135",
+  "operation": "consistency_check",
+  "timestamp": "2025-03-27T15:11:35.693398",
+  "timings": {
+    "plankart_extraction": 6.324639081954956,
+    "bestemmelser_extraction": 56.8600959777832
+  },
+  "field_counts": {
+    "plankart": 16,
+    "bestemmelser": 0
+  },
+  "resource_usage": {},
+  "document_info": {
+    "documents": {
+      "plankart": {
+        "filename": "PLANKART.pdf",
+        "size": 531031
+      },
+      "bestemmelser": {
+        "filename": "Bestemmelser.pdf",
+        "size": 182997
+      }
+    }
+  },
+  "fields": {
+    "plankart": [
+      "o_SPA",
+      "o_GF2",
+      "H320",
+      "H220",
+      "GT",
+      "o_GF1",
+      "BR",
+      "o_SF2",
+      "BIA",
+      "#02 SN\u00d8",
+      "o_GTD1",
+      "#01 SN\u00d8",
+      "o_GF3",
+      "o_GTD2",
+      "o_SF1",
+      "H210"
+    ],
+    "bestemmelser": []
+  },
+  "error": "500: 500: Error processing bestemmelser"
+}

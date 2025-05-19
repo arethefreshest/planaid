@@ -1,0 +1,25 @@
+{
+  "run_id": "20250501_163039",
+  "operation": "consistency_check",
+  "timestamp": "2025-05-01T16:30:39.805860",
+  "timings": {},
+  "field_counts": {},
+  "resource_usage": {},
+  "document_info": {
+    "documents": {
+      "plankart": {
+        "filename": "Plankart_20240515.pdf",
+        "size": 1287118
+      },
+      "bestemmelser": {
+        "filename": "bestemmelser.pdf",
+        "size": 338730
+      },
+      "sosi": {
+        "filename": "Kjets\u00e5_massetak.sos",
+        "size": 156641
+      }
+    }
+  },
+  "error": "500: 502: All connection attempts failed"
+}

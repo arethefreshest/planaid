@@ -1,0 +1,30 @@
+{
+  "run_id": "20250409_230448",
+  "operation": "consistency_check",
+  "timestamp": "2025-04-09T23:04:48.910781",
+  "timings": {
+    "consistency_check": 28.99496603012085,
+    "total_processing": 28.995333909988403
+  },
+  "field_counts": {},
+  "resource_usage": {
+    "memory_mb": 5.3125,
+    "cpu_percent": 0.0
+  },
+  "document_info": {
+    "documents": {
+      "plankart": {
+        "filename": "Plankart.pdf",
+        "size": 681479
+      },
+      "bestemmelser": {
+        "filename": "Planbestemmelser.pdf",
+        "size": 158332
+      },
+      "sosi": {
+        "filename": "Evjetun.sos",
+        "size": 124684
+      }
+    }
+  }
+}

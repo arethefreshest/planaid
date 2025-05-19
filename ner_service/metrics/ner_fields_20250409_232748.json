@@ -1,0 +1,25 @@
+{
+  "fields": [
+    "BAT1-2",
+    "rv 9 BAT1 BAT2",
+    "BAT1 BAT2",
+    "o_V1",
+    "o_AVG1-4",
+    "f_TV1-4",
+    "f_TV2",
+    "FRI1-3",
+    "FRI1",
+    "FRI3",
+    "FRI2",
+    "f_BAD",
+    "GN1-GN4",
+    "GN1 GN4",
+    "o_FV",
+    "f_VBAD",
+    "H220",
+    "H320",
+    "H740",
+    "H140",
+    "# 1"
+  ]
+}

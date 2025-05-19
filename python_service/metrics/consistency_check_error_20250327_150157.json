@@ -1,0 +1,58 @@
+{
+  "run_id": "20250327_150157",
+  "operation": "consistency_check",
+  "timestamp": "2025-03-27T15:01:57.850185",
+  "timings": {
+    "plankart_extraction": 76.31479620933533,
+    "bestemmelser_extraction": 2.9454638957977295
+  },
+  "field_counts": {
+    "plankart": 26,
+    "bestemmelser": 0
+  },
+  "resource_usage": {},
+  "document_info": {
+    "documents": {
+      "plankart": {
+        "filename": "PLANKART.pdf",
+        "size": 531031
+      },
+      "bestemmelser": {
+        "filename": "Bestemmelser.pdf",
+        "size": 182997
+      }
+    }
+  },
+  "fields": {
+    "plankart": [
+      "o_GTD1",
+      "BR",
+      "H320",
+      "#02 SN\u00d8",
+      "o_GF3",
+      "S\u00c5F",
+      "BKS",
+      "PLANKONSULENT",
+      "STL",
+      "H210",
+      "H220",
+      "DATO SIGN",
+      "o_GF1",
+      "o_SV1",
+      "o_SV3",
+      "PLANEN ER UTARBEIDET AV:",
+      "o_GTD2",
+      "NN2000",
+      "o_SF1",
+      "o_GF2",
+      "o_SPA",
+      "SAKSBEHANDLING ETTER PLAN- OG BYGNINGSLOVEN",
+      "f_BE",
+      "BIA",
+      "o_SF2",
+      "#01 SN\u00d8"
+    ],
+    "bestemmelser": []
+  },
+  "error": "500: 502: NER service unavailable"
+}

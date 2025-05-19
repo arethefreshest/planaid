@@ -1,0 +1,32 @@
+{
+  "run_id": "5c19f4ef-636a-49f1-a4c7-fc977f2a8685",
+  "operation": "backend_consistency",
+  "timestamp": "2025-04-01T13:30:07.0120020Z",
+  "timings": {
+    "file_saving": 0.006205,
+    "python_service_call": 28.373331,
+    "result_parsing": 0.024319,
+    "total_processing": -7171.594053
+  },
+  "field_counts": {
+    "matching": 8,
+    "only_in_plankart": 18,
+    "only_in_bestemmelser": 20,
+    "only_in_sosi": 0,
+    "is_consistent": 0
+  },
+  "resource_usage": {},
+  "document_info": {
+    "documents": {
+      "plankart": {
+        "filename": "PLANKART.pdf",
+        "size": 531031
+      },
+      "bestemmelser": {
+        "filename": "Bestemmelser.pdf",
+        "size": 182997
+      }
+    }
+  },
+  "error": null
+}

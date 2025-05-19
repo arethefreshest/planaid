@@ -1,0 +1,36 @@
+{
+  "run_id": "3cc608d1-eade-43f4-bf0e-cec63ba09cb0",
+  "operation": "backend_consistency",
+  "timestamp": "2025-04-09T20:52:18.6194070Z",
+  "timings": {
+    "file_saving": 0.004027,
+    "python_service_call": 26.016085,
+    "result_parsing": 0.008866,
+    "total_processing": -7173.968312
+  },
+  "field_counts": {
+    "matching": 11,
+    "only_in_plankart": 6,
+    "only_in_bestemmelser": 8,
+    "only_in_sosi": 4,
+    "is_consistent": 0
+  },
+  "resource_usage": {},
+  "document_info": {
+    "documents": {
+      "plankart": {
+        "filename": "Plankart.pdf",
+        "size": 681479
+      },
+      "bestemmelser": {
+        "filename": "Planbestemmelser.pdf",
+        "size": 158332
+      },
+      "sosi": {
+        "filename": "Evjetun.sos",
+        "size": 124684
+      }
+    }
+  },
+  "error": null
+}

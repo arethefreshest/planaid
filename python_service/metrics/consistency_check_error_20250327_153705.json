@@ -1,0 +1,48 @@
+{
+  "run_id": "20250327_153705",
+  "operation": "consistency_check",
+  "timestamp": "2025-03-27T15:37:05.595304",
+  "timings": {
+    "plankart_extraction": 7.693136930465698,
+    "bestemmelser_extraction": 54.86957311630249
+  },
+  "field_counts": {
+    "plankart": 16,
+    "bestemmelser": 0
+  },
+  "resource_usage": {},
+  "document_info": {
+    "documents": {
+      "plankart": {
+        "filename": "PLANKART.pdf",
+        "size": 531031
+      },
+      "bestemmelser": {
+        "filename": "Bestemmelser.pdf",
+        "size": 182997
+      }
+    }
+  },
+  "fields": {
+    "plankart": [
+      "o_SPA",
+      "H210",
+      "#02 SN\u00d8",
+      "#01 SN\u00d8",
+      "BIA",
+      "GT",
+      "o_GTD2",
+      "o_GF3",
+      "o_SF1",
+      "o_GF2",
+      "BR",
+      "o_GTD1",
+      "H220",
+      "o_SF2",
+      "H320",
+      "o_GF1"
+    ],
+    "bestemmelser": []
+  },
+  "error": "500: 500: Error processing bestemmelser: 400: File is empty"
+}

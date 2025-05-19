@@ -1,0 +1,30 @@
+{
+  "run_id": "20250501_164459",
+  "operation": "consistency_check",
+  "timestamp": "2025-05-01T16:44:59.346490",
+  "timings": {
+    "consistency_check": 28.031431913375854,
+    "total_processing": 28.032943725585938
+  },
+  "field_counts": {},
+  "resource_usage": {
+    "memory_mb": 23.9453125,
+    "cpu_percent": 0.0
+  },
+  "document_info": {
+    "documents": {
+      "plankart": {
+        "filename": "Plankart_20240515.pdf",
+        "size": 1287118
+      },
+      "bestemmelser": {
+        "filename": "bestemmelser.pdf",
+        "size": 338730
+      },
+      "sosi": {
+        "filename": "Kjets\u00e5_massetak.sos",
+        "size": 156641
+      }
+    }
+  }
+}

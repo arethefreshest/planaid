@@ -1,0 +1,32 @@
+{
+  "fields": [
+    "BKS",
+    "BR BIA",
+    "BE",
+    "o_SV1",
+    "o_SF",
+    "o_SPA",
+    "o_GF1-3",
+    "o_GTD1-2",
+    "BKS o_SV3",
+    "BKS GF1",
+    "BKS o_GTD1-2",
+    "BKS o_SF",
+    "BR o_SF o_SPA",
+    "# 01",
+    "BR SPA",
+    "BR",
+    "BIA",
+    "o_SV1 SPA GF SGS",
+    "SPA BR",
+    "o_SV3",
+    "o_SV3-er BKS BR o_SPA",
+    "o_SF1-2 o_SF1-2",
+    "o_SPA o_SPA",
+    "SPA SGS",
+    "o_GF1-3 GF1-GF3",
+    "GF1",
+    "BR o_GF3 # 02",
+    "GTD1-2"
+  ]
+}

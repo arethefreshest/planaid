@@ -1,0 +1,25 @@
+{
+  "run_id": "20250501_155655",
+  "operation": "consistency_check",
+  "timestamp": "2025-05-01T15:56:55.536821",
+  "timings": {},
+  "field_counts": {},
+  "resource_usage": {},
+  "document_info": {
+    "documents": {
+      "plankart": {
+        "filename": "Plankart.pdf",
+        "size": 681479
+      },
+      "bestemmelser": {
+        "filename": "Planbestemmelser.pdf",
+        "size": 158332
+      },
+      "sosi": {
+        "filename": "Evjetun.sos",
+        "size": 124684
+      }
+    }
+  },
+  "error": "500: 400: File is empty"
+}

@@ -1,0 +1,26 @@
+{
+  "run_id": "20250401_153647",
+  "operation": "consistency_check",
+  "timestamp": "2025-04-01T15:36:47.260397",
+  "timings": {
+    "consistency_check": 16.495824098587036,
+    "total_processing": 16.49641489982605
+  },
+  "field_counts": {},
+  "resource_usage": {
+    "memory_mb": 12.8203125,
+    "cpu_percent": 0.0
+  },
+  "document_info": {
+    "documents": {
+      "plankart": {
+        "filename": "PLANKART.pdf",
+        "size": 531031
+      },
+      "bestemmelser": {
+        "filename": "Bestemmelser.pdf",
+        "size": 182997
+      }
+    }
+  }
+}

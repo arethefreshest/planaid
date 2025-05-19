@@ -1,0 +1,57 @@
+{
+  "run_id": "20250327_144624",
+  "operation": "consistency_check",
+  "timestamp": "2025-03-27T14:46:24.118224",
+  "timings": {
+    "plankart_extraction": 4.074835777282715,
+    "bestemmelser_extraction": 59.16160798072815
+  },
+  "field_counts": {
+    "plankart": 16,
+    "bestemmelser": 8
+  },
+  "resource_usage": {},
+  "document_info": {
+    "documents": {
+      "plankart": {
+        "filename": "PLANKART.pdf",
+        "size": 531031
+      },
+      "bestemmelser": {
+        "filename": "Bestemmelser.pdf",
+        "size": 182997
+      }
+    }
+  },
+  "fields": {
+    "plankart": [
+      "o_GF3",
+      "o_GTD2",
+      "#02 SN\u00d8",
+      "o_SPA",
+      "o_GF2",
+      "o_SF2",
+      "GT",
+      "#01 SN\u00d8",
+      "H210",
+      "BR",
+      "H220",
+      "H320",
+      "BIA",
+      "o_GF1",
+      "o_GTD1",
+      "o_SF1"
+    ],
+    "bestemmelser": [
+      "o_SF",
+      "o_SPA",
+      "BKS",
+      "BR",
+      "BE",
+      "BIA",
+      "o_SV1",
+      "o_SV3"
+    ]
+  },
+  "error": "500: 502: NER service unavailable"
+}

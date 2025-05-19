@@ -1,0 +1,54 @@
+{
+  "run_id": "20250327_153141",
+  "operation": "consistency_check",
+  "timestamp": "2025-03-27T15:31:41.544899",
+  "timings": {
+    "plankart_extraction": 12.876818895339966,
+    "bestemmelser_extraction": 49.63165020942688
+  },
+  "field_counts": {
+    "plankart": 22,
+    "bestemmelser": 0
+  },
+  "resource_usage": {},
+  "document_info": {
+    "documents": {
+      "plankart": {
+        "filename": "PLANKART.pdf",
+        "size": 531031
+      },
+      "bestemmelser": {
+        "filename": "Bestemmelser.pdf",
+        "size": 182997
+      }
+    }
+  },
+  "fields": {
+    "plankart": [
+      "H210",
+      "o_GTD1",
+      "SAKSBEHANDLING ETTER PLAN- OG BYGNINGSLOVEN",
+      "BIA",
+      "STL",
+      "#02 SN\u00d8",
+      "o_SF2",
+      "o_SF1",
+      "#01 SN\u00d8",
+      "H220",
+      "o_GF3",
+      "NN2000",
+      "BR",
+      "o_GTD2",
+      "H320",
+      "o_GF2",
+      "o_SPA",
+      "PLANEN ER UTARBEIDET AV:",
+      "o_GF1",
+      "DATO SIGN",
+      "PLANKONSULENT",
+      "S\u00c5F"
+    ],
+    "bestemmelser": []
+  },
+  "error": "500: 500: Error processing bestemmelser"
+}

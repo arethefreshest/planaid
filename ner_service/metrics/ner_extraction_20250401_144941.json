@@ -1,0 +1,19 @@
+{
+  "run_id": "20250401_144941",
+  "timestamp": "2025-04-01T14:49:41.450260",
+  "file": "bestemmelser.pdf",
+  "timings": {
+    "text_extraction": 1.3595850467681885,
+    "spacy_processing": 0.32920408248901367,
+    "model_prediction": 15.77116584777832,
+    "total_processing": 17.462816953659058
+  },
+  "resource_usage": {
+    "memory_mb": -294.78125,
+    "cpu_percent": 0.0
+  },
+  "file_size_kb": 178.7080078125,
+  "text_length": 7423,
+  "sentence_count": 156,
+  "field_count": 28
+}

@@ -1,0 +1,138 @@
+{
+  "timestamp": "2025-05-01T16:44:59.067185",
+  "document_fields": {
+    "plankart": [
+      "AOR",
+      "BAT1",
+      "BAT2",
+      "FRI1",
+      "FRI2",
+      "FRI3",
+      "GN1",
+      "GN2",
+      "GN3",
+      "GN4",
+      "H210",
+      "H740",
+      "STL",
+      "f_BAD",
+      "f_TV1",
+      "f_TV2",
+      "f_TV3",
+      "f_TV4",
+      "f_VBAD",
+      "o_AVG1",
+      "o_AVG2",
+      "o_AVG3",
+      "o_AVG4",
+      "o_FV"
+    ],
+    "bestemmelser": [
+      "BAT1",
+      "FRI1",
+      "FRI2",
+      "FRI3",
+      "H140",
+      "H220",
+      "H320",
+      "H740",
+      "f_BAD",
+      "f_TV1",
+      "f_TV2",
+      "f_VBAD",
+      "o_AVG1",
+      "o_FV",
+      "o_V1"
+    ],
+    "sosi": {
+      "zone_identifiers": [
+        "BAT1",
+        "BAT2",
+        "FRI1",
+        "FRI2",
+        "FRI3",
+        "GN1",
+        "GN2",
+        "GN3",
+        "GN4",
+        "f_BAD",
+        "f_TV1",
+        "f_TV2",
+        "f_TV3",
+        "f_TV4",
+        "f_VBAD",
+        "o_AVG1",
+        "o_AVG2",
+        "o_AVG3",
+        "o_AVG4",
+        "o_FV",
+        "o_SKV3",
+        "o_V1",
+        "o_V2"
+      ],
+      "hensynssoner": [
+        "H140_1",
+        "H210",
+        "H220_1",
+        "H320_1",
+        "H740"
+      ],
+      "purposes": []
+    }
+  },
+  "comparison_results": {
+    "matching_fields": [
+      "BAT1",
+      "BAT2",
+      "FRI1",
+      "FRI2",
+      "FRI3",
+      "GN1",
+      "GN2",
+      "GN3",
+      "GN4",
+      "H210",
+      "H740",
+      "f_BAD",
+      "f_TV1",
+      "f_TV2",
+      "f_TV3",
+      "f_TV4",
+      "f_VBAD",
+      "o_AVG1",
+      "o_AVG2",
+      "o_AVG3",
+      "o_AVG4",
+      "o_FV",
+      "o_V1"
+    ],
+    "only_in_plankart": [
+      "AOR",
+      "STL"
+    ],
+    "only_in_bestemmelser": [
+      "H140",
+      "H220",
+      "H320"
+    ],
+    "only_in_sosi": [
+      "H140_1",
+      "H220_1",
+      "H320_1",
+      "o_SKV3",
+      "o_V2"
+    ]
+  },
+  "statistics": {
+    "total_fields": {
+      "plankart": 24,
+      "bestemmelser": 15,
+      "sosi": 23
+    },
+    "match_percentages": {
+      "plankart_match": 95.83,
+      "bestemmelser_match": 153.33,
+      "sosi_match": 100.0
+    }
+  }
+}
