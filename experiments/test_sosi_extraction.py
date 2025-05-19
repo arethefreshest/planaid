@@ -24,7 +24,7 @@ class SOSIExtractor:
     def __init__(self, sosi_codes: Dict[str, str]):
         self.zones = set()  # Only named zones (FELTNAVN)
         self.text_fields = []  # List of (TEKST, STRENG) tuples from TEKST groups
-        self.streng_values = []  # All STRENG values found (including from RpPåskrift)
+        self.streng_values = set()  # All STRENG values found (including from RpPåskrift)
         self.arealformål_mapping = {}  # Dict mapping FELTNAVN to (code, purpose) tuple
         self.field_names = set()
         self.hensynssoner = set()
@@ -32,7 +32,9 @@ class SOSIExtractor:
         
     def extract_all_fields(self, doc) -> Dict:
         """Extract all relevant fields from SOSI document."""
-        self._process_group(doc.body)
+        # Use doc.body if it exists, else use doc directly
+        group = getattr(doc, "body", doc)
+        self._process_group(group)
         
         # Convert arealformål_mapping to a list of dicts for JSON serialization
         arealformål_list = [
@@ -45,7 +47,7 @@ class SOSIExtractor:
         ]
         
         # Get unique STRENG values
-        unique_streng_values = sorted(list(set(self.streng_values)))
+        unique_streng_values = sorted(list(self.streng_values))
         
         # Create visible_annotations by validating against what's actually in STRENG values
         visible_annotations = {
@@ -100,6 +102,8 @@ class SOSIExtractor:
     
     def _process_group(self, group):
         """Process a group to find target fields."""
+        if not hasattr(group, 'name'):
+            return  # Skip non-group items (like TextItem)
         logger.debug(f"Processing group: {group.name}")
         
         # Track FELTNAVN and RPAREALFORMÅL within the same group
@@ -119,51 +123,48 @@ class SOSIExtractor:
             if not normalized:
                 continue
                 
-            if child.name == "FELTNAVN":
+            # Existing logic for quoted FELTNAVN
+            if hasattr(child, 'name') and child.name == "FELTNAVN":
+                logger.debug(f"Found FELTNAVN: {normalized}")
                 current_feltnavn = normalized
-            elif child.name == "RPAREALFORMÅL":
+                self.field_names.add(normalized)
+                self.zones.add(normalized)
+            # --- NEW LOGIC for unquoted FELTNAVN ---
+            elif hasattr(child, 'name') and child.name not in (
+                "OBJTYPE", "RPAREALFORMÅL", "NASJONALAREALPLANID", "KOMM", "PLANID", "VERTNIV", "EIERFORM", "OPPDATERINGSDATO",
+                "IDENT", "LOKALID", "NAVNEROM", "VERSJONID", "REF", "NØ", "BESKRIVELSE", "HENSYNSONENAVN", "FØRSTEDIGITALISERINGSDATO",
+                "KVALITET", "STRENG", "RPPÅSKRIFTTYPE", "BESTEMMELSEOMRNAVN", "SLUTT", "SYMBOL"
+            ):
+                # Heuristic: if the group name looks like a field identifier, add it
+                potential_id = normalize_field_comparison(str(child.name))
+                if potential_id:
+                    # Optionally confirm: does this group have a TextItem child with the same text?
+                    has_confirming_text = False
+                    if hasattr(child, 'children'):
+                        for sub_child in child.children:
+                            if hasattr(sub_child, 'text') and sub_child.text == child.name:
+                                has_confirming_text = True
+                                break
+                    if has_confirming_text:
+                        logger.debug(f"Found unquoted FELTNAVN: {potential_id}")
+                        self.field_names.add(potential_id)
+                        self.zones.add(potential_id)
+            elif hasattr(child, 'name') and child.name == "RPAREALFORMÅL":
+                logger.debug(f"Found RPAREALFORMÅL: {normalized}")
                 current_arealformål = normalized
-            elif child.name == "STRENG":  # Direct STRENG values
-                self.streng_values.append(normalized)
-                logger.debug(f"Found STRENG value: {normalized}")
-        
-        # If we found both in the same group, add to mapping
-        if current_feltnavn and current_arealformål:
-            self.arealformål_mapping[current_feltnavn] = current_arealformål
-            self.field_names.add(current_feltnavn)
-            self.zones.add(current_feltnavn)  # Only add FELTNAVN to zones
-        elif current_feltnavn:
-            self.field_names.add(current_feltnavn)
-            self.zones.add(current_feltnavn)
-        
-        # Special handling for TEKST groups that contain numbered children
-        if group.name == "TEKST":
-            for numbered_child in group.children:
-                if hasattr(numbered_child, 'children'):
-                    # Look for STRENG within the numbered child's children
-                    for sub_child in numbered_child.children:
-                        if sub_child.name == "STRENG" and hasattr(sub_child, 'value') and sub_child.value:
-                            streng_value = str(sub_child.value)
-                            self.streng_values.append(streng_value)
-                            logger.debug(f"Found STRENG in TEKST group: {streng_value}")
-        
-        # Handle HENSYNSONENAVN
-        for child in group.children:
-            if not hasattr(child, 'value'):
-                continue
-                
-            value = str(child.value) if child.value is not None else None
-            if not value:
-                continue
-                
-            normalized = normalize_field_comparison(value)
-            if not normalized:
-                continue
-                
-            if child.name == "HENSYNSONENAVN":
+                self.zones.add(normalized)
+            elif hasattr(child, 'name') and child.name == "HENSYNSONENAVN":
+                logger.debug(f"Found HENSYNSONENAVN: {normalized}")
                 self.hensynssoner.add(normalized)
+            elif hasattr(child, 'name') and child.name == "STRENG":
+                logger.debug(f"Found STRENG: {normalized}")
+                if current_feltnavn:
+                    self.visible_annotations.setdefault(current_feltnavn, set()).add(normalized)
+                if current_arealformål:
+                    self.visible_annotations.setdefault(current_arealformål, set()).add(normalized)
+                self.streng_values.add(normalized)
         
-        # Process children recursively
+        # Second pass to process nested groups
         for child in group.children:
             if hasattr(child, 'children'):
                 self._process_group(child)

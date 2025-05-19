@@ -302,6 +302,7 @@ def parse_sosi_to_docling(file_path: Path, purpose_map: Dict[str, str], doc_id: 
     current_category = None
     current_instance = None
     level_groups = {0: body_group}
+    current_field_code = None
 
     i = 0
     while i < len(lines):
@@ -373,6 +374,21 @@ def parse_sosi_to_docling(file_path: Path, purpose_map: Dict[str, str], doc_id: 
                         no_group.value = result
                         logger.debug(f"Setting NØ group value with {len(result['coordinates'])} coordinates and KP={result['kp']}")
                         continue
+                    elif key == 'FELTNAVN':
+                        # Extract field name as text
+                        if value:
+                            # Create a group for this field
+                            field_group = doc.add_group(name=value.strip(), parent=parent)
+                            current_field_code = value.strip()
+                            # Add the field code as text
+                            doc.add_text(label=DocItemLabel.TEXT, text=current_field_code, parent=field_group)
+                    elif key == 'KVALITET':
+                        # Extract quality value
+                        if value and current_field_code:
+                            quality_group = doc.add_group(name=key, parent=parent)
+                            quality_group.value = value.strip()
+                            # Add the quality value as text
+                            doc.add_text(label=DocItemLabel.TEXT, text=value.strip(), parent=quality_group)
                     else:
                         if value is None:
                             # This is a group
@@ -383,6 +399,9 @@ def parse_sosi_to_docling(file_path: Path, purpose_map: Dict[str, str], doc_id: 
                             parsed_value = parse_value(value)
                             value_group = doc.add_group(name=key, parent=parent)
                             value_group.value = parsed_value
+                            # Add the value as text if it's a string
+                            if isinstance(parsed_value, str):
+                                doc.add_text(label=DocItemLabel.TEXT, text=parsed_value, parent=value_group)
                     
                     i += 1
                 continue
@@ -408,6 +427,21 @@ def parse_sosi_to_docling(file_path: Path, purpose_map: Dict[str, str], doc_id: 
                     value_group.value = {'coordinates': coords}
                 else:
                     value_group.value = {'coordinates': []}
+            elif key == 'FELTNAVN':
+                # Extract field name as text
+                if value:
+                    # Create a group for this field
+                    field_group = doc.add_group(name=value.strip(), parent=parent)
+                    current_field_code = value.strip()
+                    # Add the field code as text
+                    doc.add_text(label=DocItemLabel.TEXT, text=current_field_code, parent=field_group)
+            elif key == 'KVALITET':
+                # Extract quality value
+                if value and current_field_code:
+                    quality_group = doc.add_group(name=key, parent=parent)
+                    quality_group.value = value.strip()
+                    # Add the quality value as text
+                    doc.add_text(label=DocItemLabel.TEXT, text=value.strip(), parent=quality_group)
             else:
                 if value is None:
                     new_group = doc.add_group(name=key, parent=parent)
@@ -416,6 +450,9 @@ def parse_sosi_to_docling(file_path: Path, purpose_map: Dict[str, str], doc_id: 
                     parsed_value = parse_value(value)
                     value_group = doc.add_group(name=key, parent=parent)
                     value_group.value = parsed_value
+                    # Add the value as text if it's a string
+                    if isinstance(parsed_value, str):
+                        doc.add_text(label=DocItemLabel.TEXT, text=parsed_value, parent=value_group)
         
         i += 1
 

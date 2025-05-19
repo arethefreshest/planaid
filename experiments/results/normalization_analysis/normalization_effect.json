@@ -1,0 +1,20 @@
+{
+  "legacy": {
+    "raw_common": [
+      "f_BAD",
+      "f_VBAD",
+      "o_FV"
+    ],
+    "normalized_common": [
+      "VBAD",
+      "FV",
+      "BAD"
+    ],
+    "improvement_percentage": 0.0
+  },
+  "docling": {
+    "raw_common": [],
+    "normalized_common": [],
+    "improvement_percentage": 0
+  }
+}
